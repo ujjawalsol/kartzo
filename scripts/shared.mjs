@@ -1,0 +1,704 @@
+import { writeFileSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import { icon, stars } from "./icons.mjs";
+
+export { icon, stars };
+
+export const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+export const head = (title, description) => `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+  <meta name="description" content="${description}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: "#1A56F0",
+              dark: "#123FBE",
+              bar: "#1246D0",
+              ink: "#0E1730",
+              muted: "#4E5D78",
+              soft: "#F4F8FF"
+            }
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "Inter", "system-ui", "sans-serif"]
+          },
+          boxShadow: {
+            card: "0 8px 24px rgba(16, 42, 110, 0.08)"
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="assets/kartzo.css">
+</head>
+<body id="top" class="overflow-x-hidden bg-white font-sans text-brand-ink antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[90] focus:rounded-xl focus:bg-white focus:px-4 focus:py-2.5 focus:text-xs focus:font-bold focus:text-brand focus:ring-2 focus:ring-brand">Skip to content</a>
+`;
+
+export const announcementBar = `
+  <div class="hidden bg-brand-bar text-white lg:block">
+    <div class="pad flex h-10 w-full items-center justify-between gap-4 text-[12.5px] font-semibold sm:h-11 sm:text-[13px]">
+      <p class="flex min-w-0 items-center gap-2">
+        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+        <span class="truncate">Free Shipping on orders ₹499+</span>
+      </p>
+      <ul class="hidden items-center gap-8 md:flex">
+        <li class="flex items-center gap-2"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4"/></svg>7 Days Easy Returns</li>
+        <li class="flex items-center gap-2"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>100% Secure Payment</li>
+      </ul>
+      <a href="index.html#app" class="inline-flex shrink-0 items-center gap-2 hover:underline">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+        <span class="sm:hidden">Get 10% OFF</span>
+        <span class="hidden sm:inline">Download App &amp; Get 10% OFF</span>
+      </a>
+    </div>
+  </div>
+`;
+
+export function nav(active) {
+  const items = [
+    ["index.html", "Home", "home"],
+    ["products.html", "Shop", "shop"],
+    ["categories.html", "Categories", "categories"],
+    ["deals.html", "Deals", "deals"],
+    ["orders.html", "Orders", "orders"],
+    ["about.html", "About", "about"]
+  ];
+  return `
+  <header class="site-header sticky top-0 z-50 border-b border-[#e8eef8] bg-white/95 backdrop-blur">
+    <!-- Desktop white bar (lg and up only) -->
+    <div class="pad hidden w-full items-center justify-between gap-3 lg:grid lg:h-auto lg:grid-cols-[minmax(0,1fr)_minmax(20rem,1.25fr)] lg:grid-rows-[auto_auto] lg:gap-x-6 lg:gap-y-3 lg:py-3 xl:flex xl:h-[76px] xl:gap-4 xl:py-0">
+
+      <!-- Brand Logo -->
+      <a href="index.html" class="shrink-0 flex items-center" aria-label="Kartzo home">
+        <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-9 w-auto">
+      </a>
+
+      <!-- Desktop Primary Nav -->
+      <nav class="site-primary-nav order-3 ml-0 hidden shrink-0 items-center gap-0 whitespace-nowrap lg:col-start-1 lg:row-start-2 lg:flex xl:order-none xl:ml-3 xl:gap-1" aria-label="Primary Navigation">
+        ${items.map(([h, l, k]) => `
+        <a href="${h}" ${active === k ? 'aria-current="page"' : ""} class="inline-flex items-center rounded-lg ${active === k ? "bg-brand-soft font-bold text-brand" : "font-semibold text-[#3c4a66] hover:bg-brand-soft hover:text-brand"} px-2.5 py-2 text-sm transition 2xl:px-3.5">${l}</a>`).join("")}
+      </nav>
+
+      <!-- Desktop Search Bar -->
+      <form class="search-form order-4 ml-0 hidden min-w-0 w-full items-center lg:col-start-2 lg:row-start-2 lg:flex xl:order-none xl:ml-auto xl:max-w-[560px]" action="products.html" method="get" role="search">
+        <label for="search" class="sr-only">Search for products, brands and more</label>
+        <div class="search-shell flex min-w-0 w-full items-center rounded-full bg-[#f3f7ff] py-1 pl-4 pr-1 transition duration-150">
+          <input id="search" name="q" class="search-input min-w-0 w-full bg-transparent text-sm text-brand-ink outline-none placeholder:text-[#93a0b8]" type="search" placeholder="Search products, brands..." autocomplete="off">
+          <button type="submit" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand text-white hover:bg-brand-dark transition" aria-label="Search">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Desktop actions: uniform 22px icons with labels -->
+      <div class="order-2 ml-auto flex shrink-0 items-center gap-3 lg:col-start-2 lg:row-start-1 xl:order-none xl:ml-4">
+        <a href="wishlist.html" class="flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Wishlist">
+          <span class="relative inline-flex items-center justify-center">
+            ${icon("heart", "h-[22px] w-[22px]")}
+            <span id="wishlist-count" class="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white leading-none">4</span>
+          </span>
+          <span class="text-[10px] font-bold mt-0.5">Wishlist</span>
+        </a>
+        <button type="button" data-cart-drawer-open class="cart-trigger flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Cart, 2 items">
+          <span class="relative inline-flex items-center justify-center">
+            ${icon("cart", "h-[22px] w-[22px]")}
+            <span id="cart-count" class="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black text-white leading-none">2</span>
+          </span>
+          <span class="text-[10px] font-bold mt-0.5">Cart</span>
+        </button>
+        <a href="account.html" class="flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Customer Account">
+          <span class="inline-flex items-center justify-center">
+            ${icon("user", "h-[22px] w-[22px]")}
+          </span>
+          <span class="text-[10px] font-bold mt-0.5">Account</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile app header, light theme (below lg only): menu + logo + bell, inline search, category pills -->
+    <div class="bg-white lg:hidden">
+      <div class="pad flex h-[60px] w-full items-center justify-between gap-3">
+        <button type="button" data-mobile-menu-open class="flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Open menu">
+          ${icon("menu", "h-6 w-6")}
+        </button>
+        <a href="index.html" class="flex min-w-0 flex-1 items-center justify-center" aria-label="Kartzo home">
+          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-8 w-auto">
+        </a>
+        <button type="button" data-cart-drawer-open class="cart-trigger relative flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Open cart">
+          ${icon("cart", "h-6 w-6")}
+          <span class="mobile-bottom-cart-count absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black leading-none text-white">2</span>
+        </button>
+      </div>
+      <div class="pad pb-2.5">
+        <form action="products.html" method="get" role="search" class="flex min-h-[48px] w-full items-center gap-2 rounded-full border-0 bg-[#f3f7ff] py-2.5 pl-4 pr-2 outline-none">
+          ${icon("search", "h-5 w-5 shrink-0 text-brand")}
+          <label for="m-search" class="sr-only">Search for products, brands and more</label>
+          <input id="m-search" name="q" type="search" placeholder="Search products, brands and more..." autocomplete="off" class="min-w-0 w-full appearance-none border-0 bg-transparent text-[15px] font-medium text-brand-ink outline-none placeholder:text-[#93a0b8]">
+        </form>
+      </div>
+      <nav class="pad no-scrollbar flex items-center gap-2 overflow-x-auto pb-2.5 text-[13px] font-bold" aria-label="Quick Category Navigation">
+        <a href="index.html" ${active === "home" ? 'aria-current="page"' : ""} class="shrink-0 rounded-full px-4 py-1.5 transition ${active === "home" ? "bg-brand text-white" : "bg-[#f3f7ff] text-slate-700 hover:text-brand"}">All</a>
+        <a href="products.html?category=electronics" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Electronics</a>
+        <a href="products.html?category=fashion" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Fashion</a>
+        <a href="products.html?category=home" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Home &amp; Living</a>
+        <a href="deals.html" ${active === "deals" ? 'aria-current="page"' : ""} class="shrink-0 rounded-full px-4 py-1.5 transition ${active === "deals" ? "bg-brand text-white" : "bg-[#f3f7ff] text-slate-700 hover:text-brand"}">Deals</a>
+      </nav>
+    </div>
+  </header>
+`;
+}
+
+export function mobileMenuDrawer(active) {
+  return `
+  <!-- Modern Mobile Slide-Over Sheet Drawer (Departments & Customer Hub) -->
+  <div id="mobile-menu-drawer" class="drawer-backdrop fixed inset-0 z-[80] bg-brand-ink/60 backdrop-blur-sm lg:hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Navigation Menu">
+    <div class="drawer-panel-left flex h-full w-[86%] max-w-sm flex-col bg-white shadow-2xl">
+      <!-- Drawer Top Bar -->
+      <div class="flex items-center justify-between border-b border-[#e8eef8] px-5 py-4">
+        <a href="index.html" class="flex items-center" aria-label="Kartzo home">
+          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-8 w-auto">
+        </a>
+        <button type="button" data-mobile-menu-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-brand-ink transition" aria-label="Close menu">
+          ${icon("close", "h-5 w-5")}
+        </button>
+      </div>
+
+      <!-- User Welcome & Sign In Strip -->
+      <div class="bg-brand-soft px-5 py-3.5 flex items-center justify-between border-b border-[#d7e3f8]/70">
+        <div class="flex items-center gap-2.5">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-white font-bold text-xs shadow-sm">
+            ${icon("user", "h-4 w-4")}
+          </div>
+          <div>
+            <p class="text-xs font-bold text-brand-ink">Welcome to Kartzo</p>
+            <p class="text-[11px] text-slate-500">Sign in for express checkout</p>
+          </div>
+        </div>
+        <a href="login.html" class="rounded-lg bg-brand px-3 py-1.5 text-xs font-bold text-white hover:bg-brand-dark transition shadow-sm">
+          Sign In
+        </a>
+      </div>
+
+      <!-- Scrollable Menu Content -->
+      <div class="flex-1 overflow-y-auto px-5 py-4 space-y-6">
+        <!-- Shop by Department (Categorized List with item counts) -->
+        <div>
+          <div class="flex items-center justify-between">
+            <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Shop by Department</p>
+            <a href="categories.html" class="text-[11px] font-bold text-brand hover:underline">View All</a>
+          </div>
+          <div class="mt-2 space-y-0.5">
+            <a href="products.html?category=electronics" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
+              <span class="flex items-center gap-3">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("headphones", "h-4 w-4")}</span>
+                <span>Audio &amp; Electronics</span>
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+            <a href="products.html?category=fashion" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
+              <span class="flex items-center gap-3">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("tag", "h-4 w-4")}</span>
+                <span>Footwear &amp; Fashion</span>
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+            <a href="products.html?category=home" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
+              <span class="flex items-center gap-3">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("home", "h-4 w-4")}</span>
+                <span>Home &amp; Living</span>
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+            <a href="products.html?category=beauty" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
+              <span class="flex items-center gap-3">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("sparkles", "h-4 w-4")}</span>
+                <span>Beauty &amp; Fragrances</span>
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+            <a href="products.html?category=kitchen" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
+              <span class="flex items-center gap-3">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("flame", "h-4 w-4")}</span>
+                <span>Kitchen Appliances</span>
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+            <a href="products.html?category=bags" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
+              <span class="flex items-center gap-3">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("package", "h-4 w-4")}</span>
+                <span>Bags &amp; Travel Gear</span>
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+          </div>
+        </div>
+
+        <!-- Orders & Account Management -->
+        <div>
+          <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">My Orders &amp; Account</p>
+          <nav class="mt-2 space-y-0.5">
+            <a href="tracking.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
+              <span class="flex items-center gap-3">
+                ${icon("truck", "h-4 w-4 text-brand")}
+                Track Shipment
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+            <a href="orders.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
+              <span class="flex items-center gap-3">
+                ${icon("package", "h-4 w-4 text-slate-500")}
+                My Orders
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+          </nav>
+        </div>
+
+        <!-- Customer Care & Assistance -->
+        <div>
+          <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Customer Support</p>
+          <nav class="mt-2 space-y-0.5">
+            <a href="contact.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
+              <span class="flex items-center gap-3">
+                ${icon("phone", "h-4 w-4 text-slate-500")}
+                24/7 Support: +91 98765 43210
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+            <a href="returns-policy.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
+              <span class="flex items-center gap-3">
+                ${icon("refresh", "h-4 w-4 text-slate-500")}
+                7-Day Doorstep Replacement
+              </span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Drawer Bottom Quick Policy Links -->
+      <div class="border-t border-[#e8eef8] p-3.5 bg-white">
+        <div class="flex items-center justify-around text-[11px] text-slate-400 font-semibold">
+          <a href="faq.html" class="hover:text-brand transition">FAQs</a>
+          <span>•</span>
+          <a href="shipping-policy.html" class="hover:text-brand transition">Shipping</a>
+          <span>•</span>
+          <a href="about.html" class="hover:text-brand transition">About</a>
+          <span>•</span>
+          <a href="privacy-policy.html" class="hover:text-brand transition">Privacy</a>
+          <span>•</span>
+          <a href="terms-conditions.html" class="hover:text-brand transition">Terms</a>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+}
+
+export function mobileBottomBar(active) {
+  const tab = (key, href, label, badge) => {
+    const isActive = active === key;
+    return `<a href="${href}" ${isActive ? 'aria-current="page"' : ""} class="flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition ${isActive ? "bg-brand-soft text-brand" : "text-[#4E5D78] hover:bg-brand-soft hover:text-brand"}">
+      <span class="relative inline-flex items-center justify-center">
+        ${icon(key === "home" ? "home" : key === "categories" ? "grid" : key === "deals" ? "zap" : key === "wishlist" ? "heart" : "user", "h-[22px] w-[22px]")}
+        ${badge || ""}
+      </span>
+      <span class="text-[11px] font-bold leading-none">${label}</span>
+    </a>`;
+  };
+  return `
+  <!-- Mobile Bottom Navigation — 5 tabs only (Menu lives in header, no repeat) -->
+  <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-[#e8eef8] bg-white/95 shadow-[0_-4px_20px_rgba(16,42,110,0.06)] backdrop-blur-md lg:hidden" aria-label="Mobile Bottom Navigation">
+    <div class="grid grid-cols-5 gap-1 px-2 pb-[max(env(safe-area-inset-bottom,0px),8px)] pt-2">
+      ${tab("home", "index.html", "Home")}
+      ${tab("categories", "categories.html", "Categories")}
+      ${tab("deals", "deals.html", "Deals", '<span class="absolute -right-1.5 -top-1 flex h-2 w-2 rounded-full bg-rose-500"></span>')}
+      ${tab("wishlist", "wishlist.html", "Wishlist", '<span class="mobile-bottom-wishlist-count absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black leading-none text-white">4</span>')}
+      ${tab("account", "account.html", "Account")}
+    </div>
+  </nav>
+`;
+}
+
+export const cartDrawer = `
+  <!-- Cart Drawer Component matching index.html -->
+  <div id="cart-drawer" class="drawer-backdrop fixed inset-0 z-[80] bg-slate-950/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <div class="drawer-panel ml-auto flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
+      <!-- Drawer Header -->
+      <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
+        <div class="flex items-center gap-2.5">
+          <h2 id="drawer-title" class="text-base font-extrabold text-brand-ink">Shopping Cart</h2>
+          <span id="drawer-cart-count" class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-black text-brand">2</span>
+        </div>
+        <button type="button" data-cart-drawer-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition" aria-label="Close cart drawer">
+          ${icon("close", "h-4 w-4")}
+        </button>
+      </div>
+
+      <!-- Free Shipping Meter -->
+      <div class="border-b border-slate-100 bg-slate-50/70 px-6 py-3.5">
+        <div class="flex items-center justify-between text-xs font-semibold text-brand-ink">
+          <span id="drawer-shipping-text" class="inline-flex items-center gap-1.5"><span class="text-emerald-600">${icon("check", "h-3.5 w-3.5")}</span><span>You unlocked <strong>FREE Delivery!</strong></span></span>
+          <span class="text-emerald-600 font-extrabold">₹499+ Goal Met</span>
+        </div>
+        <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+          <div id="drawer-shipping-progress" class="h-full rounded-full bg-emerald-600 transition-all duration-300" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- Drawer Items List -->
+      <div class="flex-1 space-y-4 overflow-y-auto p-6" id="drawer-items">
+        <article class="drawer-item flex gap-4 rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-sm" data-price="2799">
+          <a href="product.html" class="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-50 p-2">
+            <img src="assets/p-headphones.webp" alt="Wireless Headphones" width="800" height="800" class="h-full w-auto object-contain">
+          </a>
+          <div class="flex min-w-0 flex-1 flex-col justify-between">
+            <div class="flex items-start justify-between gap-1">
+              <div>
+                <a href="product.html" class="block truncate text-xs sm:text-sm font-bold text-brand-ink hover:text-brand transition">Wireless Headphones Pro</a>
+                <p class="text-[11px] text-slate-500">Space Black • Bluetooth 5.3</p>
+              </div>
+              <button type="button" class="drawer-remove-item text-slate-400 hover:text-rose-500 transition" aria-label="Remove item">
+                ${icon("trash", "h-4 w-4")}
+              </button>
+            </div>
+            <div class="mt-2.5 flex items-center justify-between">
+              <div data-qty data-min="1" data-max="5" class="inline-flex items-center rounded-lg border border-slate-200 bg-slate-50">
+                <button type="button" class="qty-btn qty-minus flex h-7 w-7 items-center justify-center text-slate-600 hover:text-slate-900" aria-label="Decrease quantity">${icon("minus", "h-3 w-3")}</button>
+                <span data-qty-value class="min-w-[1.5rem] text-center text-xs font-bold text-brand-ink">1</span>
+                <button type="button" class="qty-btn qty-plus flex h-7 w-7 items-center justify-center text-slate-600 hover:text-slate-900" aria-label="Increase quantity">${icon("plus", "h-3 w-3")}</button>
+              </div>
+              <p class="text-xs sm:text-sm font-extrabold text-brand-ink">₹2,799</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="drawer-item flex gap-4 rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-sm" data-price="3499">
+          <a href="product.html" class="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-50 p-2">
+            <img src="assets/p-watch.webp" alt="Smart Watch" width="800" height="800" class="h-full w-auto object-contain">
+          </a>
+          <div class="flex min-w-0 flex-1 flex-col justify-between">
+            <div class="flex items-start justify-between gap-1">
+              <div>
+                <a href="product.html" class="block truncate text-xs sm:text-sm font-bold text-brand-ink hover:text-brand transition">Smart Watch AMOLED</a>
+                <p class="text-[11px] text-slate-500">Midnight Blue • AMOLED</p>
+              </div>
+              <button type="button" class="drawer-remove-item text-slate-400 hover:text-rose-500 transition" aria-label="Remove item">
+                ${icon("trash", "h-4 w-4")}
+              </button>
+            </div>
+            <div class="mt-2.5 flex items-center justify-between">
+              <div data-qty data-min="1" data-max="5" class="inline-flex items-center rounded-lg border border-slate-200 bg-slate-50">
+                <button type="button" class="qty-btn qty-minus flex h-7 w-7 items-center justify-center text-slate-600 hover:text-slate-900" aria-label="Decrease quantity">${icon("minus", "h-3 w-3")}</button>
+                <span data-qty-value class="min-w-[1.5rem] text-center text-xs font-bold text-brand-ink">1</span>
+                <button type="button" class="qty-btn qty-plus flex h-7 w-7 items-center justify-center text-slate-600 hover:text-slate-900" aria-label="Increase quantity">${icon("plus", "h-3 w-3")}</button>
+              </div>
+              <p class="text-xs sm:text-sm font-extrabold text-brand-ink">₹3,499</p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Drawer Footer -->
+      <div class="border-t border-slate-200 bg-slate-50/50 p-6">
+        <div class="space-y-2 text-xs">
+          <div class="flex justify-between text-slate-600">
+            <span>Subtotal</span>
+            <span class="font-bold text-brand-ink">₹6,298</span>
+          </div>
+          <div class="flex justify-between text-slate-600">
+            <span>Shipping</span>
+            <span class="font-bold text-emerald-600">Free</span>
+          </div>
+          <div class="flex justify-between border-t border-slate-200 pt-2 text-sm font-extrabold text-brand-ink">
+            <span>Total</span>
+            <span class="text-base text-brand">₹6,298</span>
+          </div>
+        </div>
+        <p class="mt-2 text-[11px] text-slate-400">Taxes included. Discounts applied at next step.</p>
+        <div class="mt-4 flex flex-col gap-2.5">
+          <a href="checkout.html" class="flex min-h-12 items-center justify-center rounded-xl bg-brand text-xs sm:text-sm font-bold text-white shadow-md hover:bg-brand-dark transition active:scale-[0.99]">
+            Checkout Now
+          </a>
+          <a href="cart.html" class="flex min-h-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
+            View Shopping Cart
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+export const searchModal = `
+  <!-- Predictive Global Search Modal matching index.html -->
+  <div id="search-modal" class="modal-backdrop fixed inset-0 z-[80] flex items-start justify-center bg-slate-950/60 p-4 pt-16 backdrop-blur-sm sm:pt-24" role="dialog" aria-modal="true" aria-labelledby="modal-search-label">
+    <div class="modal-panel w-full max-w-2xl rounded-3xl bg-white p-6 shadow-2xl">
+      <div class="flex items-center justify-between gap-3 border-b border-slate-100 pb-4">
+        <form class="flex flex-1 items-center gap-3" action="search.html" method="get" role="search">
+          <span class="text-brand">${icon("search", "h-5 w-5")}</span>
+          <label id="modal-search-label" for="search-modal-input" class="sr-only">Search products</label>
+          <input id="search-modal-input" name="q" type="search" placeholder="Search by product name, brand, or category..." class="w-full text-base font-semibold text-brand-ink outline-none placeholder:text-slate-400">
+        </form>
+        <button type="button" data-search-modal-close class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition" aria-label="Close search overlay">
+          ${icon("close", "h-4 w-4")}
+        </button>
+      </div>
+
+      <!-- Trending Queries -->
+      <div id="modal-trending-searches" class="mt-4">
+        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Popular Searches</p>
+        <div class="mt-2.5 flex flex-wrap gap-2">
+          <a href="search.html?q=headphones" class="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1 text-xs font-semibold text-slate-700 hover:border-brand hover:text-brand hover:bg-brand-soft transition">Wireless Headphones</a>
+          <a href="search.html?q=smart+watch" class="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1 text-xs font-semibold text-slate-700 hover:border-brand hover:text-brand hover:bg-brand-soft transition">Smart Watch</a>
+          <a href="search.html?q=shoes" class="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1 text-xs font-semibold text-slate-700 hover:border-brand hover:text-brand hover:bg-brand-soft transition">Running Shoes</a>
+          <a href="search.html?q=air+fryer" class="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1 text-xs font-semibold text-slate-700 hover:border-brand hover:text-brand hover:bg-brand-soft transition">Air Fryer</a>
+        </div>
+      </div>
+
+      <!-- Live Results Container -->
+      <div class="mt-5">
+        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Suggested Products</p>
+        <div id="modal-search-results" class="mt-2.5 grid max-h-[320px] gap-2 overflow-y-auto pr-1">
+          <a href="product.html" class="modal-search-item flex items-center gap-3.5 rounded-xl p-2.5 transition hover:bg-slate-50" data-search="wireless headphones bluetooth audio electronics">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-1"><img src="assets/p-headphones.webp" alt="" class="h-9 w-auto object-contain"></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-xs sm:text-sm font-bold text-brand-ink">Wireless Headphones Pro</p>
+              <p class="text-[11px] text-slate-500">Audio • Bluetooth 5.3</p>
+            </div>
+            <p class="text-xs sm:text-sm font-extrabold text-brand">₹2,799</p>
+          </a>
+          <a href="product.html" class="modal-search-item flex items-center gap-3.5 rounded-xl p-2.5 transition hover:bg-slate-50" data-search="smart watch amoled fitness electronics">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-1"><img src="assets/p-watch.webp" alt="" class="h-9 w-auto object-contain"></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-xs sm:text-sm font-bold text-brand-ink">Smart Watch AMOLED</p>
+              <p class="text-[11px] text-slate-500">Wearables • AMOLED Display</p>
+            </div>
+            <p class="text-xs sm:text-sm font-extrabold text-brand">₹3,499</p>
+          </a>
+          <a href="product.html" class="modal-search-item flex items-center gap-3.5 rounded-xl p-2.5 transition hover:bg-slate-50" data-search="mens running shoes sports footwear fashion">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-1"><img src="assets/p-shoes.webp" alt="" class="h-9 w-auto object-contain"></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-xs sm:text-sm font-bold text-brand-ink">Men's Running Shoes</p>
+              <p class="text-[11px] text-slate-500">Footwear • Lightweight Cushion</p>
+            </div>
+            <p class="text-xs sm:text-sm font-extrabold text-brand">₹2,399</p>
+          </a>
+        </div>
+        <p id="modal-search-empty" class="mt-4 hidden text-center text-xs font-semibold text-slate-400">No matching items found. Try different keywords.</p>
+      </div>
+
+      <div class="mt-4 border-t border-slate-100 pt-3 text-center">
+        <a href="products.html" class="text-xs font-bold text-brand hover:underline inline-flex items-center gap-1">
+          <span>View All Products in Catalog</span>
+          ${icon("arrow-right", "h-3.5 w-3.5")}
+        </a>
+      </div>
+    </div>
+  </div>
+`;
+
+export const footer = `
+  <footer class="border-t border-slate-200 bg-white pb-[76px] lg:pb-0">
+    <div class="pad site-max hidden gap-10 py-16 sm:grid-cols-2 lg:grid lg:grid-cols-5">
+      <!-- Brand & Mission Column -->
+      <div class="lg:col-span-2 space-y-4">
+        <a href="index.html" class="inline-block" aria-label="Kartzo Home">
+          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-8 w-auto">
+        </a>
+        <p class="max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">
+          Kartzo delivers curated essentials across consumer technology, fashion, and home lifestyle with guaranteed authentic sourcing, fair pricing, and direct doorstep returns.
+        </p>
+
+        <!-- Social Channels -->
+        <div class="flex items-center gap-2 pt-2">
+          <a href="https://facebook.com" target="_blank" rel="noopener" class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-brand hover:text-brand hover:bg-brand-soft transition" aria-label="Facebook">
+            <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H8v3h3v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1z"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-brand hover:text-brand hover:bg-brand-soft transition" aria-label="Instagram">
+            <svg class="h-3.5 w-3.5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-brand hover:text-brand hover:bg-brand-soft transition" aria-label="Twitter">
+            <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24"><path d="M17.5 3h3.1l-6.8 7.8L22 21h-6.2l-4.8-6.3L5.7 21H2.6l7.3-8.4L2 3h6.3l4.4 5.8L17.5 3zm-1.1 16.2h1.7L7.7 4.7H5.9l10.5 14.5z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation Columns -->
+      <div>
+        <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Shop Catalog</h3>
+        <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
+          <li><a href="products.html" class="hover:text-brand transition">All Products</a></li>
+          <li><a href="categories.html" class="hover:text-brand transition">Shop by Category</a></li>
+          <li><a href="deals.html" class="hover:text-brand transition">Flash Deals</a></li>
+          <li><a href="products.html?q=electronics" class="hover:text-brand transition">Audio &amp; Electronics</a></li>
+          <li><a href="size-guide.html" class="hover:text-brand transition">Size &amp; Fit Guide</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Customer Care</h3>
+        <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
+          <li><a href="tracking.html" class="hover:text-brand transition">Track Your Parcel</a></li>
+          <li><a href="contact.html" class="hover:text-brand transition">Contact Support</a></li>
+          <li><a href="faq.html" class="hover:text-brand transition">Help &amp; FAQs</a></li>
+          <li><a href="shipping-policy.html" class="hover:text-brand transition">Shipping Policy</a></li>
+          <li><a href="returns-policy.html" class="hover:text-brand transition">7-Day Returns Policy</a></li>
+          <li><a href="cancellation-policy.html" class="hover:text-brand transition">Order Cancellation</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Company</h3>
+        <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
+          <li><a href="about.html" class="hover:text-brand transition">About Kartzo</a></li>
+          <li><a href="blog.html" class="hover:text-brand transition">Journal &amp; Guides</a></li>
+          <li><a href="account.html" class="hover:text-brand transition">Customer Account</a></li>
+          <li><a href="privacy-policy.html" class="hover:text-brand transition">Privacy Policy</a></li>
+          <li><a href="terms-conditions.html" class="hover:text-brand transition">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar with Payment Indicators & Copyright (desktop only) -->
+    <div class="hidden border-t border-slate-100 bg-slate-50/70 lg:block">
+      <div class="pad site-max flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between text-xs text-slate-500 font-medium">
+        <p>© 2026 Kartzo Technologies Pvt. Ltd. All rights reserved.</p>
+        <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-600 font-semibold">
+          <span class="rounded bg-white border border-slate-200 px-2 py-0.5">UPI</span>
+          <span class="rounded bg-white border border-slate-200 px-2 py-0.5">RuPay</span>
+          <span class="rounded bg-white border border-slate-200 px-2 py-0.5">Visa</span>
+          <span class="rounded bg-white border border-slate-200 px-2 py-0.5">Mastercard</span>
+          <span class="rounded bg-white border border-slate-200 px-2 py-0.5">NetBanking</span>
+          <span class="rounded bg-white border border-slate-200 px-2 py-0.5">Cash on Delivery</span>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile-only single-line footer -->
+    <div class="px-4 py-3 text-center lg:hidden">
+      <p class="text-xs text-slate-500">© 2026 Kartzo. All rights reserved.</p>
+    </div>
+  </footer>
+  <script src="assets/kartzo.js"></script>
+`;
+
+export function productCard({ href = "product.html", img, alt, badge, badgeClass = "bg-[#ef3b3b]", name, sub, rating, price, mrp, data }) {
+  const ratingNum = parseFloat(rating.split(" ")[0]) || 4.8;
+  return `
+    <article class="product-card group rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm hover:border-brand/40 hover:shadow-card transition duration-200" data-name="${data}" data-cat="${data.split(" ")[0]}">
+      <div class="image-wrap relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-[#F6F8FB] p-3">
+        ${badge ? `<span class="absolute left-2.5 top-2.5 z-10 rounded-md ${badgeClass} text-white px-2 py-0.5 text-[10px] font-black tracking-wide shadow-sm">${badge}</span>` : ""}
+        <button type="button" class="wish-btn absolute right-2.5 top-2.5 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:scale-105 hover:text-rose-500" aria-pressed="false" aria-label="Add ${name} to wishlist">
+          ${icon("heart", "h-4 w-4")}
+        </button>
+        <a href="${href}" class="flex h-full w-full items-center justify-center">
+          <img src="${img}" alt="${alt}" width="800" height="800" class="h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105" loading="lazy">
+        </a>
+      </div>
+
+      <div class="mt-3.5 flex flex-1 flex-col justify-between">
+        <div>
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">${sub}</p>
+          <h3 class="mt-1 text-xs sm:text-sm font-bold text-brand-ink leading-snug line-clamp-2">
+            <a href="${href}" class="hover:text-brand transition">${name}</a>
+          </h3>
+          <div class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+            ${stars(ratingNum)}
+            <span class="text-[11px] font-bold text-brand-ink">${rating.split(" ")[0]}</span>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="flex items-baseline justify-between gap-1">
+            <span class="text-sm sm:text-base font-black text-brand-ink">${price}</span>
+            <span class="text-xs text-slate-400 line-through font-medium">${mrp}</span>
+          </div>
+          <button type="button" class="add-cart quick-add-btn mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </article>`;
+}
+
+export const products = [
+  { href: "product.html", img: "assets/p-headphones.webp", alt: "Wireless Headphones", badge: "30% OFF", badgeClass: "bg-rose-500", name: "Wireless Headphones Pro", sub: "Bluetooth 5.3", rating: "4.8 2.1K", price: "₹2,799", mrp: "₹3,999", data: "electronics headphones bluetooth audio" },
+  { href: "product.html", img: "assets/p-watch.webp", alt: "Smart Watch", badge: "40% OFF", badgeClass: "bg-rose-500", name: "Smart Watch AMOLED", sub: "Health & Fitness", rating: "4.6 1.8K", price: "₹3,499", mrp: "₹5,832", data: "electronics watch amoled wearables" },
+  { href: "product.html", img: "assets/p-shoes.webp", alt: "Running Shoes", badge: "40% OFF", badgeClass: "bg-rose-500", name: "Men's Running Shoes", sub: "Footwear & Sport", rating: "4.7 2.6K", price: "₹2,399", mrp: "₹3,998", data: "fashion shoes running sneakers" },
+  { href: "product.html", img: "assets/p-phone.webp", alt: "Smartphone", badge: "25% OFF", badgeClass: "bg-rose-500", name: "Smartphone 128GB", sub: "Mobile Tech", rating: "4.8 4.1K", price: "₹54,999", mrp: "₹73,332", data: "electronics mobile phone smartphone" },
+  { href: "product.html", img: "assets/p-fryer.webp", alt: "Air Fryer", badge: "25% OFF", badgeClass: "bg-rose-500", name: "Air Fryer 5L Rapid", sub: "Kitchen Appliance", rating: "4.5 1.3K", price: "₹4,499", mrp: "₹5,999", data: "kitchen fryer airfryer appliance" },
+  { href: "product.html", img: "assets/p-backpack.webp", alt: "Backpack", badge: "30% OFF", badgeClass: "bg-rose-500", name: "Laptop Backpack 25L", sub: "Travel & Daily", rating: "4.6 2.5K", price: "₹1,299", mrp: "₹1,856", data: "bags backpack travel laptop" },
+  { href: "product.html", img: "assets/p-earbuds.webp", alt: "TWS Earbuds", badge: "NEW", badgeClass: "bg-brand", name: "TWS Earbuds Active", sub: "Noise Cancellation", rating: "4.7 1.5K", price: "₹1,999", mrp: "₹2,799", data: "electronics earbuds audio wireless" },
+  { href: "product.html", img: "assets/p-perfume.webp", alt: "Perfume", badge: "NEW", badgeClass: "bg-brand", name: "Premium Perfume 100ml", sub: "Fragrance", rating: "4.5 1.3K", price: "₹1,299", mrp: "₹1,999", data: "beauty perfume fragrance grooming" },
+  { href: "product.html", img: "assets/p-blender.webp", alt: "Blender", badge: "NEW", badgeClass: "bg-brand", name: "Portable Blender 400ml", sub: "Kitchen & Travel", rating: "4.6 982", price: "₹1,799", mrp: "₹2,399", data: "kitchen blender juice portable" },
+  { href: "product.html", img: "assets/p-sunglasses.webp", alt: "Sunglasses", badge: "NEW", badgeClass: "bg-brand", name: "UV Polarized Sunglasses", sub: "Eyewear", rating: "4.4 654", price: "₹1,399", mrp: "₹1,999", data: "fashion sunglasses eyewear uv" },
+  { href: "product.html", img: "assets/p-luggage.webp", alt: "Luggage", badge: "NEW", badgeClass: "bg-brand", name: "Travel Luggage Cabin 20\"", sub: "Luggage & Travel", rating: "4.6 1.1K", price: "₹2,999", mrp: "₹4,499", data: "bags luggage suitcase travel" },
+  { href: "product.html", img: "assets/p-chair.webp", alt: "Gaming Chair", badge: "NEW", badgeClass: "bg-brand", name: "Ergonomic Desk Chair", sub: "Home Office", rating: "4.8 765", price: "₹8,999", mrp: "₹12,999", data: "home chair ergonomic office" }
+];
+
+export const cats = [
+  ["Audio & Electronics", "assets/p-headphones.webp", "24 Products", "Bluetooth audio, smart wearables, fast chargers"],
+  ["Footwear & Fashion", "assets/c-fashion.webp", "36 Products", "Running sneakers, outerwear, active accessories"],
+  ["Home & Living", "assets/c-home.webp", "18 Products", "Ergonomic seating, organizers, desk lighting"],
+  ["Beauty & Grooming", "assets/p-perfume.webp", "15 Products", "Fine fragrances, personal care, grooming tools"],
+  ["Kitchen Appliances", "assets/p-fryer.webp", "12 Products", "Air fryers, portable blenders, cookware"],
+  ["Sports & Training", "assets/p-shoes.webp", "20 Products", "Fitness equipment, bottles, gym essentials"],
+  ["Toys & STEM", "assets/c-toys.webp", "14 Products", "STEM kits, puzzles, creative hobby gear"],
+  ["Mobile Accessories", "assets/p-phone.webp", "28 Products", "Protective cases, braided cables, power banks"],
+  ["Bags & Travel", "assets/p-backpack.webp", "16 Products", "Waterproof backpacks, cabin trolley bags"],
+  ["Wellness Essentials", "assets/c-health.webp", "10 Products", "Ergonomic supports, massage therapy tools"]
+];
+
+export const crumbs = (items) => `
+  <nav class="pad site-max hidden pt-6 text-xs text-slate-500 md:block" aria-label="Breadcrumb">
+    <ol class="flex flex-wrap items-center gap-2" itemscope itemtype="https://schema.org/BreadcrumbList">
+      ${items.map((item, i) => `
+        <li class="flex items-center gap-2" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          ${i === items.length - 1
+            ? `<span class="font-bold text-brand-ink" itemprop="name">${item.label}</span><meta itemprop="position" content="${i + 1}" />`
+            : `<a class="hover:text-brand transition font-medium text-slate-600" href="${item.href}" itemprop="item"><span itemprop="name">${item.label}</span></a><meta itemprop="position" content="${i + 1}" /><span aria-hidden="true" class="text-slate-300">/</span>`
+          }
+        </li>`
+      ).join("")}
+    </ol>
+  </nav>
+`;
+
+export function page(file, title, description, active, body, extraScript = "") {
+  // RULE #1: NEVER OVERWRITE index.html
+  if (file === "index.html") {
+    console.log("Protected index.html — skipping write.");
+    return;
+  }
+  const html = `${head(title, description)}
+${announcementBar}
+${nav(active)}
+  <main id="main">
+${body}
+  </main>
+${mobileMenuDrawer(active)}
+${mobileBottomBar(active)}
+${cartDrawer}
+${searchModal}
+${footer}
+  <script src="assets/kartzo.js"></script>
+${extraScript}
+</body>
+</html>
+`;
+  writeFileSync(join(root, file), html);
+  console.log("wrote", file);
+}
