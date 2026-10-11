@@ -247,7 +247,7 @@ export function buildInfoSupport() {
           ],
           [
             "How do I apply promotional coupon KARTZO10?",
-            "During checkout or inside your <a href='cart.html' class='text-brand font-bold hover:underline'>Shopping Bag</a>, enter <strong>KARTZO10</strong> in the voucher code field and click Apply to instantly deduct 10% from your order total."
+            "During checkout or inside your <a href='cart.html' class='text-brand font-bold hover:underline'>Shopping Cart</a>, enter <strong>KARTZO10</strong> in the voucher code field and click Apply to instantly deduct 10% from your order total."
           ],
           [
             "What if I need to cancel my order before dispatch?",

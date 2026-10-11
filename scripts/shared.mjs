@@ -49,7 +49,7 @@ export const head = (title, description) => `<!DOCTYPE html>
 `;
 
 export const announcementBar = `
-  <div class="bg-brand-bar text-white">
+  <div class="hidden bg-brand-bar text-white lg:block">
     <div class="pad flex h-10 w-full items-center justify-between gap-4 text-[12.5px] font-semibold sm:h-11 sm:text-[13px]">
       <p class="flex min-w-0 items-center gap-2">
         <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
@@ -79,11 +79,12 @@ export function nav(active) {
   ];
   return `
   <header class="site-header sticky top-0 z-50 border-b border-[#e8eef8] bg-white/95 backdrop-blur">
-    <div class="pad flex h-[62px] w-full items-center justify-between gap-3 sm:h-[68px] lg:grid lg:h-auto lg:grid-cols-[minmax(0,1fr)_minmax(20rem,1.25fr)] lg:grid-rows-[auto_auto] lg:gap-x-6 lg:gap-y-3 lg:py-3 xl:flex xl:h-[76px] xl:gap-4 xl:py-0">
-      
+    <!-- Desktop white bar (lg and up only) -->
+    <div class="pad hidden w-full items-center justify-between gap-3 lg:grid lg:h-auto lg:grid-cols-[minmax(0,1fr)_minmax(20rem,1.25fr)] lg:grid-rows-[auto_auto] lg:gap-x-6 lg:gap-y-3 lg:py-3 xl:flex xl:h-[76px] xl:gap-4 xl:py-0">
+
       <!-- Brand Logo -->
       <a href="index.html" class="shrink-0 flex items-center" aria-label="Kartzo home">
-        <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-7 w-auto sm:h-9">
+        <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-9 w-auto">
       </a>
 
       <!-- Desktop Primary Nav -->
@@ -103,55 +104,58 @@ export function nav(active) {
         </div>
       </form>
 
-      <!-- Actions Group -->
-      <div class="order-2 ml-auto flex shrink-0 items-center gap-1 sm:gap-2 lg:col-start-2 lg:row-start-1 lg:ml-auto lg:gap-3 xl:order-none xl:ml-4">
-        <!-- Mobile/Tablet Search Button (opens search modal) -->
-        <button type="button" data-search-modal-open class="flex h-10 w-10 items-center justify-center rounded-xl text-brand-ink hover:bg-brand-soft lg:hidden transition" aria-label="Search products">
-          ${icon("search", "h-5 w-5")}
-        </button>
-
-        <!-- Desktop-Only Wishlist (on mobile, cleanly accessed via bottom bar) -->
-        <a href="wishlist.html" class="hidden lg:flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Wishlist">
+      <!-- Desktop actions: uniform 22px icons with labels -->
+      <div class="order-2 ml-auto flex shrink-0 items-center gap-3 lg:col-start-2 lg:row-start-1 xl:order-none xl:ml-4">
+        <a href="wishlist.html" class="flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Wishlist">
           <span class="relative inline-flex items-center justify-center">
-            ${icon("heart", "h-5 w-5")}
+            ${icon("heart", "h-[22px] w-[22px]")}
             <span id="wishlist-count" class="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white leading-none">4</span>
           </span>
           <span class="text-[10px] font-bold mt-0.5">Wishlist</span>
         </a>
-
-        <!-- Desktop-Only Cart (on mobile, cleanly accessed via bottom bar) -->
-        <button type="button" data-cart-drawer-open class="cart-trigger hidden lg:flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Cart, 2 items">
+        <button type="button" data-cart-drawer-open class="cart-trigger flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Cart, 2 items">
           <span class="relative inline-flex items-center justify-center">
-            ${icon("cart", "h-5 w-5")}
+            ${icon("cart", "h-[22px] w-[22px]")}
             <span id="cart-count" class="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black text-white leading-none">2</span>
           </span>
           <span class="text-[10px] font-bold mt-0.5">Cart</span>
         </button>
-
-        <!-- Account (Visible on all screens) -->
-        <a href="account.html" class="flex h-10 w-10 sm:min-h-11 sm:min-w-11 flex-col items-center justify-center rounded-xl text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Customer Account">
-          ${icon("user", "h-5 w-5")}
-          <span class="hidden text-[10px] font-bold lg:block mt-0.5">Account</span>
+        <a href="account.html" class="flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Customer Account">
+          <span class="inline-flex items-center justify-center">
+            ${icon("user", "h-[22px] w-[22px]")}
+          </span>
+          <span class="text-[10px] font-bold mt-0.5">Account</span>
         </a>
-
-        <!-- Mobile Menu Trigger (Drawer) -->
-        <button type="button" data-mobile-menu-open class="flex h-10 w-10 items-center justify-center rounded-xl text-brand-ink hover:bg-brand-soft lg:hidden transition" aria-label="Open menu">
-          ${icon("menu", "h-5 w-5")}
-        </button>
       </div>
     </div>
 
-    <!-- Mobile Horizontal Category Navigation Strip (Sub-Navbar) -->
-    <div class="border-t border-[#e8eef8]/80 bg-white lg:hidden">
-      <nav class="pad no-scrollbar flex items-center gap-1.5 overflow-x-auto py-2 text-xs font-semibold" aria-label="Quick Category Navigation">
-        <a href="index.html" class="shrink-0 flex items-center gap-1 rounded-full ${active === "home" ? "bg-brand text-white shadow-xs" : "border border-slate-200/80 bg-[#f8faff] text-slate-700 hover:border-brand hover:text-brand"} px-3 py-1 transition font-bold">Home</a>
-        <a href="products.html" class="shrink-0 flex items-center gap-1 rounded-full ${active === "shop" ? "bg-brand text-white shadow-xs" : "border border-slate-200/80 bg-[#f8faff] text-slate-700 hover:border-brand hover:text-brand"} px-3 py-1 transition font-bold">Shop</a>
-        <a href="categories.html" class="shrink-0 flex items-center gap-1 rounded-full ${active === "categories" ? "bg-brand text-white shadow-xs" : "border border-slate-200/80 bg-[#f8faff] text-slate-700 hover:border-brand hover:text-brand"} px-3 py-1 transition font-bold">Categories</a>
-        <a href="deals.html" class="shrink-0 flex items-center gap-1.5 rounded-full border border-rose-200 bg-rose-50/70 px-3 py-1 font-bold text-rose-600 hover:bg-rose-100 transition ${active === "deals" ? "ring-2 ring-rose-500" : ""}"><span class="h-1.5 w-1.5 rounded-full bg-rose-500 animate-pulse"></span>Deals 🔥</a>
-        <a href="products.html?category=electronics" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 text-slate-700 hover:border-brand hover:text-brand transition">🎧 Electronics</a>
-        <a href="products.html?category=fashion" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 text-slate-700 hover:border-brand hover:text-brand transition">👟 Fashion</a>
-        <a href="products.html?category=home" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 text-slate-700 hover:border-brand hover:text-brand transition">🏠 Home</a>
-        <a href="orders.html" class="shrink-0 flex items-center gap-1 rounded-full ${active === "orders" ? "bg-brand text-white shadow-xs" : "border border-slate-200/80 bg-[#f8faff] text-slate-700 hover:border-brand hover:text-brand"} px-3 py-1 transition font-bold">Orders</a>
+    <!-- Mobile app header, light theme (below lg only): menu + logo + bell, inline search, category pills -->
+    <div class="bg-white lg:hidden">
+      <div class="pad flex h-[60px] w-full items-center justify-between gap-3">
+        <button type="button" data-mobile-menu-open class="flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Open menu">
+          ${icon("menu", "h-6 w-6")}
+        </button>
+        <a href="index.html" class="flex min-w-0 flex-1 items-center justify-center" aria-label="Kartzo home">
+          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-8 w-auto">
+        </a>
+        <button type="button" data-cart-drawer-open class="cart-trigger relative flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Open cart">
+          ${icon("cart", "h-6 w-6")}
+          <span class="mobile-bottom-cart-count absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black leading-none text-white">2</span>
+        </button>
+      </div>
+      <div class="pad pb-2.5">
+        <form action="products.html" method="get" role="search" class="flex min-h-[48px] w-full items-center gap-2 rounded-full border-0 bg-[#f3f7ff] py-2.5 pl-4 pr-2 outline-none">
+          ${icon("search", "h-5 w-5 shrink-0 text-brand")}
+          <label for="m-search" class="sr-only">Search for products, brands and more</label>
+          <input id="m-search" name="q" type="search" placeholder="Search products, brands and more..." autocomplete="off" class="min-w-0 w-full appearance-none border-0 bg-transparent text-[15px] font-medium text-brand-ink outline-none placeholder:text-[#93a0b8]">
+        </form>
+      </div>
+      <nav class="pad no-scrollbar flex items-center gap-2 overflow-x-auto pb-2.5 text-[13px] font-bold" aria-label="Quick Category Navigation">
+        <a href="index.html" ${active === "home" ? 'aria-current="page"' : ""} class="shrink-0 rounded-full px-4 py-1.5 transition ${active === "home" ? "bg-brand text-white" : "bg-[#f3f7ff] text-slate-700 hover:text-brand"}">All</a>
+        <a href="products.html?category=electronics" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Electronics</a>
+        <a href="products.html?category=fashion" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Fashion</a>
+        <a href="products.html?category=home" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Home &amp; Living</a>
+        <a href="deals.html" ${active === "deals" ? 'aria-current="page"' : ""} class="shrink-0 rounded-full px-4 py-1.5 transition ${active === "deals" ? "bg-brand text-white" : "bg-[#f3f7ff] text-slate-700 hover:text-brand"}">Deals</a>
       </nav>
     </div>
   </header>
@@ -166,7 +170,7 @@ export function mobileMenuDrawer(active) {
       <!-- Drawer Top Bar -->
       <div class="flex items-center justify-between border-b border-[#e8eef8] px-5 py-4">
         <a href="index.html" class="flex items-center" aria-label="Kartzo home">
-          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-7 w-auto">
+          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-8 w-auto">
         </a>
         <button type="button" data-mobile-menu-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-brand-ink transition" aria-label="Close menu">
           ${icon("close", "h-5 w-5")}
@@ -338,40 +342,26 @@ export function mobileMenuDrawer(active) {
 }
 
 export function mobileBottomBar(active) {
+  const tab = (key, href, label, badge) => {
+    const isActive = active === key;
+    return `<a href="${href}" ${isActive ? 'aria-current="page"' : ""} class="flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition ${isActive ? "bg-brand-soft text-brand" : "text-[#4E5D78] hover:bg-brand-soft hover:text-brand"}">
+      <span class="relative inline-flex items-center justify-center">
+        ${icon(key === "home" ? "home" : key === "categories" ? "grid" : key === "deals" ? "zap" : key === "wishlist" ? "heart" : "user", "h-[22px] w-[22px]")}
+        ${badge || ""}
+      </span>
+      <span class="text-[11px] font-bold leading-none">${label}</span>
+    </a>`;
+  };
   return `
-  <!-- Modern App-Style Floating Sticky Bottom Nav Bar (Mobile Only) -->
-  <nav class="fixed bottom-0 inset-x-0 z-40 flex h-16 items-center justify-around border-t border-[#e8eef8] bg-white/95 backdrop-blur-md px-1 shadow-[0_-4px_20px_rgba(16,42,110,0.06)] lg:hidden pb-[env(safe-area-inset-bottom,0px)]" aria-label="Mobile Bottom Navigation">
-    <a href="index.html" class="bottom-nav-tab flex flex-1 flex-col items-center justify-center py-1 transition ${active === 'home' ? 'active' : 'text-[#4E5D78] hover:text-brand'}">
-      ${icon("home", "h-5 w-5")}
-      <span class="mt-0.5 text-[10px] font-bold">Home</span>
-    </a>
-    <a href="categories.html" class="bottom-nav-tab flex flex-1 flex-col items-center justify-center py-1 transition ${active === 'categories' ? 'active' : 'text-[#4E5D78] hover:text-brand'}">
-      ${icon("grid", "h-5 w-5")}
-      <span class="mt-0.5 text-[10px] font-bold">Categories</span>
-    </a>
-    <a href="deals.html" class="bottom-nav-tab relative flex flex-1 flex-col items-center justify-center py-1 transition ${active === 'deals' ? 'active' : 'text-[#4E5D78] hover:text-brand'}">
-      <span class="absolute top-1 right-3 flex h-2 w-2 rounded-full bg-rose-500 animate-pulse"></span>
-      ${icon("flame", "h-5 w-5 text-amber-500")}
-      <span class="mt-0.5 text-[10px] font-bold">Deals</span>
-    </a>
-    <a href="wishlist.html" class="bottom-nav-tab relative flex flex-1 flex-col items-center justify-center py-1 transition ${active === 'wishlist' ? 'active' : 'text-[#4E5D78] hover:text-brand'}">
-      <span class="relative inline-flex items-center justify-center">
-        ${icon("heart", "h-5 w-5")}
-        <span class="mobile-bottom-wishlist-count absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white leading-none">4</span>
-      </span>
-      <span class="mt-0.5 text-[10px] font-bold">Wishlist</span>
-    </a>
-    <button type="button" data-cart-drawer-open class="cart-trigger bottom-nav-tab relative flex flex-1 flex-col items-center justify-center py-1 transition text-[#4E5D78] hover:text-brand">
-      <span class="relative inline-flex items-center justify-center">
-        ${icon("cart", "h-5 w-5")}
-        <span class="mobile-bottom-cart-count absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black text-white leading-none">2</span>
-      </span>
-      <span class="mt-0.5 text-[10px] font-bold">Bag</span>
-    </button>
-    <button type="button" data-mobile-menu-open class="bottom-nav-tab flex flex-1 flex-col items-center justify-center py-1 transition text-[#4E5D78] hover:text-brand" aria-label="Open navigation menu">
-      ${icon("menu", "h-5 w-5")}
-      <span class="mt-0.5 text-[10px] font-bold">Menu</span>
-    </button>
+  <!-- Mobile Bottom Navigation — 5 tabs only (Menu lives in header, no repeat) -->
+  <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-[#e8eef8] bg-white/95 shadow-[0_-4px_20px_rgba(16,42,110,0.06)] backdrop-blur-md lg:hidden" aria-label="Mobile Bottom Navigation">
+    <div class="grid grid-cols-5 gap-1 px-2 pb-[max(env(safe-area-inset-bottom,0px),8px)] pt-2">
+      ${tab("home", "index.html", "Home")}
+      ${tab("categories", "categories.html", "Categories")}
+      ${tab("deals", "deals.html", "Deals", '<span class="absolute -right-1.5 -top-1 flex h-2 w-2 rounded-full bg-rose-500"></span>')}
+      ${tab("wishlist", "wishlist.html", "Wishlist", '<span class="mobile-bottom-wishlist-count absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black leading-none text-white">4</span>')}
+      ${tab("account", "account.html", "Account")}
+    </div>
   </nav>
 `;
 }
@@ -383,7 +373,7 @@ export const cartDrawer = `
       <!-- Drawer Header -->
       <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
         <div class="flex items-center gap-2.5">
-          <h2 id="drawer-title" class="text-base font-extrabold text-brand-ink">Shopping Bag</h2>
+          <h2 id="drawer-title" class="text-base font-extrabold text-brand-ink">Shopping Cart</h2>
           <span id="drawer-cart-count" class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-black text-brand">2</span>
         </div>
         <button type="button" data-cart-drawer-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition" aria-label="Close cart drawer">
@@ -554,8 +544,8 @@ export const searchModal = `
 `;
 
 export const footer = `
-  <footer class="border-t border-slate-200 bg-white">
-    <div class="pad site-max grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-5">
+  <footer class="border-t border-slate-200 bg-white pb-[76px] lg:pb-0">
+    <div class="pad site-max hidden gap-10 py-16 sm:grid-cols-2 lg:grid lg:grid-cols-5">
       <!-- Brand & Mission Column -->
       <div class="lg:col-span-2 space-y-4">
         <a href="index.html" class="inline-block" aria-label="Kartzo Home">
@@ -615,8 +605,8 @@ export const footer = `
       </div>
     </div>
 
-    <!-- Bottom Bar with Payment Indicators & Copyright -->
-    <div class="border-t border-slate-100 bg-slate-50/70">
+    <!-- Bottom Bar with Payment Indicators & Copyright (desktop only) -->
+    <div class="hidden border-t border-slate-100 bg-slate-50/70 lg:block">
       <div class="pad site-max flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between text-xs text-slate-500 font-medium">
         <p>© 2026 Kartzo Technologies Pvt. Ltd. All rights reserved.</p>
         <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-600 font-semibold">
@@ -628,6 +618,10 @@ export const footer = `
           <span class="rounded bg-white border border-slate-200 px-2 py-0.5">Cash on Delivery</span>
         </div>
       </div>
+    </div>
+    <!-- Mobile-only single-line footer -->
+    <div class="px-4 py-3 text-center lg:hidden">
+      <p class="text-xs text-slate-500">© 2026 Kartzo. All rights reserved.</p>
     </div>
   </footer>
   <script src="assets/kartzo.js"></script>
@@ -665,7 +659,7 @@ export function productCard({ href = "product.html", img, alt, badge, badgeClass
             <span class="text-xs text-slate-400 line-through font-medium">${mrp}</span>
           </div>
           <button type="button" class="add-cart quick-add-btn mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
-            Add to Bag
+            Add to Cart
           </button>
         </div>
       </div>
@@ -701,7 +695,7 @@ export const cats = [
 ];
 
 export const crumbs = (items) => `
-  <nav class="pad site-max pt-6 text-xs text-slate-500" aria-label="Breadcrumb">
+  <nav class="pad site-max hidden pt-6 text-xs text-slate-500 md:block" aria-label="Breadcrumb">
     <ol class="flex flex-wrap items-center gap-2" itemscope itemtype="https://schema.org/BreadcrumbList">
       ${items.map((item, i) => `
         <li class="flex items-center gap-2" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">

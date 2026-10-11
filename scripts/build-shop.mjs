@@ -7,15 +7,15 @@ export function buildShop() {
   page("products.html", "Shop All Products — Kartzo", "Browse verified electronics, lifestyle accessories, footwear, and home essentials with fast doorstep delivery across India.", "shop", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Shop All Products" }])}
     
-    <div class="pad site-max py-8">
+    <div class="pad site-max py-5 sm:py-8">
       <!-- Collection Header -->
-      <div class="mb-8 flex flex-col gap-4 border-b border-slate-200/80 pb-6 sm:flex-row sm:items-end sm:justify-between">
+      <div class="mb-5 flex flex-col gap-3 border-b border-slate-200/80 pb-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:pb-6">
         <div>
           <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
             ${icon("sparkles", "h-3.5 w-3.5")}
             Curated Catalog
           </span>
-          <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+          <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
             All Products
           </h1>
           <p class="mt-1 text-xs sm:text-sm text-slate-500">
@@ -23,31 +23,34 @@ export function buildShop() {
           </p>
         </div>
         
-        <!-- Controls: Sort & Mobile Filter Toggle -->
-        <div class="flex items-center gap-2.5">
-          <button type="button" data-filter-drawer-open class="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-bold text-brand-ink shadow-sm lg:hidden hover:border-slate-300 hover:bg-slate-50 transition" aria-label="Open filter options">
+        <!-- Controls: Filter Button + Custom Sort Dropdown -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          <button type="button" data-filter-drawer-open class="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-bold text-brand-ink shadow-sm transition hover:border-slate-300 hover:bg-slate-50 sm:flex-none lg:hidden" aria-label="Open filter options">
             ${icon("filter", "h-4 w-4 text-brand")}
             <span>Filters</span>
           </button>
           
-          <div class="relative">
-            <label class="sr-only" for="sort">Sort products</label>
-            <select id="sort" class="min-h-11 appearance-none rounded-xl border border-slate-200 bg-white pl-4 pr-10 text-xs sm:text-sm font-bold text-brand-ink shadow-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/10 transition cursor-pointer">
-              <option value="popular">Most Popular</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="newest">Newest Arrivals</option>
-              <option value="rating">Highest Rated</option>
-            </select>
-            <span class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400">
-              ${icon("chevron-down", "h-4 w-4")}
-            </span>
+          <div class="relative flex-1 sm:w-56 sm:flex-none" data-sort-wrap>
+            <button type="button" id="sort-btn" aria-haspopup="listbox" aria-expanded="false" class="flex min-h-11 w-full items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs sm:text-sm font-bold text-brand-ink shadow-sm transition hover:border-brand/40">
+              <span class="flex min-w-0 items-center gap-2">
+                <svg class="h-4 w-4 shrink-0 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10m-8 6h6"/></svg>
+                <span id="sort-label" class="truncate">Most Popular</span>
+              </span>
+              ${icon("chevron-down", "h-4 w-4 shrink-0 text-slate-400")}
+            </button>
+            <ul id="sort-menu" role="listbox" aria-label="Sort products" class="absolute inset-x-0 top-full z-30 mt-2 hidden overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-xl">
+              ${[["popular", "Most Popular"], ["price-asc", "Price: Low to High"], ["price-desc", "Price: High to Low"], ["newest", "Newest Arrivals"], ["rating", "Highest Rated"]].map(([v, l], i) => `
+              <li><button type="button" role="option" data-sort="${v}" aria-selected="${i === 0 ? "true" : "false"}" class="sort-option flex min-h-11 w-full items-center justify-between gap-2 px-4 text-xs sm:text-sm font-bold transition ${i === 0 ? "bg-brand-soft text-brand" : "text-slate-600 hover:bg-slate-50"}">
+                <span>${l}</span>
+                <svg class="sort-tick h-4 w-4 shrink-0 ${i === 0 ? "" : "hidden"}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              </button></li>`).join("")}
+            </ul>
           </div>
         </div>
       </div>
 
       <!-- Active Filter Chips -->
-      <div id="active-filters-bar" class="mb-6 flex flex-wrap items-center gap-2 text-xs">
+      <div id="active-filters-bar" class="mb-4 flex flex-wrap items-center gap-2 text-xs sm:mb-6">
         <span class="font-bold text-slate-400 uppercase tracking-wider text-[11px]">Active Filters:</span>
         <span id="active-cat-chip" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           Category: <span id="chip-cat-name">All</span>
@@ -115,7 +118,7 @@ export function buildShop() {
           </div>
 
           <!-- Bottom Editorial / SEO Information -->
-          <div class="mt-16 border-t border-slate-200/80 pt-10 text-xs sm:text-sm text-slate-500">
+          <div class="mt-8 hidden border-t border-slate-200/80 pt-8 text-xs text-slate-500 sm:mt-16 sm:block sm:pt-10 sm:text-sm">
             <h2 class="text-sm sm:text-base font-bold text-brand-ink">Authentic Quality Guarantees at Kartzo</h2>
             <p class="mt-2 leading-relaxed">
               Every item featured in the Kartzo catalog is sourced directly from verified manufacturer hubs and authorized distributors. We rigorously test consumer electronics for battery retention and acoustics, apparel for tensile seam strength, and home goods for ergonomics. All purchases include our 7-Day Doorstep Replacement Guarantee and official brand tax invoices.
@@ -128,27 +131,33 @@ export function buildShop() {
     <!-- Mobile Filter Drawer -->
     <div id="filter-drawer" class="drawer-backdrop fixed inset-0 z-[80] bg-slate-950/60 backdrop-blur-sm lg:hidden" role="dialog" aria-modal="true" aria-labelledby="filter-drawer-title">
       <div class="drawer-panel ml-auto flex h-full w-full max-w-xs flex-col bg-white shadow-2xl">
-        <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
-          <h2 id="filter-drawer-title" class="text-base font-extrabold text-brand-ink">Filter Catalog</h2>
+        <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+          <div>
+            <h2 id="filter-drawer-title" class="text-base font-extrabold text-brand-ink">Filters</h2>
+            <p class="mt-0.5 text-xs text-slate-500"><span id="drawer-count">12</span> products found</p>
+          </div>
           <button type="button" data-filter-drawer-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition" aria-label="Close filters">
             ${icon("close", "h-4 w-4")}
           </button>
         </div>
-        <div class="flex-1 overflow-y-auto p-6 space-y-6">
+        <div class="flex-1 overflow-y-auto p-4 space-y-5">
           <div>
-            <h3 class="text-xs font-extrabold text-brand-ink uppercase tracking-wider">Categories</h3>
-            <div class="mt-3 space-y-2">
+            <h3 class="px-1 text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Categories</h3>
+            <div class="mt-2 space-y-1">
               ${["All", "Electronics", "Fashion", "Kitchen", "Beauty", "Bags", "Home"].map((c, i) => `
-              <label class="flex cursor-pointer items-center gap-3 text-xs font-semibold text-slate-700">
+              <label class="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl px-3 text-xs font-bold text-slate-700 transition hover:bg-brand-soft">
                 <input type="radio" name="cat-mobile" value="${c.toLowerCase()}" class="accent-brand h-4 w-4" ${i === 0 ? "checked" : ""}>
                 <span>${c}</span>
               </label>`).join("")}
             </div>
           </div>
         </div>
-        <div class="border-t border-slate-200 p-4">
-          <button type="button" data-filter-drawer-close class="flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white shadow-md hover:bg-brand-dark transition">
-            Apply Filters
+        <div class="flex gap-2 border-t border-slate-200 p-4">
+          <button type="button" id="reset-mobile-filters" class="flex min-h-11 flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 transition hover:bg-slate-50">
+            Reset
+          </button>
+          <button type="button" data-filter-drawer-close class="flex min-h-11 flex-[2] items-center justify-center rounded-xl bg-brand text-xs font-bold text-white shadow-md hover:bg-brand-dark transition">
+            Show Results
           </button>
         </div>
       </div>
@@ -174,6 +183,8 @@ export function buildShop() {
         if (show) shown += 1;
       });
       if (countEl) countEl.textContent = shown;
+      var drawerCount = document.getElementById("drawer-count");
+      if (drawerCount) drawerCount.textContent = shown;
       if (shown === 0) {
         if (empty) empty.classList.remove("hidden");
       } else {
@@ -197,6 +208,71 @@ export function buildShop() {
       clearBtn.addEventListener("click", function () {
         var allRadio = document.querySelector('input[name="cat"][value="all"]');
         if (allRadio) { allRadio.checked = true; apply(); }
+      });
+    }
+
+    var resetMobile = document.getElementById("reset-mobile-filters");
+    if (resetMobile) {
+      resetMobile.addEventListener("click", function () {
+        var firstMobile = document.querySelector('input[name="cat-mobile"][value="all"]');
+        if (firstMobile) { firstMobile.checked = true; firstMobile.dispatchEvent(new Event("change")); }
+      });
+    }
+
+    // Custom sort dropdown + real sorting
+    var sortWrap = document.querySelector('[data-sort-wrap]');
+    var sortBtn = document.getElementById("sort-btn");
+    var sortMenu = document.getElementById("sort-menu");
+    var sortLabel = document.getElementById("sort-label");
+    var grid = document.getElementById("product-grid");
+    var originalOrder = grid ? Array.prototype.slice.call(grid.querySelectorAll(".product-card")) : [];
+    function priceOf(card) {
+      var m = (card.textContent || "").match(/₹([\d,]+)/);
+      return m ? parseInt(m[1].replace(/,/g, ""), 10) : 0;
+    }
+    function ratingOf(card) {
+      var spans = card.querySelectorAll("span");
+      for (var i = 0; i < spans.length; i++) {
+        var t = (spans[i].textContent || "").trim();
+        if (/^\\d\\.\\d$/.test(t)) return parseFloat(t);
+      }
+      return 0;
+    }
+    function sortCards(mode) {
+      if (!grid) return;
+      var list = originalOrder.slice();
+      if (mode === "price-asc") list.sort(function (a, b) { return priceOf(a) - priceOf(b); });
+      else if (mode === "price-desc") list.sort(function (a, b) { return priceOf(b) - priceOf(a); });
+      else if (mode === "rating") list.sort(function (a, b) { return ratingOf(b) - ratingOf(a); });
+      list.forEach(function (c) { grid.appendChild(c); });
+      if (sortLabel) {
+        var opt = document.querySelector('.sort-option[data-sort="' + mode + '"] span');
+        if (opt) sortLabel.textContent = opt.textContent;
+      }
+      document.querySelectorAll(".sort-option").forEach(function (o) {
+        var on = o.getAttribute("data-sort") === mode;
+        o.setAttribute("aria-selected", on ? "true" : "false");
+        o.classList.toggle("bg-brand-soft", on);
+        o.classList.toggle("text-brand", on);
+        o.classList.toggle("text-slate-600", !on);
+        var tick = o.querySelector(".sort-tick");
+        if (tick) tick.classList.toggle("hidden", !on);
+      });
+    }
+    if (sortBtn && sortMenu) {
+      sortBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = sortMenu.classList.toggle("hidden");
+        sortBtn.setAttribute("aria-expanded", open ? "false" : "true");
+      });
+      document.addEventListener("click", function (e) {
+        if (sortWrap && !sortWrap.contains(e.target)) { sortMenu.classList.add("hidden"); sortBtn.setAttribute("aria-expanded", "false"); }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { sortMenu.classList.add("hidden"); sortBtn.setAttribute("aria-expanded", "false"); }
+      });
+      document.querySelectorAll(".sort-option").forEach(function (o) {
+        o.addEventListener("click", function () { sortCards(o.getAttribute("data-sort")); sortMenu.classList.add("hidden"); sortBtn.setAttribute("aria-expanded", "false"); });
       });
     }
 
@@ -232,8 +308,8 @@ export function buildShop() {
   page("categories.html", "All Departments & Categories — Kartzo", "Explore all product collections on Kartzo with curated selections for electronics, fashion, home essentials and sports.", "categories", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Categories" }])}
 
-    <div class="pad site-max py-8">
-      <div class="mb-8 border-b border-slate-200/80 pb-6">
+    <div class="pad site-max py-5 sm:py-8">
+      <div class="mb-6 hidden border-b border-slate-200/80 pb-6 sm:mb-8 sm:block">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("sparkles", "h-3.5 w-3.5")}
           Curated Departments
@@ -247,18 +323,19 @@ export function buildShop() {
       </div>
 
       <!-- Featured Hero Hub -->
-      <div class="relative mb-10 overflow-hidden rounded-3xl bg-brand-ink text-white">
+      <div class="relative mb-6 overflow-hidden rounded-[1.4rem] bg-brand-ink text-white sm:mb-10 sm:rounded-3xl">
         <img src="assets/electronics.webp" alt="Electronics Featured Collection" width="2113" height="619" class="absolute inset-0 h-full w-full object-cover opacity-25">
-        <div class="relative z-10 flex items-center p-6 sm:p-12">
+        <div class="relative z-10 flex items-center p-5 sm:p-12">
           <div class="max-w-xl">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-300 backdrop-blur-sm">
               Featured Department
             </span>
-            <h2 class="mt-3 text-2xl sm:text-4xl font-extrabold">Electronics &amp; Smart Tech</h2>
-            <p class="mt-2 text-xs sm:text-sm text-white/80 leading-relaxed">
+            <h2 class="mt-2 text-[1.45rem] font-extrabold leading-tight sm:mt-3 sm:text-4xl">Electronics &amp; Smart Tech</h2>
+            <p class="mt-1.5 hidden text-[13px] text-white/80 leading-relaxed sm:mt-2 sm:block sm:text-sm">
               Discover Bluetooth 5.3 wireless headphones, AMOLED smartwatches, and fast-charging accessories at honest direct prices.
             </p>
-            <a href="products.html?q=electronics" class="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-6 text-xs sm:text-sm font-bold text-brand-ink hover:bg-brand-soft hover:text-brand transition shadow-md">
+            <p class="mt-1.5 truncate text-[13px] font-medium text-white/80 sm:hidden">Top tech at honest prices.</p>
+            <a href="products.html?q=electronics" class="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-5 text-sm font-bold text-brand-ink hover:bg-brand-soft hover:text-brand transition shadow-md sm:mt-5 sm:px-6">
               <span>Explore Collection</span>
               ${icon("arrow-right", "h-4 w-4")}
             </a>
@@ -266,22 +343,54 @@ export function buildShop() {
         </div>
       </div>
 
-      <!-- Category Cards Grid -->
-      <div class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <!-- View Tabs + Category Cards Grid -->
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <p class="text-sm font-extrabold text-brand-ink">${cats.length} Departments</p>
+        <div class="flex rounded-xl bg-[#f3f7ff] p-1" role="group" aria-label="Change layout">
+          <button type="button" data-cat-view="grid" aria-pressed="true" class="flex min-h-9 items-center gap-1.5 rounded-lg bg-white px-3 text-xs font-bold text-brand shadow-sm transition">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+            Grid
+          </button>
+          <button type="button" data-cat-view="list" aria-pressed="false" class="flex min-h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-bold text-slate-500 transition">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/></svg>
+            List
+          </button>
+        </div>
+      </div>
+      <div id="cat-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5">
         ${cats.map(([name, img, count, sub]) => `
-        <a href="products.html?q=${name.toLowerCase().split(" ")[0]}" class="group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="flex aspect-square w-full items-center justify-center rounded-xl bg-[#F6F8FB] p-3 transition duration-200 group-hover:scale-105">
-            <img src="${img}" alt="${name}" width="800" height="800" class="h-full w-full object-contain">
+        <a href="products.html?q=${name.toLowerCase().split(" ")[0]}" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
+          <div class="cat-media overflow-hidden rounded-xl">
+            <img src="${img}" alt="${name}" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
           </div>
-          <div class="mt-3.5 text-center">
-            <h3 class="text-xs sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">${name}</h3>
+          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
+            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">${name}</h3>
             <p class="mt-0.5 text-[11px] font-semibold text-brand">${count}</p>
-            <p class="mt-1 text-[10px] text-slate-400 line-clamp-1">${sub}</p>
+            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">${sub}</p>
           </div>
+          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">${icon("chevron-right", "h-4 w-4")}</span>
         </a>`).join("")}
       </div>
     </div>
-`);
+`, `<script>
+  (function () {
+    var grid = document.getElementById("cat-grid");
+    var btns = Array.prototype.slice.call(document.querySelectorAll("[data-cat-view]"));
+    if (!grid || !btns.length) return;
+    function setView(view) {
+      grid.classList.toggle("list-view", view === "list");
+      btns.forEach(function (b) {
+        var on = b.getAttribute("data-cat-view") === view;
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+        b.classList.toggle("bg-white", on);
+        b.classList.toggle("text-brand", on);
+        b.classList.toggle("shadow-sm", on);
+        b.classList.toggle("text-slate-500", !on);
+      });
+    }
+    btns.forEach(function (b) { b.addEventListener("click", function () { setView(b.getAttribute("data-cat-view")); }); });
+  })();
+</script>`);
 
   // ---------------------------------------------------------------------------
   // 03. FLASH DEALS PAGE (deals.html)
@@ -289,16 +398,16 @@ export function buildShop() {
   page("deals.html", "Limited Time Deals & Offers — Kartzo", "Save up to 60% on high-demand electronics, shoes, and home goods during the Kartzo Flash Sale.", "deals", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Flash Deals" }])}
 
-    <div class="pad site-max py-8">
+    <div class="pad site-max py-5 sm:py-8">
       <!-- Deals Countdown Banner -->
-      <div class="relative mb-10 overflow-hidden rounded-3xl bg-brand-ink p-6 sm:p-12 text-white shadow-xl">
+      <div class="relative mb-6 overflow-hidden rounded-[1.4rem] bg-brand-ink p-5 text-white shadow-xl sm:mb-10 sm:rounded-3xl sm:p-12">
         <img src="assets/deals.webp" alt="Deals banner" width="2150" height="439" class="absolute inset-0 h-full w-full object-cover object-right opacity-25">
         <div class="relative z-10 max-w-xl">
           <div class="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-300 backdrop-blur-sm">
             <span class="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
             Flash Deals Live
           </div>
-          <h1 class="mt-3 text-2xl sm:text-4xl font-extrabold tracking-tight">
+          <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight sm:mt-3 sm:text-4xl">
             Up to 60% OFF Top Picks
           </h1>
           <p class="mt-2 text-xs sm:text-sm text-white/80 leading-relaxed">
@@ -306,7 +415,7 @@ export function buildShop() {
           </p>
           
           <!-- Countdown Clock -->
-          <div class="mt-6 flex items-center gap-2 text-center text-xs font-extrabold">
+          <div class="mt-4 flex items-center gap-2 text-center text-xs font-extrabold sm:mt-6">
             <div class="flex items-center gap-1.5 mr-2 text-slate-300 font-semibold text-xs">
               ${icon("clock", "h-4 w-4 text-amber-400")}
               <span>Ends in:</span>
@@ -321,7 +430,7 @@ export function buildShop() {
       </div>
 
       <!-- Deals Product Grid -->
-      <div class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div id="deals-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
         ${products.slice(0, 8).map(p => productCard({ ...p, badge: p.badge || "SAVE 35%", badgeClass: "bg-[#ef3b3b]" })).join("\n        ")}
       </div>
     </div>
@@ -471,7 +580,7 @@ export function buildShop() {
               </button>
             </div>
             <button type="button" class="add-cart quick-add-btn min-h-12 flex-1 rounded-xl bg-brand px-6 text-sm font-bold text-white shadow-[0_8px_20px_rgba(26,86,240,0.28)] transition hover:bg-brand-dark active:scale-[0.98]">
-              Add to Bag
+              Add to Cart
             </button>
             <a href="checkout.html" class="inline-flex min-h-12 flex-1 sm:flex-none items-center justify-center rounded-xl border border-slate-200 bg-white px-7 text-sm font-bold text-brand-ink hover:border-slate-300 hover:bg-slate-50 transition active:scale-[0.98]">
               Buy Now
@@ -655,7 +764,7 @@ export function buildShop() {
           <span class="block text-[10px] text-slate-400 line-through">₹3,999</span>
         </div>
         <button type="button" class="add-cart quick-add-btn flex min-h-11 flex-1 items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition">
-          Add to Bag
+          Add to Cart
         </button>
       </div>
     </div>

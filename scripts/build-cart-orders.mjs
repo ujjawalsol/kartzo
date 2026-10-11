@@ -4,29 +4,29 @@ export function buildCartOrders() {
   // ---------------------------------------------------------------------------
   // 05. SHOPPING CART PAGE (cart.html)
   // ---------------------------------------------------------------------------
-  page("cart.html", "Your Shopping Bag — Kartzo", "Review and manage items in your Kartzo bag with free express delivery and coupon savings.", "shop", `
-    ${crumbs([{ href: "index.html", label: "Home" }, { label: "Shopping Bag" }])}
+  page("cart.html", "Your Shopping Cart — Kartzo", "Review and manage items in your Kartzo bag with free express delivery and coupon savings.", "shop", `
+    ${crumbs([{ href: "index.html", label: "Home" }, { label: "Shopping Cart" }])}
 
-    <div class="pad site-max py-8">
-      <div class="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between border-b border-slate-200/80 pb-6">
+    <div class="pad site-max py-5 sm:py-8">
+      <div class="mb-5 flex flex-row items-end justify-between gap-3 border-b border-slate-200/80 pb-4 sm:mb-8 sm:pb-6">
         <div>
           <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
             ${icon("cart", "h-3.5 w-3.5")}
             Order Preparation
           </span>
-          <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
-            Shopping Bag
+          <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
+            Shopping Cart
           </h1>
-          <p id="cart-item-count-label" class="mt-1 text-xs sm:text-sm text-slate-500">2 items in your bag</p>
+          <p id="cart-item-count-label" class="mt-1 text-xs sm:text-sm text-slate-500">2 items in your cart</p>
         </div>
-        <a href="products.html" class="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-brand hover:underline mt-2 sm:mt-0">
-          <span>Continue Browsing</span>
+        <a href="products.html" class="inline-flex shrink-0 items-center gap-1 pb-1 text-xs sm:text-sm font-bold text-brand hover:underline">
+          <span>Continue</span>
           ${icon("arrow-right", "h-3.5 w-3.5")}
         </a>
       </div>
 
       <!-- Free Shipping Meter -->
-      <div class="mb-8 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 sm:p-5">
+      <div class="mb-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3 sm:mb-8 sm:p-5">
         <div class="flex items-center justify-between text-xs font-bold text-brand-ink">
           <span class="flex items-center gap-2">
             ${icon("truck", "h-4 w-4 text-emerald-600")}
@@ -46,16 +46,16 @@ export function buildCartOrders() {
             ["assets/p-headphones.webp", "Wireless Headphones Pro", "Space Black • Bluetooth 5.3", "₹2,799", "1"],
             ["assets/p-watch.webp", "Smart Watch AMOLED", "Midnight Blue • AMOLED Display", "₹3,499", "1"]
           ].map(([img, name, sub, price, qty]) => `
-          <article class="cart-item flex gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-sm" data-price="${price.replace(/[₹,]/g, "")}">
-            <a href="product.html" class="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-[#F6F8FB] p-2">
-              <img src="${img}" alt="${name}" class="h-20 w-auto object-contain" width="800" height="800">
+          <article class="cart-item flex gap-3 rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm sm:gap-4 sm:p-5" data-price="${price.replace(/[₹,]/g, "")}">
+            <a href="product.html" class="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-[#F6F8FB] p-1.5 sm:h-24 sm:w-24 sm:p-2">
+              <img src="${img}" alt="${name}" class="h-16 w-auto object-contain sm:h-20" width="800" height="800">
             </a>
             <div class="min-w-0 flex-1 flex flex-col justify-between">
               <div class="flex items-start justify-between gap-2">
                 <div>
                   <a href="product.html" class="text-sm sm:text-base font-extrabold text-brand-ink hover:text-brand transition">${name}</a>
                   <p class="text-xs text-slate-500 mt-0.5">${sub}</p>
-                  <p class="mt-1 inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600">
+                  <p class="mt-1 hidden items-center gap-1 text-[11px] font-bold text-emerald-600 sm:inline-flex">
                     ${icon("check", "h-3 w-3")}
                     In Stock • Dispatches in 24 hrs
                   </p>
@@ -65,7 +65,7 @@ export function buildCartOrders() {
                 </button>
               </div>
 
-              <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3">
+              <div class="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3 sm:mt-4">
                 <div data-qty data-min="1" data-max="5" class="inline-flex items-center rounded-xl border border-slate-200 bg-slate-50">
                   <button type="button" class="qty-btn qty-minus flex h-8 w-8 items-center justify-center text-slate-600 hover:text-slate-900" aria-label="Decrease quantity">
                     ${icon("minus", "h-3.5 w-3.5")}
@@ -77,22 +77,22 @@ export function buildCartOrders() {
                 </div>
                 <div class="text-right">
                   <span class="block text-sm sm:text-base font-black text-brand-ink line-total">${price}</span>
-                  <span class="block text-[11px] text-slate-400">Unit: ${price}</span>
+                  <span class="hidden text-[11px] text-slate-400 sm:block">Unit: ${price}</span>
                 </div>
               </div>
             </div>
           </article>`).join("")}
 
           <!-- Delivery Note Input -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
+          <div class="hidden rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm sm:block">
             <label for="order-note" class="text-xs font-extrabold text-brand-ink">Delivery Instructions / Address Landmark (Optional)</label>
             <textarea id="order-note" rows="2" placeholder="e.g. Please leave with security desk if unreachable by phone." class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/50 p-3 text-xs font-semibold text-brand-ink outline-none focus:border-brand focus:bg-white transition"></textarea>
           </div>
         </div>
 
         <!-- Order Summary Aside -->
-        <aside class="h-fit rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
-          <h2 class="text-base font-extrabold text-brand-ink">Order Summary</h2>
+        <aside class="h-fit rounded-2xl border-0 bg-transparent p-0 shadow-none sm:border sm:border-slate-200/80 sm:bg-white sm:p-6 sm:shadow-sm">
+          <h2 class="hidden text-base font-extrabold text-brand-ink sm:block">Order Summary</h2>
 
           <!-- Promo Code Input -->
           <form id="coupon-form" class="mt-4 border-b border-slate-100 pb-4">
@@ -105,7 +105,7 @@ export function buildCartOrders() {
           </form>
 
           <dl class="mt-4 space-y-2.5 text-xs sm:text-sm">
-            <div class="flex justify-between"><dt class="text-slate-500">Bag Subtotal</dt><dd id="subtotal" class="font-extrabold text-brand-ink">₹6,298</dd></div>
+            <div class="flex justify-between"><dt class="text-slate-500">Cart Subtotal</dt><dd id="subtotal" class="font-extrabold text-brand-ink">₹6,298</dd></div>
             <div class="flex justify-between"><dt class="text-slate-500">Express Delivery</dt><dd class="font-bold text-emerald-600">FREE</dd></div>
             <div class="flex justify-between" id="discount-row"><dt class="text-slate-500">Applied Discount</dt><dd id="discount-val" class="font-bold text-emerald-600">₹0</dd></div>
             <div class="flex justify-between border-t border-slate-100 pt-3 text-base sm:text-lg"><dt class="font-black text-brand-ink">Total Payable</dt><dd id="total" class="font-black text-brand">₹6,298</dd></div>
@@ -118,7 +118,7 @@ export function buildCartOrders() {
           </a>
 
           <!-- Trust Badges -->
-          <div class="mt-6 border-t border-slate-100 pt-4 space-y-2 text-xs font-semibold text-slate-500">
+          <div class="mt-6 hidden border-t border-slate-100 pt-4 space-y-2 text-xs font-semibold text-slate-500 sm:block">
             <div class="flex items-center gap-2">
               <span class="text-emerald-600">${icon("shield-check", "h-4 w-4")}</span>
               <span>256-Bit Bank Grade Encrypted Checkout</span>
@@ -136,8 +136,8 @@ export function buildCartOrders() {
         <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 text-slate-400">
           ${icon("cart", "h-8 w-8")}
         </div>
-        <h2 class="mt-4 text-lg font-extrabold text-brand-ink">Your Shopping Bag is Empty</h2>
-        <p class="mt-1 text-xs sm:text-sm text-slate-500">Looks like you haven't added anything to your bag yet.</p>
+        <h2 class="mt-4 text-lg font-extrabold text-brand-ink">Your Shopping Cart is Empty</h2>
+        <p class="mt-1 text-xs sm:text-sm text-slate-500">Looks like you haven't added anything to your cart yet.</p>
         <div class="mt-6 flex justify-center gap-3">
           <a href="products.html" class="inline-flex min-h-11 items-center gap-2 rounded-xl bg-brand px-6 text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-brand-dark transition">
             <span>Explore All Products</span>
@@ -150,7 +150,7 @@ export function buildCartOrders() {
       </div>
 
       <!-- Recommended Add-ons Section -->
-      <div class="mt-16">
+      <div class="mt-8 sm:mt-16">
         <h2 class="mb-6 text-xl sm:text-2xl font-extrabold text-brand-ink">Popular Recommendations</h2>
         <div class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
           ${products.slice(4, 8).map(productCard).join("\n          ")}
@@ -182,7 +182,7 @@ export function buildCartOrders() {
       document.getElementById("total").textContent = format(finalTotal);
       
       var countLabel = document.getElementById("cart-item-count-label");
-      if (countLabel) countLabel.textContent = items + (items === 1 ? " item" : " items") + " in your bag";
+      if (countLabel) countLabel.textContent = items + (items === 1 ? " item" : " items") + " in your cart";
 
       if (items === 0) {
         document.getElementById("cart-content-wrapper").classList.add("hidden");
@@ -198,7 +198,7 @@ export function buildCartOrders() {
       btn.addEventListener("click", function () {
         btn.closest(".cart-item").remove();
         recalc();
-        if (window.Kartzo) Kartzo.toast("Item removed from bag", "cart");
+        if (window.Kartzo) Kartzo.toast("Item removed from cart", "cart");
       });
     });
 
@@ -226,7 +226,7 @@ export function buildCartOrders() {
   // 06. CHECKOUT FLOW (checkout.html)
   // ---------------------------------------------------------------------------
   page("checkout.html", "Secure Checkout — Kartzo", "Securely complete your Kartzo order with verified delivery address and instant payment options.", "shop", `
-    ${crumbs([{ href: "index.html", label: "Home" }, { href: "cart.html", label: "Shopping Bag" }, { label: "Checkout" }])}
+    ${crumbs([{ href: "index.html", label: "Home" }, { href: "cart.html", label: "Shopping Cart" }, { label: "Checkout" }])}
 
     <div class="pad site-max py-8">
       <div class="mb-8 border-b border-slate-200/80 pb-6">
@@ -600,22 +600,22 @@ export function buildCartOrders() {
   page("wishlist.html", "My Wishlist — Kartzo", "Saved favorites and products on your Kartzo wishlist ready for quick checkout.", "shop", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "My Wishlist" }])}
 
-    <div class="pad site-max py-8">
-      <div class="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between border-b border-slate-200/80 pb-6">
+    <div class="pad site-max py-5 sm:py-8">
+      <div class="mb-5 flex flex-row items-end justify-between gap-3 border-b border-slate-200/80 pb-4 sm:mb-8 sm:pb-6">
         <div>
           <span class="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-600">
             ${icon("heart", "h-3.5 w-3.5")}
             Saved Items
           </span>
-          <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+          <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
             My Wishlist
           </h1>
           <p class="mt-1 text-xs sm:text-sm text-slate-500">
             <span id="wishlist-page-count" class="font-bold text-brand-ink">4</span> saved products ready to purchase.
           </p>
         </div>
-        <a href="products.html" class="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-brand hover:underline mt-2 sm:mt-0">
-          <span>Discover More Products</span>
+        <a href="products.html" class="inline-flex shrink-0 items-center gap-1 pb-1 text-xs sm:text-sm font-bold text-brand hover:underline">
+          <span>Discover More</span>
           ${icon("arrow-right", "h-3.5 w-3.5")}
         </a>
       </div>

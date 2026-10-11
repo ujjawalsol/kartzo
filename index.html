@@ -38,7 +38,7 @@
 <body id="top" class="overflow-x-hidden bg-white font-sans text-brand-ink antialiased">
   <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-bold focus:text-brand">Skip to content</a>
 
-  <div class="bg-brand-bar text-white">
+  <div class="hidden bg-brand-bar text-white lg:block">
     <div class="pad flex h-10 w-full items-center justify-between gap-4 text-[12.5px] font-semibold sm:h-11 sm:text-[13px]">
       <p class="flex min-w-0 items-center gap-2">
         <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
@@ -59,9 +59,10 @@
   </div>
 
   <header class="site-header sticky top-0 z-50 border-b border-[#e8eef8] bg-white/95 backdrop-blur">
-    <div class="pad flex h-[62px] w-full items-center justify-between gap-3 sm:h-[68px] lg:grid lg:h-auto lg:grid-cols-[minmax(0,1fr)_minmax(20rem,1.25fr)] lg:grid-rows-[auto_auto] lg:gap-x-6 lg:gap-y-3 lg:py-3 xl:flex xl:h-[76px] xl:gap-4 xl:py-0">
+    <!-- Desktop white bar (lg and up only) -->
+    <div class="pad hidden w-full items-center justify-between gap-3 lg:grid lg:h-auto lg:grid-cols-[minmax(0,1fr)_minmax(20rem,1.25fr)] lg:grid-rows-[auto_auto] lg:gap-x-6 lg:gap-y-3 lg:py-3 xl:flex xl:h-[76px] xl:gap-4 xl:py-0">
       <a href="index.html" class="shrink-0 flex items-center" aria-label="Kartzo home">
-        <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-7 w-auto sm:h-9">
+        <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-9 w-auto">
       </a>
       <nav class="site-primary-nav order-3 ml-0 hidden shrink-0 items-center gap-0 whitespace-nowrap lg:col-start-1 lg:row-start-2 lg:flex xl:order-none xl:ml-3 xl:gap-1" aria-label="Primary Navigation">
         <a href="index.html" aria-current="page" class="inline-flex items-center rounded-lg bg-brand-soft px-2.5 py-2 text-sm font-bold text-brand 2xl:px-3.5">Home</a>
@@ -80,120 +81,111 @@
           </button>
         </div>
       </form>
-      <div class="order-2 ml-auto flex shrink-0 items-center gap-1 sm:gap-2 lg:col-start-2 lg:row-start-1 lg:ml-auto lg:gap-3 xl:order-none xl:ml-4">
-        <!-- Mobile/Tablet Search Button (opens search modal) -->
-        <button type="button" data-search-modal-open class="flex h-10 w-10 items-center justify-center rounded-xl text-brand-ink hover:bg-brand-soft lg:hidden transition" aria-label="Search products">
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="m20 20-3.8-3.8"/></svg>
-        </button>
-
-        <!-- Desktop-Only Wishlist (on mobile, cleanly accessed via bottom bar) -->
-        <a href="wishlist.html" class="hidden lg:flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Wishlist">
+      <div class="order-2 ml-auto flex shrink-0 items-center gap-3 lg:col-start-2 lg:row-start-1 xl:order-none xl:ml-4">
+        <a href="wishlist.html" class="flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Wishlist">
           <span class="relative inline-flex items-center justify-center">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+            <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
             <span id="wishlist-count" class="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white leading-none">4</span>
           </span>
           <span class="text-[10px] font-bold mt-0.5">Wishlist</span>
         </a>
-
-        <!-- Desktop-Only Cart (on mobile, cleanly accessed via bottom bar) -->
-        <button type="button" data-cart-drawer-open class="cart-trigger hidden lg:flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Cart, 2 items">
+        <button type="button" data-cart-drawer-open class="cart-trigger flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Cart, 2 items">
           <span class="relative inline-flex items-center justify-center">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M3 4h2l2.2 11h11.3l1.8-7H7"/></svg>
+            <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M3 4h2l2.2 11h11.3l1.8-7H7"/></svg>
             <span id="cart-count" class="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black text-white leading-none">2</span>
           </span>
           <span class="text-[10px] font-bold mt-0.5">Cart</span>
         </button>
-
-        <!-- Account (Visible on all screens) -->
-        <a href="account.html" class="flex h-10 w-10 sm:min-h-11 sm:min-w-11 flex-col items-center justify-center rounded-xl text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Account">
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19"/></svg>
-          <span class="hidden text-[10px] font-bold lg:block mt-0.5">Account</span>
+        <a href="account.html" class="flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Account">
+          <span class="inline-flex items-center justify-center">
+            <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19"/></svg>
+          </span>
+          <span class="text-[10px] font-bold mt-0.5">Account</span>
         </a>
-
-        <!-- Mobile Menu Trigger (Drawer) -->
-        <button type="button" data-mobile-menu-open class="flex h-10 w-10 items-center justify-center rounded-xl text-brand-ink hover:bg-brand-soft lg:hidden transition" aria-label="Open menu">
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>
-        </button>
       </div>
     </div>
 
-    <!-- Mobile Horizontal Category Navigation Strip (Sub-Navbar) -->
-    <div class="border-t border-[#e8eef8]/80 bg-white lg:hidden">
-      <nav class="pad no-scrollbar flex items-center gap-1.5 overflow-x-auto py-2 text-xs font-semibold" aria-label="Quick Category Navigation">
-        <a href="index.html" class="shrink-0 flex items-center gap-1 rounded-full bg-brand px-3 py-1 font-bold text-white shadow-xs">Home</a>
-        <a href="products.html" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 font-bold text-slate-700 hover:border-brand hover:text-brand transition">Shop</a>
-        <a href="categories.html" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 font-bold text-slate-700 hover:border-brand hover:text-brand transition">Categories</a>
-        <a href="deals.html" class="shrink-0 flex items-center gap-1.5 rounded-full border border-rose-200 bg-rose-50/70 px-3 py-1 font-bold text-rose-600 hover:bg-rose-100 transition"><span class="h-1.5 w-1.5 rounded-full bg-rose-500 animate-pulse"></span>Deals 🔥</a>
-        <a href="products.html?category=electronics" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 text-slate-700 hover:border-brand hover:text-brand transition">🎧 Electronics</a>
-        <a href="products.html?category=fashion" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 text-slate-700 hover:border-brand hover:text-brand transition">👟 Fashion</a>
-        <a href="products.html?category=home" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 text-slate-700 hover:border-brand hover:text-brand transition">🏠 Home</a>
-        <a href="orders.html" class="shrink-0 flex items-center gap-1 rounded-full border border-slate-200/80 bg-[#f8faff] px-3 py-1 font-bold text-slate-700 hover:border-brand hover:text-brand transition">Orders</a>
+    <!-- Mobile app header, light theme (below lg only): menu + logo + bell, inline search, category pills -->
+    <div class="bg-white lg:hidden">
+      <div class="pad flex h-[60px] w-full items-center justify-between gap-3">
+        <button type="button" data-mobile-menu-open class="flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Open menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>
+        </button>
+        <a href="index.html" class="flex min-w-0 flex-1 items-center justify-center" aria-label="Kartzo home">
+          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-8 w-auto">
+        </a>
+        <button type="button" data-cart-drawer-open class="cart-trigger relative flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Open cart">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M3 4h2l2.2 11h11.3l1.8-7H7"/></svg>
+          <span class="mobile-bottom-cart-count absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black leading-none text-white">2</span>
+        </button>
+      </div>
+      <div class="pad pb-2.5">
+        <form action="products.html" method="get" role="search" class="flex min-h-[48px] w-full items-center gap-2 rounded-full border-0 bg-[#f3f7ff] py-2.5 pl-4 pr-2 outline-none">
+          <svg class="h-5 w-5 shrink-0 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <label for="m-search" class="sr-only">Search for products, brands and more</label>
+          <input id="m-search" name="q" type="search" placeholder="Search products, brands and more..." autocomplete="off" class="min-w-0 w-full appearance-none border-0 bg-transparent text-[15px] font-medium text-brand-ink outline-none placeholder:text-[#93a0b8]">
+        </form>
+      </div>
+      <nav class="pad no-scrollbar flex items-center gap-2 overflow-x-auto pb-2.5 text-[13px] font-bold" aria-label="Quick Category Navigation">
+        <a href="index.html" aria-current="page" class="shrink-0 rounded-full bg-brand px-4 py-1.5 text-white">All</a>
+        <a href="products.html?category=electronics" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Electronics</a>
+        <a href="products.html?category=fashion" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Fashion</a>
+        <a href="products.html?category=home" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Home &amp; Living</a>
+        <a href="deals.html" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Deals</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero-carousel relative overflow-hidden bg-brand-ink" data-hero-carousel aria-label="Featured Kartzo offers">
-      <div class="hero-stage relative min-h-[520px] sm:min-h-[570px] lg:min-h-[600px]">
+    <section class="hero-carousel relative mx-3 mt-3 overflow-hidden rounded-[1.4rem] bg-brand-ink sm:mx-4 lg:mx-0 lg:mt-0 lg:rounded-none" data-hero-carousel aria-label="Featured Kartzo offers">
+      <div class="hero-stage relative min-h-[150px] sm:min-h-[520px] lg:min-h-[540px]">
         <article class="hero-slide is-active relative col-start-1 row-start-1 min-w-0" data-hero-slide aria-hidden="false">
-          <img src="assets/hero 2.png" alt="Featured electronics and home appliances collection" width="1242" height="1242" class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
+          <img src="assets/hero/hero-1.webp" alt="Featured electronics and home appliances collection" width="2103" height="748" class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
           <div class="hero-slide-shade absolute inset-0"></div>
-          <div class="pad relative z-10 flex min-h-[520px] items-center py-12 sm:min-h-[570px] lg:min-h-[600px]">
+          <div class="pad relative z-10 flex min-h-[150px] items-center py-3 sm:min-h-[520px] lg:min-h-[540px]">
             <div class="max-w-xl text-white">
               <p class="hero-kicker inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">Featured collection</p>
-              <h1 class="mt-4 max-w-lg text-[2.45rem] font-extrabold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[4.7rem]">Upgrade your<br><span class="text-[#b9d5ff]">everyday.</span></h1>
-              <p class="mt-5 max-w-md text-sm leading-relaxed text-white/80 sm:text-base">Smart tech, home upgrades and daily essentials — curated for better living and better value.</p>
-              <div class="mt-7 flex flex-wrap gap-3">
+              <h1 class="mt-2 max-w-lg text-[1.6rem] sm:mt-4 font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-6xl lg:text-[4.7rem]">Upgrade your<br><span class="text-[#b9d5ff]">everyday.</span></h1>
+              <p class="mt-1.5 truncate text-[13px] font-semibold text-white/85 sm:hidden">Top brands, great deals</p>
+              <p class="mt-3 hidden max-w-md text-sm leading-relaxed text-white/80 sm:mt-5 sm:block sm:text-base">Smart tech, home upgrades and daily essentials — curated for better living and better value.</p>
+              <div class="mt-3 flex flex-wrap gap-3 sm:mt-7">
                 <a href="products.html" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-6 text-sm font-extrabold text-brand-ink shadow-[0_12px_28px_rgba(0,0,0,0.18)] transition hover:bg-[#eaf2ff]">Shop collection <span class="ml-2" aria-hidden="true">→</span></a>
-                <a href="deals.html" class="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">View hot deals</a>
-              </div>
-              <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-white/75">
-                <span>Free delivery over ₹499</span><span class="h-1 w-1 rounded-full bg-white/50" aria-hidden="true"></span><span>7-day easy returns</span>
+                <a href="deals.html" class="hidden min-h-11 items-center justify-center rounded-xl border border-white/30 sm:inline-flex bg-white/10 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">View hot deals</a>
               </div>
             </div>
           </div>
         </article>
 
         <article class="hero-slide relative col-start-1 row-start-1 min-w-0" data-hero-slide aria-hidden="true" inert>
-          <img src="assets/hero 3.png" alt="Blue-toned smart devices and entertainment electronics" width="1242" height="1242" class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
+          <img src="assets/hero/hero-2.webp" alt="Blue-toned smart devices and entertainment electronics" width="2103" height="748" class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
           <div class="hero-slide-shade absolute inset-0"></div>
-          <div class="pad relative z-10 flex min-h-[520px] items-center py-12 sm:min-h-[570px] lg:min-h-[600px]">
+          <div class="pad relative z-10 flex min-h-[150px] items-center py-3 sm:min-h-[520px] lg:min-h-[540px]">
             <div class="max-w-xl text-white">
               <p class="hero-kicker inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">Tech week is live</p>
-              <h2 class="mt-4 max-w-lg text-[2.45rem] font-extrabold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[4.7rem]">Big screen.<br><span class="text-[#b9d5ff]">Bigger deals.</span></h2>
-              <p class="mt-5 max-w-md text-sm leading-relaxed text-white/80 sm:text-base">Bring home the gadgets you have been waiting for with limited-time prices across electronics.</p>
-              <div class="mt-7 flex flex-wrap gap-3"><a href="products.html?category=electronics" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-6 text-sm font-extrabold text-brand-ink shadow-[0_12px_28px_rgba(0,0,0,0.18)] transition hover:bg-[#eaf2ff]">Shop electronics <span class="ml-2" aria-hidden="true">→</span></a><a href="deals.html" class="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">Save up to 50%</a></div>
+              <h2 class="mt-2 max-w-lg text-[1.6rem] sm:mt-4 font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-6xl lg:text-[4.7rem]">Big screen.<br><span class="text-[#b9d5ff]">Bigger deals.</span></h2>
+              <p class="mt-1.5 truncate text-[13px] font-semibold text-white/85 sm:hidden">Big brands, bigger savings</p>
+              <p class="mt-3 hidden max-w-md text-sm leading-relaxed text-white/80 sm:mt-5 sm:block sm:text-base">Bring home the gadgets you have been waiting for with limited-time prices across electronics.</p>
+              <div class="mt-3 flex flex-wrap gap-3 sm:mt-7"><a href="products.html?category=electronics" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-6 text-sm font-extrabold text-brand-ink shadow-[0_12px_28px_rgba(0,0,0,0.18)] transition hover:bg-[#eaf2ff]">Shop electronics <span class="ml-2" aria-hidden="true">→</span></a><a href="deals.html" class="hidden min-h-11 items-center justify-center rounded-xl border border-white/30 sm:inline-flex bg-white/10 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">Save up to 50%</a></div>
             </div>
           </div>
         </article>
 
         <article class="hero-slide relative col-start-1 row-start-1 min-w-0" data-hero-slide aria-hidden="true" inert>
-          <img src="assets/hero 4.png" alt="Smart home and lifestyle products styled in a blue living room" width="1242" height="1242" class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
+          <img src="assets/hero/hero-3.webp" alt="Smart home and lifestyle products styled in a blue living room" width="2103" height="748" class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
           <div class="hero-slide-shade absolute inset-0"></div>
-          <div class="pad relative z-10 flex min-h-[520px] items-center py-12 sm:min-h-[570px] lg:min-h-[600px]">
-            <div class="max-w-xl text-white"><p class="hero-kicker inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">Home refresh</p><h2 class="mt-4 max-w-lg text-[2.45rem] font-extrabold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[4.7rem]">Make space<br><span class="text-[#b9d5ff]">for better.</span></h2><p class="mt-5 max-w-md text-sm leading-relaxed text-white/80 sm:text-base">Small upgrades, smarter routines and home essentials that look as good as they work.</p><div class="mt-7 flex flex-wrap gap-3"><a href="products.html?category=home" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-6 text-sm font-extrabold text-brand-ink shadow-[0_12px_28px_rgba(0,0,0,0.18)] transition hover:bg-[#eaf2ff]">Shop home <span class="ml-2" aria-hidden="true">→</span></a><a href="categories.html" class="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">Explore categories</a></div></div>
+          <div class="pad relative z-10 flex min-h-[150px] items-center py-3 sm:min-h-[520px] lg:min-h-[540px]">
+            <div class="max-w-xl text-white"><p class="hero-kicker inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">Home refresh</p><h2 class="mt-2 max-w-lg text-[1.6rem] sm:mt-4 font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-6xl lg:text-[4.7rem]">Make space<br><span class="text-[#b9d5ff]">for better.</span></h2><p class="mt-1.5 truncate text-[13px] font-semibold text-white/85 sm:hidden">Stylish picks for your home</p><p class="mt-3 hidden max-w-md text-sm leading-relaxed text-white/80 sm:mt-5 sm:block sm:text-base">Small upgrades, smarter routines and home essentials that look as good as they work.</p><div class="mt-3 flex flex-wrap gap-3 sm:mt-7"><a href="products.html?category=home" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-6 text-sm font-extrabold text-brand-ink shadow-[0_12px_28px_rgba(0,0,0,0.18)] transition hover:bg-[#eaf2ff]">Shop home <span class="ml-2" aria-hidden="true">→</span></a><a href="categories.html" class="hidden min-h-11 items-center justify-center rounded-xl border border-white/30 sm:inline-flex bg-white/10 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">Explore categories</a></div></div>
           </div>
         </article>
 
-        <article class="hero-slide relative col-start-1 row-start-1 min-w-0" data-hero-slide aria-hidden="true" inert>
-          <img src="assets/hero 5.png" alt="Curated collection of everyday lifestyle and technology products" width="1242" height="1242" class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
-          <div class="hero-slide-shade absolute inset-0"></div>
-          <div class="pad relative z-10 flex min-h-[520px] items-center py-12 sm:min-h-[570px] lg:min-h-[600px]"><div class="max-w-xl text-white"><p class="hero-kicker inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">Your cart, upgraded</p><h2 class="mt-4 max-w-lg text-[2.45rem] font-extrabold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[4.7rem]">Find your<br><span class="text-[#b9d5ff]">next favourite.</span></h2><p class="mt-5 max-w-md text-sm leading-relaxed text-white/80 sm:text-base">Discover useful, good-looking products across fashion, gadgets, beauty and more.</p><div class="mt-7 flex flex-wrap gap-3"><a href="categories.html" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-6 text-sm font-extrabold text-brand-ink shadow-[0_12px_28px_rgba(0,0,0,0.18)] transition hover:bg-[#eaf2ff]">Browse categories <span class="ml-2" aria-hidden="true">→</span></a><a href="products.html" class="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">See best sellers</a></div></div></div>
-        </article>
 
-        <article class="hero-slide relative col-start-1 row-start-1 min-w-0" data-hero-slide aria-hidden="true" inert>
-          <img src="assets/hero.webp" alt="Kartzo shopping collection with headphones, smartwatch, phone and sneakers" width="1536" height="1024" class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
-          <div class="hero-slide-shade absolute inset-0"></div>
-          <div class="pad relative z-10 flex min-h-[520px] items-center py-12 sm:min-h-[570px] lg:min-h-[600px]"><div class="max-w-xl text-white"><p class="hero-kicker inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">Welcome to Kartzo</p><h2 class="mt-4 max-w-lg text-[2.45rem] font-extrabold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[4.7rem]">Everything you need.<br><span class="text-[#b9d5ff]">Better prices.</span></h2><p class="mt-5 max-w-md text-sm leading-relaxed text-white/80 sm:text-base">A smarter way to shop everyday essentials with fast delivery, secure checkout and easy returns.</p><div class="mt-7 flex flex-wrap gap-3"><a href="products.html" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-6 text-sm font-extrabold text-brand-ink shadow-[0_12px_28px_rgba(0,0,0,0.18)] transition hover:bg-[#eaf2ff]">Start shopping <span class="ml-2" aria-hidden="true">→</span></a><a href="deals.html" class="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">Grab a deal</a></div></div></div>
-        </article>
-
-        <div class="pad pointer-events-none absolute inset-x-0 bottom-5 z-20 flex flex-wrap items-center justify-center gap-2">
+        <div class="pad pointer-events-none absolute inset-x-0 bottom-0 z-20 flex flex-wrap items-center justify-center gap-2.5 px-4 sm:gap-2 sm:px-0 sm:bottom-5">
           <div class="pointer-events-auto flex items-center" data-hero-dots role="group" aria-label="Choose featured slide"></div>
         </div>
       </div>
     </section>
 
-    <section aria-label="Shopping benefits" class="border-b border-[#eef2f8] bg-white">
+    <section aria-label="Shopping benefits" class="hidden border-b border-[#eef2f8] bg-white sm:block">
       <ul class="pad grid w-full grid-cols-2 gap-x-4 gap-y-5 py-5 lg:grid-cols-4 lg:gap-6 lg:py-6">
         <li class="flex min-w-0 flex-col items-center gap-2 text-center sm:flex-row sm:gap-3 sm:text-left">
           <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eaf1ff] text-brand" aria-hidden="true"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg></span>
@@ -214,65 +206,61 @@
       </ul>
     </section>
 
-    <section id="categories" class="w-full py-6 sm:py-8">
-      <div class="pad mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 sm:mb-5">
-        <h2 class="text-balance text-xl font-extrabold sm:text-2xl">Shop by <span class="text-brand">Category</span></h2>
-        <a href="categories.html" class="inline-flex min-h-11 items-center text-sm font-bold text-brand hover:underline">View All Categories <span class="ml-1" aria-hidden="true">→</span></a>
-      </div>
+    <section id="categories" class="w-full pb-2 pt-6 sm:py-8">
       <div class="pad grid auto-cols-[6.5rem] grid-flow-col gap-3 overflow-x-auto pb-2 pt-1 sm:auto-cols-[7rem] sm:gap-4 xl:grid-flow-row xl:grid-cols-10 xl:overflow-visible">
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/p-headphones.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/p-headphones.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Electronics</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/c-fashion.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/c-fashion.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Fashion</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/c-home.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/c-home.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Home &amp; Living</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/p-perfume.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/p-perfume.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Beauty</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/p-fryer.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/p-fryer.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Kitchen</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/p-shoes.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/p-shoes.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Sports</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/c-toys.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/c-toys.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Toys &amp; Games</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/p-phone.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/p-phone.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Mobile &amp; Accessories</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/p-backpack.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/p-backpack.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Bags &amp; Luggage</span>
         </a>
         <a href="products.html" class="group flex min-w-0 flex-col items-center gap-2">
-          <span class="flex aspect-square w-full items-center justify-center rounded-2xl border border-[#e7eefb] bg-[#f7f9fc] p-2 shadow-[0_2px_8px_rgba(15,40,100,0.04)] transition duration-200 group-hover:border-brand"><img src="assets/c-health.webp" alt="" width="800" height="800" class="h-full w-full object-contain"></span>
+          <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand"><img src="assets/c-health.webp" alt="" width="800" height="800" class="h-full w-full rounded-full object-cover"></span>
           <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">Health &amp; Wellness</span>
         </a>
       </div>
     </section>
 
-    <section id="deals" class="pad w-full">
-      <div class="relative overflow-hidden rounded-3xl bg-[#0b47e8]">
-        <img src="assets/deals.webp" alt="" width="2150" height="439" class="h-[230px] w-full object-cover object-right sm:h-[250px]">
+    <section id="deals" class="pad hidden w-full sm:block">
+      <div class="relative overflow-hidden rounded-[1.4rem] bg-[#0b47e8] sm:rounded-3xl">
+        <img src="assets/deals.webp" alt="" width="2150" height="439" class="h-[190px] w-full object-cover object-right sm:h-[250px]">
         <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0837c4] via-[#0837c4]/75 to-transparent sm:via-[#0837c4]/25"></div>
-        <div class="absolute inset-0 flex items-center justify-between gap-4 px-3 sm:px-5">
+        <div class="absolute inset-0 flex items-center justify-between gap-4 px-4 sm:px-5">
           <div class="max-w-md text-white">
             <p class="inline-flex rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">Limited Time Offer</p>
-            <h2 class="mt-2 text-[1.65rem] font-extrabold leading-[1.05] tracking-tight sm:text-4xl">Big Deals, Bigger Savings</h2>
-            <p class="mt-2 text-sm text-white/85">Up to 60% OFF — limited time only.</p>
-            <a href="products.html" class="mt-4 inline-flex min-h-11 items-center rounded-lg bg-white px-5 text-sm font-bold text-brand-dark hover:bg-[#eef4ff]">Shop Deals →</a>
+            <h2 class="mt-1.5 text-[1.45rem] font-extrabold leading-[1.05] tracking-tight sm:mt-2 sm:text-4xl">Big Deals, Bigger Savings</h2>
+            <p class="mt-1.5 text-[13px] text-white/85 sm:mt-2 sm:text-sm">Up to 60% OFF — limited time only.</p>
+            <a href="products.html" class="mt-3 inline-flex min-h-11 items-center rounded-lg bg-white px-5 text-sm font-bold text-brand-dark hover:bg-[#eef4ff] sm:mt-4">Shop Deals →</a>
           </div>
           <div class="hidden h-[118px] w-[118px] shrink-0 flex-col items-center justify-center rounded-full bg-[#eef6ff] text-brand shadow-lg sm:flex" aria-hidden="true">
             <span class="text-[11px] font-bold tracking-wide">UP TO</span>
@@ -283,7 +271,7 @@
       </div>
     </section>
 
-    <section id="products" class="pad w-full py-8">
+    <section id="products" class="pad w-full pb-6 pt-4 sm:py-8">
       <div class="mb-5 flex items-center justify-between gap-3">
         <h2 class="text-xl font-extrabold tracking-tight sm:text-2xl">Best <span class="text-brand">Sellers</span></h2>
         <a href="products.html" class="text-sm font-bold text-brand hover:underline">View All →</a>
@@ -352,7 +340,7 @@
         </article>
       </div>
 
-      <ul class="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <ul class="mt-4 hidden grid-cols-2 gap-3 sm:grid lg:grid-cols-4">
         <li class="flex items-center gap-3 rounded-2xl border border-[#e7eefb] bg-[#f8fbff] px-3 py-3">
           <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e7efff] text-brand" aria-hidden="true"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg></span>
           <span><span class="block text-sm font-extrabold">Wide Product Range</span><span class="block text-xs text-brand-muted">Everything you need in one place.</span></span>
@@ -373,36 +361,34 @@
     </section>
 
     <section aria-label="Featured collections" class="pad grid w-full items-stretch gap-4 lg:grid-cols-5">
-      <article class="grid min-w-0 overflow-hidden rounded-3xl bg-[#041868] sm:min-h-80 sm:grid-cols-[55%_45%] lg:col-span-3">
-        <div class="flex min-w-0 flex-col p-6 text-white sm:p-8 lg:p-6 xl:p-8">
-          <p class="text-xs font-bold uppercase text-white/80">Electronics Sale</p>
-          <h2 class="mt-3 text-balance text-2xl font-extrabold leading-tight sm:text-3xl lg:text-2xl xl:text-3xl">Top Brands<br>Up to 50% OFF</h2>
-          <div class="mt-auto pt-6">
-            <a href="products.html?category=electronics" class="inline-flex min-h-11 max-w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-brand-dark hover:bg-[#eef4ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Shop Electronics <span aria-hidden="true">→</span></a>
+      <!-- Electronics: full-bleed image + light gradient + vertically centered content -->
+      <article class="relative min-h-[230px] min-w-0 overflow-hidden rounded-[1.4rem] sm:rounded-3xl sm:min-h-[250px] lg:col-span-3 lg:min-h-[300px]">
+        <img src="assets/electronics.webp" alt="" width="2113" height="619" class="absolute inset-0 h-full w-full scale-[1.03] object-cover object-center" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#041868]/95 via-[#041868]/40 to-transparent" aria-hidden="true"></div>
+        <div class="relative z-10 flex h-full min-h-[inherit] max-w-[75%] flex-col justify-center p-5 text-white sm:max-w-[62%] sm:p-6 lg:p-8">
+          <p class="text-xs font-bold uppercase tracking-wide text-white/80">Electronics Sale</p>
+          <h2 class="mt-2 text-2xl font-extrabold leading-tight sm:text-[28px]">Top Brands<br>Up to 50% OFF</h2>
+          <div class="mt-5">
+            <a href="products.html?category=electronics" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-brand-dark transition hover:bg-[#eef4ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Shop Electronics <span aria-hidden="true">→</span></a>
           </div>
-        </div>
-        <div class="relative min-h-44 overflow-hidden sm:min-h-0">
-          <!-- Overscan trims the white border baked into the source image. -->
-          <img src="assets/electronics.webp" alt="" width="2113" height="619" class="absolute inset-x-0 bottom-0 h-[104%] w-full object-cover object-[80%_center]" loading="lazy">
         </div>
       </article>
-      <article class="grid min-w-0 overflow-hidden rounded-3xl bg-[#f4eadf] sm:min-h-80 sm:grid-cols-[55%_45%] lg:col-span-2 lg:grid-cols-[60%_40%]">
-        <div class="flex min-w-0 flex-col p-6 sm:p-8 lg:p-6 xl:p-8">
-          <p class="text-xs font-bold uppercase text-[#805729]">Home &amp; Living</p>
-          <h2 class="mt-3 text-balance text-2xl font-extrabold leading-tight text-brand-ink sm:text-3xl lg:text-2xl xl:text-3xl">Make It<br>Yours</h2>
-          <p class="mt-3 text-pretty text-sm leading-relaxed text-brand-muted">Stylish, comfortable and modern products for your home.</p>
-          <div class="mt-auto pt-6">
-            <a href="products.html?category=home" class="inline-flex min-h-11 max-w-full items-center justify-center gap-2 rounded-xl bg-brand-ink px-4 py-3 text-sm font-bold text-white hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-ink">Shop Home <span aria-hidden="true">→</span></a>
+      <!-- Home: full-bleed image + light gradient + vertically centered content (same as left) -->
+      <article class="relative min-h-[230px] min-w-0 overflow-hidden rounded-[1.4rem] sm:rounded-3xl sm:min-h-[250px] lg:col-span-2 lg:min-h-[300px]">
+        <img src="assets/home.webp" alt="Blue sofa in a bright living room" width="1912" height="706" class="absolute inset-0 h-full w-full object-cover object-[50%_25%]" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#f4eadf] via-[#f4eadf]/55 to-transparent" aria-hidden="true"></div>
+        <div class="relative z-10 flex h-full min-h-[inherit] max-w-[75%] flex-col justify-center p-5 sm:max-w-[80%] sm:p-6 lg:p-8">
+          <p class="text-xs font-bold uppercase tracking-wide text-[#805729]">Home &amp; Living</p>
+          <h2 class="mt-2 text-2xl font-extrabold leading-tight text-brand-ink sm:text-[28px]">Make It<br>Yours</h2>
+          <p class="mt-2 max-w-[26ch] text-sm leading-relaxed text-brand-muted">Stylish, comfortable and modern products for your home.</p>
+          <div class="mt-5">
+            <a href="products.html?category=home" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-ink px-4 py-3 text-sm font-bold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-ink">Shop Home <span aria-hidden="true">→</span></a>
           </div>
-        </div>
-        <div class="relative min-h-44 overflow-hidden sm:min-h-0">
-          <!-- The original asset has a white top strip; crop it inside this image pane. -->
-          <img src="assets/home.webp" alt="Blue sofa in a bright living room" width="1912" height="706" class="absolute inset-x-0 bottom-0 h-[110%] w-full object-cover object-[78%_center]" loading="lazy">
         </div>
       </article>
     </section>
 
-    <section id="new-arrivals" class="pad w-full py-8">
+    <section id="new-arrivals" class="pad w-full pb-6 pt-4 sm:py-8">
       <div class="mb-5 flex items-center justify-between gap-3">
         <h2 class="text-xl font-extrabold tracking-tight sm:text-2xl">New <span class="text-brand">Arrivals</span></h2>
         <a href="products.html" class="text-sm font-bold text-brand hover:underline">View All →</a>
@@ -471,7 +457,7 @@
       </div>
     </section>
 
-    <section id="brands" class="pad w-full pb-2">
+    <section id="brands" class="pad hidden w-full pb-2 sm:block">
       <div class="mb-5 flex items-center justify-between gap-3">
         <h2 class="text-xl font-extrabold tracking-tight sm:text-2xl">Shop Top <span class="text-brand">Brands</span></h2>
         <a href="products.html" class="text-sm font-bold text-brand hover:underline">View All →</a>
@@ -490,7 +476,7 @@
       </ul>
     </section>
 
-    <section id="about" class="pad w-full py-8">
+    <section id="about" class="pad hidden w-full py-8 sm:block">
       <h2 class="mb-4 text-xl font-extrabold tracking-tight sm:text-2xl">Why Choose <span class="text-brand">Kartzo?</span></h2>
       <ul class="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
         <li class="rounded-2xl border border-[#e7eefb] bg-[#f7faff] px-3 py-5 text-center">
@@ -625,7 +611,7 @@
 
     -->
 
-    <section id="blog" class="pad w-full pb-8">
+    <section id="blog" class="pad hidden w-full pb-8 sm:block">
       <div class="mb-4 flex items-center justify-between gap-3">
         <h2 class="text-xl font-extrabold tracking-tight sm:text-2xl">Latest from <span class="text-brand">Our Blog</span></h2>
         <a href="about.html" class="text-sm font-bold text-brand hover:underline">View All →</a>
@@ -661,7 +647,7 @@
       </div>
     </section>
 
-    <section class="pad w-full pb-10">
+    <section class="pad hidden w-full pb-10 sm:block">
       <div class="flex flex-col gap-4 rounded-2xl bg-[#0c1b4d] px-5 py-5 text-white sm:px-8 lg:flex-row lg:items-center">
         <div class="flex items-center gap-3">
           <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/20" aria-hidden="true">
@@ -684,8 +670,9 @@
     </section>
   </main>
 
-  <footer class="border-t border-[#e8eef8] bg-white">
-    <div class="pad mx-auto grid w-full gap-8 py-10 md:grid-cols-2 lg:grid-cols-4">
+  <footer class="border-t border-[#e8eef8] bg-white pb-[76px] lg:pb-0">
+    <!-- Desktop footer (lg and up only) -->
+    <div class="pad mx-auto hidden w-full gap-8 py-10 md:grid-cols-2 lg:grid lg:grid-cols-4">
       <div>
         <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-10 w-auto">
         <p class="mt-3 max-w-xs text-sm leading-relaxed text-brand-muted">Quality products, better prices, faster delivery.</p>
@@ -727,11 +714,15 @@
         </ul>
       </div>
     </div>
-    <div class="border-t border-[#e8eef8]">
+    <div class="hidden border-t border-[#e8eef8] lg:block">
       <div class="pad mx-auto flex w-full flex-col gap-2 py-4 text-xs text-[#7d8aa3] sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 Kartzo. All rights reserved.</p>
         <p class="flex gap-3"><a class="hover:text-brand" href="about.html">Privacy</a><a class="hover:text-brand" href="about.html">Terms</a><a class="hover:text-brand" href="about.html">Sitemap</a></p>
       </div>
+    </div>
+    <!-- Mobile-only single-line footer -->
+    <div class="px-4 py-3 text-center lg:hidden">
+      <p class="text-xs text-[#7d8aa3]">© 2026 Kartzo. All rights reserved.</p>
     </div>
   </footer>
 
@@ -741,7 +732,7 @@
       <!-- Drawer Top Bar -->
       <div class="flex items-center justify-between border-b border-[#e8eef8] px-5 py-4">
         <a href="index.html" class="flex items-center" aria-label="Kartzo home">
-          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-7 w-auto">
+          <img src="assets/logo.webp" alt="Kartzo" width="541" height="168" class="h-8 w-auto">
         </a>
         <button type="button" data-mobile-menu-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-brand-ink transition" aria-label="Close menu">
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
@@ -910,39 +901,36 @@
     </div>
   </div>
 
-  <!-- Modern App-Style Floating Sticky Bottom Nav Bar (Mobile Only) -->
-  <nav class="fixed bottom-0 inset-x-0 z-40 flex h-16 items-center justify-around border-t border-[#e8eef8] bg-white/95 backdrop-blur-md px-1 shadow-[0_-4px_20px_rgba(16,42,110,0.06)] lg:hidden pb-[env(safe-area-inset-bottom,0px)]" aria-label="Mobile Bottom Navigation">
-    <a href="index.html" class="bottom-nav-tab flex flex-1 flex-col items-center justify-center py-1 transition active">
-      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
-      <span class="mt-0.5 text-[10px] font-bold">Home</span>
-    </a>
-    <a href="categories.html" class="bottom-nav-tab flex flex-1 flex-col items-center justify-center py-1 transition text-[#4E5D78] hover:text-brand">
-      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
-      <span class="mt-0.5 text-[10px] font-bold">Categories</span>
-    </a>
-    <a href="deals.html" class="bottom-nav-tab relative flex flex-1 flex-col items-center justify-center py-1 transition text-[#4E5D78] hover:text-brand">
-      <span class="absolute top-1 right-3 flex h-2 w-2 rounded-full bg-rose-500 animate-pulse"></span>
-      <svg class="h-5 w-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-      <span class="mt-0.5 text-[10px] font-bold">Deals</span>
-    </a>
-    <a href="wishlist.html" class="bottom-nav-tab relative flex flex-1 flex-col items-center justify-center py-1 transition text-[#4E5D78] hover:text-brand">
-      <span class="relative inline-flex items-center justify-center">
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.2 4.6 13a5.2 5.2 0 0 1 0-7.4 5.2 5.2 0 0 1 7.4 0L12 6.6l.4-.4a5.2 5.2 0 0 1 7.4 0 5.2 5.2 0 0 1 0 7.4L12 20.2z"/></svg>
-        <span class="mobile-bottom-wishlist-count absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white leading-none">4</span>
-      </span>
-      <span class="mt-0.5 text-[10px] font-bold">Wishlist</span>
-    </a>
-    <button type="button" data-cart-drawer-open class="cart-trigger bottom-nav-tab relative flex flex-1 flex-col items-center justify-center py-1 transition text-[#4E5D78] hover:text-brand">
-      <span class="relative inline-flex items-center justify-center">
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h2l2.2 11.2a1 1 0 0 0 1 .8h10.6a1 1 0 0 0 1-.8L22 7H7"/><circle cx="10" cy="20" r="1.2"/><circle cx="19" cy="20" r="1.2"/></svg>
-        <span class="mobile-bottom-cart-count absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black text-white leading-none">2</span>
-      </span>
-      <span class="mt-0.5 text-[10px] font-bold">Bag</span>
-    </button>
-    <button type="button" data-mobile-menu-open class="bottom-nav-tab flex flex-1 flex-col items-center justify-center py-1 transition text-[#4E5D78] hover:text-brand" aria-label="Open navigation menu">
-      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>
-      <span class="mt-0.5 text-[10px] font-bold">Menu</span>
-    </button>
+  <!-- Mobile Bottom Navigation — 5 tabs only (Menu lives in header, no repeat) -->
+  <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-[#e8eef8] bg-white/95 shadow-[0_-4px_20px_rgba(16,42,110,0.06)] backdrop-blur-md lg:hidden" aria-label="Mobile Bottom Navigation">
+    <div class="grid grid-cols-5 gap-1 px-2 pb-[max(env(safe-area-inset-bottom,0px),8px)] pt-2">
+      <a href="index.html" aria-current="page" class="flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl bg-brand-soft px-1 py-2 text-brand">
+        <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        <span class="text-[11px] font-bold leading-none">Home</span>
+      </a>
+      <a href="categories.html" class="flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-[#4E5D78] transition hover:bg-brand-soft hover:text-brand">
+        <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span class="text-[11px] font-bold leading-none">Categories</span>
+      </a>
+      <a href="deals.html" class="flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-[#4E5D78] transition hover:bg-brand-soft hover:text-brand">
+        <span class="relative inline-flex items-center justify-center">
+          <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+          <span class="absolute -right-1.5 -top-1 flex h-2 w-2 rounded-full bg-rose-500"></span>
+        </span>
+        <span class="text-[11px] font-bold leading-none">Deals</span>
+      </a>
+      <a href="wishlist.html" class="flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-[#4E5D78] transition hover:bg-brand-soft hover:text-brand">
+        <span class="relative inline-flex items-center justify-center">
+          <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+          <span class="mobile-bottom-wishlist-count absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black leading-none text-white">4</span>
+        </span>
+        <span class="text-[11px] font-bold leading-none">Wishlist</span>
+      </a>
+      <a href="account.html" class="flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-[#4E5D78] transition hover:bg-brand-soft hover:text-brand" aria-label="Account">
+        <svg class="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19"/></svg>
+        <span class="text-[11px] font-bold leading-none">Account</span>
+      </a>
+    </div>
   </nav>
 
   <!-- Cart Drawer Component matching store -->
@@ -950,7 +938,7 @@
     <div class="drawer-panel ml-auto flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
         <div class="flex items-center gap-2.5">
-          <h2 id="drawer-title" class="text-base font-extrabold text-brand-ink">Shopping Bag</h2>
+          <h2 id="drawer-title" class="text-base font-extrabold text-brand-ink">Shopping Cart</h2>
           <span id="drawer-cart-count" class="rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-black text-brand">2</span>
         </div>
         <button type="button" data-cart-drawer-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition" aria-label="Close cart drawer">
@@ -1012,7 +1000,7 @@
             Checkout Now
           </a>
           <a href="cart.html" class="flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            View Bag Details
+            View Cart Details
           </a>
         </div>
       </div>

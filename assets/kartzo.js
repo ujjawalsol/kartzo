@@ -110,7 +110,7 @@
       if (button.getAttribute("data-added") === "1") return;
       button.setAttribute("data-added", "1");
       var original = button.textContent;
-      button.textContent = "Added to Bag";
+      button.textContent = "Added to Cart";
       setCart(cartCount + 1);
       showToast("Item added to your cart", "cart");
 
@@ -120,7 +120,7 @@
 
       window.setTimeout(function () {
         button.setAttribute("data-added", "0");
-        button.textContent = original.indexOf("Buy") !== -1 ? original : "Add to Bag";
+        button.textContent = original.indexOf("Buy") !== -1 ? original : "Add to Cart";
       }, 1500);
     });
   });
