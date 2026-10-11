@@ -209,55 +209,67 @@ export function buildAuthAccount() {
   page("account.html", "My Account — Kartzo", "Manage your Kartzo customer profile, saved delivery addresses, orders, and security settings.", "account", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "My Account" }])}
 
-    <div class="pad site-max py-8">
-      <!-- Welcome Header -->
-      <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200/80 pb-6 gap-4">
-        <div class="flex items-center gap-4">
-          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-soft text-brand font-black text-xl">
-            RM
-          </div>
-          <div>
-            <h1 class="text-2xl font-extrabold text-brand-ink">Hello, Rahul Mehta</h1>
-            <p class="text-xs text-slate-500">rahul.mehta@example.com • Member since Jan 2025</p>
-          </div>
+    <div class="pad site-max py-5 sm:py-8">
+      <!-- Profile Header -->
+      <div class="mb-5 flex flex-row items-center gap-3 border-b border-slate-200/80 pb-4 sm:mb-8 sm:gap-4 sm:pb-6">
+        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand text-base font-black text-white shadow-md sm:h-16 sm:w-16 sm:text-lg">
+          RM
         </div>
-        <a href="login.html" class="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-          Sign Out
-        </a>
+        <div class="min-w-0">
+          <h1 class="truncate text-[1.35rem] font-extrabold leading-tight text-brand-ink sm:text-2xl">Hello, Rahul Mehta</h1>
+          <p class="mt-0.5 truncate text-xs text-slate-500 sm:text-sm">rahul.mehta@example.com</p>
+          <p class="text-[11px] text-slate-400">Member since Jan 2025</p>
+        </div>
       </div>
 
       <!-- Customer Account Layout -->
-      <div class="grid gap-8 lg:grid-cols-[260px_1fr]">
+      <div class="grid gap-5 lg:grid-cols-[260px_1fr] lg:gap-8">
         
         <!-- Account Sidebar Navigation -->
-        <aside class="space-y-1">
-          <a href="account.html" class="flex items-center gap-3 rounded-xl bg-brand-soft px-4 py-3 text-xs font-bold text-brand">
-            ${icon("user", "h-4 w-4")}
-            <span>Overview &amp; Profile</span>
+        <aside class="space-y-1.5" id="account-menu">
+          <a href="account.html#sec-details" data-sec-toggle="sec-details" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            ${icon("user", "h-5 w-5 text-slate-400")}
+            <span>Personal Details</span>
+            ${icon("chevron-right", "h-5 w-5 ml-auto text-slate-300")}
           </a>
-          <a href="orders.html" class="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            ${icon("package", "h-4 w-4 text-slate-400")}
+          <a href="orders.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            ${icon("package", "h-5 w-5 text-slate-400")}
             <span>My Orders (4)</span>
+            ${icon("chevron-right", "h-5 w-5 ml-auto text-slate-300")}
           </a>
-          <a href="wishlist.html" class="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            ${icon("heart", "h-4 w-4 text-slate-400")}
+          <a href="wishlist.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            ${icon("heart", "h-5 w-5 text-slate-400")}
             <span>Saved Wishlist (4)</span>
+            ${icon("chevron-right", "h-5 w-5 ml-auto text-slate-300")}
           </a>
-          <a href="tracking.html" class="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            ${icon("truck", "h-4 w-4 text-slate-400")}
+          <a href="tracking.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            ${icon("truck", "h-5 w-5 text-slate-400")}
             <span>Track Shipments</span>
+            ${icon("chevron-right", "h-5 w-5 ml-auto text-slate-300")}
           </a>
-          <a href="contact.html" class="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            ${icon("help", "h-4 w-4 text-slate-400")}
+          <a href="account.html#sec-addresses" data-sec-toggle="sec-addresses" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            ${icon("map-pin", "h-5 w-5 text-slate-400")}
+            <span>Saved Addresses</span>
+            ${icon("chevron-right", "h-5 w-5 ml-auto text-slate-300")}
+          </a>
+          <a href="contact.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            ${icon("help", "h-5 w-5 text-slate-400")}
             <span>Help &amp; Support</span>
+            ${icon("chevron-right", "h-5 w-5 ml-auto text-slate-300")}
           </a>
+          <div class="pt-2 mt-2 border-t border-slate-100">
+            <a href="login.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-rose-600 hover:bg-rose-50 transition">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+              <span>Sign Out</span>
+            </a>
+          </div>
         </aside>
 
         <!-- Main Account Content Area -->
         <div class="space-y-8">
           
           <!-- Recent Order Snapshot -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
                 <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Most Recent Order</h2>
@@ -294,7 +306,7 @@ export function buildAuthAccount() {
           </div>
 
           <!-- Saved Addresses Grid -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <div id="sec-addresses" class="hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6 scroll-mt-24">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Saved Delivery Addresses</h2>
               <button type="button" class="text-xs font-bold text-brand hover:underline">+ Add New</button>
@@ -324,7 +336,7 @@ export function buildAuthAccount() {
           </div>
 
           <!-- Profile Details Form -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <div id="sec-details" class="hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6 scroll-mt-24">
             <h2 class="text-sm sm:text-base font-extrabold text-brand-ink border-b border-slate-100 pb-4">Personal Details</h2>
             <form class="mt-4 grid gap-4 sm:grid-cols-2">
               <div>
@@ -336,7 +348,7 @@ export function buildAuthAccount() {
                 <input class="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink" value="rahul.mehta@example.com">
               </div>
               <div class="sm:col-span-2">
-                <button type="button" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-brand px-6 text-xs sm:text-sm font-bold text-white hover:bg-brand-dark transition">
+                <button type="button" class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-brand px-6 text-xs sm:text-sm font-bold text-white hover:bg-brand-dark transition sm:w-auto">
                   Save Changes
                 </button>
               </div>
@@ -345,5 +357,37 @@ export function buildAuthAccount() {
         </div>
       </div>
     </div>
-`);
+`, `<script>
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll("#account-menu [data-sec-toggle]"));
+    var sections = {};
+    ["sec-details", "sec-addresses"].forEach(function (id) { sections[id] = document.getElementById(id); });
+    function paint(activeId) {
+      links.forEach(function (l) {
+        var on = l.getAttribute("data-sec-toggle") === activeId;
+        l.classList.toggle("bg-brand-soft", on);
+        l.classList.toggle("text-brand", on);
+        l.classList.toggle("text-slate-700", !on);
+        if (on) l.setAttribute("aria-current", "true"); else l.removeAttribute("aria-current");
+      });
+    }
+    links.forEach(function (l) {
+      l.addEventListener("click", function (e) {
+        e.preventDefault();
+        var id = l.getAttribute("data-sec-toggle");
+        var el = sections[id];
+        if (!el) return;
+        var willShow = el.classList.contains("hidden");
+        Object.keys(sections).forEach(function (k) { if (sections[k]) sections[k].classList.add("hidden"); });
+        if (willShow) {
+          el.classList.remove("hidden");
+          paint(id);
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          paint(null);
+        }
+      });
+    });
+  })();
+</script>`);
 }

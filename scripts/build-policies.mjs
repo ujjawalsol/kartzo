@@ -10,9 +10,9 @@ export function buildPolicies() {
       ["terms-conditions.html", "Terms of Service", "terms"]
     ];
     return `
-      <div class="mb-8 flex flex-wrap items-center gap-2 border-b border-slate-200/80 pb-4">
+      <div class="mb-5 flex gap-2 overflow-x-auto no-scrollbar border-b border-slate-200/80 pb-4 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:pb-4">
         ${list.map(([url, title, slug]) => `
-          <a href="${url}" class="rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${activeSlug === slug ? "bg-brand text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"}">${title}</a>
+          <a href="${url}" class="shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${activeSlug === slug ? "bg-brand text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"}">${title}</a>
         `).join("")}
       </div>
     `;
@@ -24,15 +24,15 @@ export function buildPolicies() {
   page("shipping-policy.html", "Shipping & Delivery Policy — Kartzo", "Detailed information about shipping timeframes, free shipping thresholds, carrier partners, and order tracking on Kartzo.", "about", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Shipping Policy" }])}
 
-    <div class="pad site-max py-8 max-w-4xl mx-auto">
+    <div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
       ${policyNav("shipping")}
 
-      <div class="mb-8">
+      <div class="mb-5 sm:mb-8">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("truck", "h-3.5 w-3.5")}
           Fulfillment Guidelines
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           Shipping &amp; Delivery Policy
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Last updated: October 2026 • Valid for all orders across India.</p>
@@ -83,15 +83,15 @@ export function buildPolicies() {
   page("returns-policy.html", "7-Day Return & Refund Policy — Kartzo", "Understand our 7-Day Doorstep Replacement and Refund Guarantee on Kartzo.", "about", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Returns Policy" }])}
 
-    <div class="pad site-max py-8 max-w-4xl mx-auto">
+    <div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
       ${policyNav("returns")}
 
-      <div class="mb-8">
+      <div class="mb-5 sm:mb-8">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("refresh", "h-3.5 w-3.5")}
           Buyer Protection
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           7-Day Return &amp; Refund Policy
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Hassle-free doorstep pickup and verified instant refunds.</p>
@@ -146,15 +146,15 @@ export function buildPolicies() {
   page("cancellation-policy.html", "Order Cancellation Policy — Kartzo", "Guidelines for cancelling orders before and after courier dispatch on Kartzo.", "about", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Cancellation Policy" }])}
 
-    <div class="pad site-max py-8 max-w-4xl mx-auto">
+    <div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
       ${policyNav("cancellation")}
 
-      <div class="mb-8">
+      <div class="mb-5 sm:mb-8">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("clock", "h-3.5 w-3.5")}
           Order Management
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           Order Cancellation Policy
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Transparent guidelines on cancelling orders at any stage.</p>
@@ -180,15 +180,15 @@ export function buildPolicies() {
   page("privacy-policy.html", "Privacy Policy — Kartzo", "How Kartzo collects, uses, encrypts, and protects your personal and payment information.", "about", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Privacy Policy" }])}
 
-    <div class="pad site-max py-8 max-w-4xl mx-auto">
+    <div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
       ${policyNav("privacy")}
 
-      <div class="mb-8">
+      <div class="mb-5 sm:mb-8">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("shield-check", "h-3.5 w-3.5")}
           Data Protection
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           Privacy Policy
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Effective Date: October 2026 • Compliant with Indian IT Act and DPDP guidelines.</p>
@@ -219,15 +219,15 @@ export function buildPolicies() {
   page("terms-conditions.html", "Terms of Service — Kartzo", "Terms and conditions governing website usage, product orders, and customer rights on Kartzo.", "about", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Terms of Service" }])}
 
-    <div class="pad site-max py-8 max-w-4xl mx-auto">
+    <div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
       ${policyNav("terms")}
 
-      <div class="mb-8">
+      <div class="mb-5 sm:mb-8">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("help", "h-3.5 w-3.5")}
           Legal Agreement
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           Terms of Service
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Applicable to all visitors and customers of Kartzo Technologies Pvt. Ltd.</p>

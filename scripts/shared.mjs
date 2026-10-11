@@ -201,52 +201,48 @@ export function mobileMenuDrawer(active) {
             <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Shop by Department</p>
             <a href="categories.html" class="text-[11px] font-bold text-brand hover:underline">View All</a>
           </div>
-          <div class="mt-2.5 space-y-1">
-            <a href="products.html?category=electronics" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+          <div class="mt-2 space-y-0.5">
+            <a href="products.html?category=electronics" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">🎧</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("headphones", "h-4 w-4")}</span>
                 <span>Audio &amp; Electronics</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">24 items</span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
-            <a href="products.html?category=fashion" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=fashion" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">👟</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("tag", "h-4 w-4")}</span>
                 <span>Footwear &amp; Fashion</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">36 items</span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
-            <a href="products.html?category=home" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=home" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">🏠</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("home", "h-4 w-4")}</span>
                 <span>Home &amp; Living</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">18 items</span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
-            <a href="products.html?category=beauty" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=beauty" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">💄</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("sparkles", "h-4 w-4")}</span>
                 <span>Beauty &amp; Fragrances</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">15 items</span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
-            <a href="products.html?category=kitchen" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=kitchen" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">🍳</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("flame", "h-4 w-4")}</span>
                 <span>Kitchen Appliances</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">12 items</span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
-            <a href="products.html?category=bags" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=bags" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">🎒</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">${icon("package", "h-4 w-4")}</span>
                 <span>Bags &amp; Travel Gear</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">16 items</span>
-            </a>
-            <a href="products.html" class="flex items-center justify-between rounded-xl border border-dashed border-slate-200 px-3 py-2 text-xs font-bold text-brand hover:bg-brand-soft transition mt-2">
-              <span>Browse Complete Catalog</span>
-              ${icon("arrow-right", "h-3.5 w-3.5")}
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
           </div>
         </div>
@@ -254,27 +250,20 @@ export function mobileMenuDrawer(active) {
         <!-- Orders & Account Management -->
         <div>
           <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">My Orders &amp; Account</p>
-          <nav class="mt-2 space-y-1">
-            <a href="tracking.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+          <nav class="mt-2 space-y-0.5">
+            <a href="tracking.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
               <span class="flex items-center gap-3">
                 ${icon("truck", "h-4 w-4 text-brand")}
-                Track Active Shipment
+                Track Shipment
               </span>
-              <span class="rounded bg-emerald-50 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">Live AWB</span>
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
-            <a href="orders.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+            <a href="orders.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
               <span class="flex items-center gap-3">
                 ${icon("package", "h-4 w-4 text-slate-500")}
-                My Past Orders
+                My Orders
               </span>
-              ${icon("chevron-right", "h-4 w-4 text-slate-400")}
-            </a>
-            <a href="account.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-              <span class="flex items-center gap-3">
-                ${icon("user", "h-4 w-4 text-slate-500")}
-                Profile &amp; Saved Addresses
-              </span>
-              ${icon("chevron-right", "h-4 w-4 text-slate-400")}
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
           </nav>
         </div>
@@ -282,45 +271,22 @@ export function mobileMenuDrawer(active) {
         <!-- Customer Care & Assistance -->
         <div>
           <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Customer Support</p>
-          <nav class="mt-2 space-y-1">
-            <a href="contact.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+          <nav class="mt-2 space-y-0.5">
+            <a href="contact.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
               <span class="flex items-center gap-3">
                 ${icon("phone", "h-4 w-4 text-slate-500")}
                 24/7 Support: +91 98765 43210
               </span>
-              ${icon("chevron-right", "h-4 w-4 text-slate-400")}
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
-            <a href="returns-policy.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+            <a href="returns-policy.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
               <span class="flex items-center gap-3">
                 ${icon("refresh", "h-4 w-4 text-slate-500")}
                 7-Day Doorstep Replacement
               </span>
-              ${icon("chevron-right", "h-4 w-4 text-slate-400")}
-            </a>
-            <a href="size-guide.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-              <span class="flex items-center gap-3">
-                ${icon("help", "h-4 w-4 text-slate-500")}
-                Size &amp; Fit Guide
-              </span>
-              ${icon("chevron-right", "h-4 w-4 text-slate-400")}
-            </a>
-            <a href="about.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-              <span class="flex items-center gap-3">
-                ${icon("shield-check", "h-4 w-4 text-slate-500")}
-                About Kartzo &amp; Quality Promise
-              </span>
-              ${icon("chevron-right", "h-4 w-4 text-slate-400")}
+              ${icon("chevron-right", "h-4 w-4 text-slate-300")}
             </a>
           </nav>
-        </div>
-
-        <!-- Service Assurance Strip -->
-        <div class="rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5 space-y-1.5 text-xs">
-          <div class="flex items-center gap-2 text-brand font-bold">
-            ${icon("truck", "h-4 w-4")}
-            <span>Free Express Delivery</span>
-          </div>
-          <p class="text-[11px] text-slate-500 leading-relaxed">Orders ₹499+ qualify for free express delivery across all pin codes in India.</p>
         </div>
       </div>
 
@@ -330,6 +296,8 @@ export function mobileMenuDrawer(active) {
           <a href="faq.html" class="hover:text-brand transition">FAQs</a>
           <span>•</span>
           <a href="shipping-policy.html" class="hover:text-brand transition">Shipping</a>
+          <span>•</span>
+          <a href="about.html" class="hover:text-brand transition">About</a>
           <span>•</span>
           <a href="privacy-policy.html" class="hover:text-brand transition">Privacy</a>
           <span>•</span>

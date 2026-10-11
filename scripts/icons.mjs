@@ -27,6 +27,9 @@ export function icon(name, className = "h-4 w-4", ariaHidden = true) {
     case "zap":
       return `<svg ${base}><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>`;
 
+    case "headphones":
+      return `<svg ${base}><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H4zM20 13v4a2 2 0 0 1-2 2h-1v-6h3z"/><path d="M12 19v2"/></svg>`;
+
     case "search":
       return `<svg ${base}><circle cx="11" cy="11" r="7.5"/><path d="m20 20-3.8-3.8"/></svg>`;
 

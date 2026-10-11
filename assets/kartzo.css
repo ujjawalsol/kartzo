@@ -108,8 +108,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 #cat-grid.list-view .cat-media img { aspect-ratio: auto; height: 100%; }
 #cat-grid.list-view .cat-body { margin-top: 0; padding: 0; text-align: left; flex: 1 1 auto; min-width: 0; }
 #cat-grid.list-view .cat-arrow { display: inline-flex; }
-/* Deals + wishlist + products: compact cards on phones */
+/* Product page: compact thumbnails on phones + compact cards */
 @media (max-width: 639.5px) {
+  [data-gallery-thumb] { width: 64px; height: 64px; padding: 6px; }
   #deals-grid .product-card, #wishlist-grid .product-card, #product-grid .product-card { padding: 8px; }
   #deals-grid .product-card .image-wrap, #wishlist-grid .product-card .image-wrap, #product-grid .product-card .image-wrap { aspect-ratio: 4 / 3; padding: 8px; }
   #deals-grid .product-card .quick-add-btn, #wishlist-grid .product-card .quick-add-btn, #product-grid .product-card .quick-add-btn { min-height: 40px; }

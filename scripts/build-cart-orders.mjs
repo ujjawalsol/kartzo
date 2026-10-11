@@ -228,28 +228,28 @@ export function buildCartOrders() {
   page("checkout.html", "Secure Checkout — Kartzo", "Securely complete your Kartzo order with verified delivery address and instant payment options.", "shop", `
     ${crumbs([{ href: "index.html", label: "Home" }, { href: "cart.html", label: "Shopping Cart" }, { label: "Checkout" }])}
 
-    <div class="pad site-max py-8">
-      <div class="mb-8 border-b border-slate-200/80 pb-6">
+    <div class="pad site-max py-5 sm:py-8">
+      <div class="mb-5 border-b border-slate-200/80 pb-4 sm:mb-8 sm:pb-6">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("lock", "h-3.5 w-3.5")}
           256-Bit SSL Encrypted
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           Order Checkout
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Enter your delivery details and choose your preferred payment option.</p>
       </div>
 
-      <form id="checkout-form" class="grid gap-8 lg:grid-cols-[1fr_380px]" novalidate>
-        <div class="space-y-6">
+      <form id="checkout-form" class="grid gap-5 lg:grid-cols-[1fr_380px] lg:gap-8" novalidate>
+        <div class="space-y-4 sm:space-y-6">
           
           <!-- Step 1: Delivery Address -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm">
+          <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-7">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-xs font-black text-white">1</span>
               <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Shipping &amp; Delivery Address</h2>
             </div>
-            <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            <div class="mt-4 grid gap-3 sm:mt-5 sm:gap-4 sm:grid-cols-2">
               <label class="block text-xs font-bold text-slate-600 sm:col-span-1">Full Name *
                 <input required name="name" class="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink outline-none focus:border-brand focus:bg-white transition" value="Rahul Mehta">
               </label>
@@ -272,13 +272,13 @@ export function buildCartOrders() {
           </div>
 
           <!-- Step 2: Shipping Option -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm">
+          <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-7">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-xs font-black text-white">2</span>
               <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Delivery Method</h2>
             </div>
             <div class="mt-4 space-y-2.5">
-              <label class="flex cursor-pointer items-center justify-between rounded-xl border-2 border-brand bg-brand-soft/40 p-4 transition">
+              <label class="flex cursor-pointer items-center justify-between rounded-xl border-2 border-brand bg-brand-soft/40 p-3 transition sm:p-4">
                 <div class="flex items-center gap-3">
                   <input type="radio" name="shipping" value="free" checked class="accent-brand h-4 w-4">
                   <div>
@@ -292,13 +292,13 @@ export function buildCartOrders() {
           </div>
 
           <!-- Step 3: Payment Method -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm">
+          <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-7">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-xs font-black text-white">3</span>
               <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Payment Mode</h2>
             </div>
             <div class="mt-4 space-y-2.5">
-              <label class="flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 p-4 hover:bg-slate-50 transition">
+              <label class="flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 p-3 hover:bg-slate-50 transition sm:p-4">
                 <div class="flex items-center gap-3">
                   <input type="radio" name="payment" value="upi" checked class="accent-brand h-4 w-4">
                   <div>
@@ -308,7 +308,7 @@ export function buildCartOrders() {
                 </div>
                 <span class="text-xs font-bold text-brand">Popular</span>
               </label>
-              <label class="flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 p-4 hover:bg-slate-50 transition">
+              <label class="flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 p-3 hover:bg-slate-50 transition sm:p-4">
                 <div class="flex items-center gap-3">
                   <input type="radio" name="payment" value="card" class="accent-brand h-4 w-4">
                   <div>
@@ -317,7 +317,7 @@ export function buildCartOrders() {
                   </div>
                 </div>
               </label>
-              <label class="flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 p-4 hover:bg-slate-50 transition">
+              <label class="flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 p-3 hover:bg-slate-50 transition sm:p-4">
                 <div class="flex items-center gap-3">
                   <input type="radio" name="payment" value="cod" class="accent-brand h-4 w-4">
                   <div>
@@ -331,7 +331,7 @@ export function buildCartOrders() {
         </div>
 
         <!-- Checkout Aside Summary -->
-        <aside class="h-fit rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+        <aside class="h-fit rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6">
           <h2 class="text-base font-extrabold text-brand-ink">Review &amp; Pay</h2>
           
           <div class="mt-4 divide-y divide-slate-100 border-b border-slate-100 pb-4">
@@ -393,23 +393,23 @@ export function buildCartOrders() {
   page("orders.html", "My Orders — Kartzo", "View and track all past orders, delivery status, invoices, and doorstep return requests on Kartzo.", "orders", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "My Orders" }])}
 
-    <div class="pad site-max py-8">
-      <div class="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between border-b border-slate-200/80 pb-6">
+    <div class="pad site-max py-5 sm:py-8">
+      <div class="mb-5 flex flex-col border-b border-slate-200/80 pb-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between sm:pb-6">
         <div>
           <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
             ${icon("package", "h-3.5 w-3.5")}
             Customer Account
           </span>
-          <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+          <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
             My Orders
           </h1>
           <p class="mt-1 text-xs sm:text-sm text-slate-500">Track current deliveries, view GST invoices, and reorder past favorites.</p>
         </div>
 
         <!-- Filter Tabs -->
-        <div class="mt-4 flex flex-wrap gap-2 sm:mt-0">
+        <div class="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1 sm:mt-0 sm:flex-wrap sm:overflow-visible sm:pb-0">
           ${["All", "Active", "Delivered", "Cancelled"].map((t, i) => `
-          <button type="button" data-filter="${t.toLowerCase()}" class="order-filter min-h-10 rounded-xl px-4 text-xs font-bold transition ${i === 0 ? "bg-brand text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"}">${t}</button>`).join("")}
+          <button type="button" data-filter="${t.toLowerCase()}" class="order-filter min-h-10 shrink-0 rounded-xl px-4 text-xs font-bold transition ${i === 0 ? "bg-brand text-white shadow-sm" : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"}">${t}</button>`).join("")}
         </div>
       </div>
 
@@ -425,7 +425,7 @@ export function buildCartOrders() {
           { id: "KZ-10255", date: "12 Sep 2026", status: "processing", label: "Processing", items: [["assets/p-earbuds.webp", "TWS Earbuds Active", "₹1,999"]], total: "₹1,999", active: true },
           { id: "KZ-10110", date: "2 Aug 2026", status: "cancelled", label: "Cancelled", items: [["assets/p-perfume.webp", "Premium Perfume 100ml", "₹1,299"]], total: "₹1,299", active: false }
         ].map(o => `
-        <article class="order-card rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-sm transition hover:shadow-card" data-status="${o.status}" data-active="${o.active ? "1" : "0"}">
+        <article class="order-card rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm transition hover:shadow-card sm:p-6" data-status="${o.status}" data-active="${o.active ? "1" : "0"}">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
               <p class="text-sm font-black text-brand-ink">${o.id}</p>
@@ -448,8 +448,8 @@ export function buildCartOrders() {
           <ul class="my-4 space-y-3">
             ${o.items.map(([img, name, price]) => `
             <li class="flex items-center gap-3.5">
-              <span class="flex h-16 w-16 items-center justify-center rounded-xl bg-[#F6F8FB] p-1">
-                <img src="${img}" alt="${name}" class="h-12 w-auto object-contain" width="800" height="800">
+              <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#F6F8FB] p-1 sm:h-16 sm:w-16">
+                <img src="${img}" alt="${name}" class="h-10 w-auto object-contain sm:h-12" width="800" height="800">
               </span>
               <div class="min-w-0 flex-1">
                 <span class="block truncate text-xs sm:text-sm font-extrabold text-brand-ink">${name}</span>
@@ -479,9 +479,9 @@ export function buildCartOrders() {
     buttons.forEach(function (btn) {
       btn.addEventListener("click", function () {
         buttons.forEach(function (b) {
-          b.className = "order-filter min-h-10 rounded-xl px-4 text-xs font-bold border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition";
+          b.className = "order-filter min-h-10 shrink-0 rounded-xl px-4 text-xs font-bold border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition";
         });
-        btn.className = "order-filter min-h-10 rounded-xl px-4 text-xs font-bold bg-brand text-white shadow-sm transition";
+        btn.className = "order-filter min-h-10 shrink-0 rounded-xl px-4 text-xs font-bold bg-brand text-white shadow-sm transition";
         var f = btn.getAttribute("data-filter");
         document.querySelectorAll(".order-card").forEach(function (card) {
           var show = f === "all" || (f === "active" && card.getAttribute("data-active") === "1") || (f === card.getAttribute("data-status"));
@@ -498,20 +498,20 @@ export function buildCartOrders() {
   page("tracking.html", "Track Your Order — Kartzo", "Real-time shipment tracking for all Kartzo deliveries with live checkpoint status.", "orders", `
     ${crumbs([{ href: "index.html", label: "Home" }, { href: "orders.html", label: "Orders" }, { label: "Track Package" }])}
 
-    <div class="pad site-max py-8 max-w-4xl mx-auto">
-      <div class="mb-8 border-b border-slate-200/80 pb-6 text-center">
+    <div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
+      <div class="mb-5 border-b border-slate-200/80 pb-4 text-center sm:mb-8 sm:pb-6">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("truck", "h-3.5 w-3.5")}
           Courier Tracking
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           Track Your Shipment
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Enter your Order ID and registered phone number to look up live status.</p>
       </div>
 
       <!-- Tracking Lookup Form -->
-      <form class="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm">
+      <form class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-7">
         <div class="grid gap-4 sm:grid-cols-2">
           <label class="block text-xs font-bold text-slate-600">Order ID (e.g. KZ-10482)
             <input required class="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink outline-none focus:border-brand focus:bg-white" value="KZ-10482">
@@ -527,7 +527,7 @@ export function buildCartOrders() {
       </form>
 
       <!-- Active Shipment Status Card -->
-      <div class="mt-8 rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm">
+      <div class="mt-5 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:mt-8 sm:p-8">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-5">
           <div>
             <span class="rounded bg-brand-soft px-2.5 py-0.5 text-xs font-bold text-brand">Shipped via Blue Dart Express</span>
@@ -541,29 +541,29 @@ export function buildCartOrders() {
         </div>
 
         <!-- 4-Step Progress Milestone -->
-        <ol class="mt-8 grid gap-4 grid-cols-2 sm:grid-cols-4">
-          <li class="rounded-xl bg-emerald-50 p-4 text-center">
+        <ol class="mt-5 grid gap-2.5 grid-cols-2 sm:mt-8 sm:gap-4 sm:grid-cols-4">
+          <li class="rounded-xl bg-emerald-50 p-3 text-center sm:p-4">
             <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">
               ${icon("check", "h-4 w-4")}
             </span>
             <span class="mt-2 block text-xs font-extrabold text-emerald-800">Order Confirmed</span>
             <span class="block text-[10px] text-slate-500">6 Oct, 10:30 AM</span>
           </li>
-          <li class="rounded-xl bg-emerald-50 p-4 text-center">
+          <li class="rounded-xl bg-emerald-50 p-3 text-center sm:p-4">
             <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">
               ${icon("check", "h-4 w-4")}
             </span>
             <span class="mt-2 block text-xs font-extrabold text-emerald-800">Packed &amp; Dispatched</span>
             <span class="block text-[10px] text-slate-500">6 Oct, 04:15 PM</span>
           </li>
-          <li class="rounded-xl bg-brand-soft p-4 text-center ring-2 ring-brand/30">
+          <li class="rounded-xl bg-brand-soft p-3 text-center sm:p-4 ring-2 ring-brand/30">
             <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-brand text-white text-xs font-bold">
               ${icon("truck", "h-4 w-4")}
             </span>
             <span class="mt-2 block text-xs font-extrabold text-brand">In Transit</span>
             <span class="block text-[10px] text-slate-500">Hub Mumbai</span>
           </li>
-          <li class="rounded-xl bg-slate-50 p-4 text-center">
+          <li class="rounded-xl bg-slate-50 p-3 text-center sm:p-4">
             <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-400 text-xs font-bold">
               ${icon("package", "h-4 w-4")}
             </span>
@@ -573,7 +573,7 @@ export function buildCartOrders() {
         </ol>
 
         <!-- Checkpoints Table -->
-        <div class="mt-8 border-t border-slate-100 pt-6">
+        <div class="mt-5 border-t border-slate-100 pt-4 sm:mt-8 sm:pt-6">
           <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Milestone History</h3>
           <div class="mt-4 space-y-3 text-xs">
             <div class="flex items-start gap-4">

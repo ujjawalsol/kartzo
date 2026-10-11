@@ -463,12 +463,12 @@ export function buildShop() {
       { label: "Wireless Headphones Pro" }
     ])}
 
-    <div class="pad site-max py-8">
-      <div class="grid gap-10 lg:grid-cols-2 lg:gap-14">
+    <div class="pad site-max py-5 sm:py-8">
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-14">
         
         <!-- Product Media Gallery -->
         <div class="space-y-4">
-          <div class="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-slate-200/80 bg-[#F6F8FB] p-8 shadow-sm">
+          <div class="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-slate-200/80 bg-[#F6F8FB] p-4 shadow-sm sm:p-8">
             <span class="absolute left-4 top-4 z-10 rounded-md bg-rose-500 px-2.5 py-1 text-[11px] font-black text-white shadow-sm">
               30% OFF
             </span>
@@ -506,7 +506,7 @@ export function buildShop() {
             </span>
           </div>
 
-          <h1 class="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-ink">
+          <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-3xl">
             Wireless Headphones Pro
           </h1>
           <p class="mt-1.5 text-xs sm:text-sm text-slate-500 leading-relaxed">
@@ -526,8 +526,8 @@ export function buildShop() {
           </div>
 
           <!-- Price Block -->
-          <div class="mt-5 flex items-baseline gap-3">
-            <span class="text-3xl font-black text-brand-ink">₹2,799</span>
+          <div class="mt-4 flex items-baseline gap-2.5 sm:mt-5 sm:gap-3">
+            <span class="text-[1.7rem] font-black leading-none text-brand-ink sm:text-3xl">₹2,799</span>
             <span class="text-base text-slate-400 line-through font-medium">₹3,999</span>
             <span class="rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-black text-emerald-700">Save ₹1,200</span>
           </div>
@@ -588,7 +588,7 @@ export function buildShop() {
           </div>
 
           <!-- Pincode Delivery Estimator -->
-          <div class="mt-6 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4">
+          <div class="mt-5 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3 sm:mt-6 sm:p-4">
             <label for="pincode-input" class="flex items-center gap-2 text-xs font-extrabold text-brand-ink">
               ${icon("truck", "h-4 w-4 text-brand")}
               <span>Check Delivery &amp; COD Availability</span>
@@ -623,7 +623,7 @@ export function buildShop() {
       </div>
 
       <!-- Product Specifications, In The Box, Shipping Accordions -->
-      <div class="mt-14 space-y-3 max-w-4xl">
+      <div class="mt-8 space-y-3 max-w-4xl sm:mt-14">
         <details class="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm" open>
           <summary class="flex cursor-pointer items-center justify-between font-extrabold text-sm sm:text-base text-brand-ink">
             <span>Product Specifications &amp; Features</span>
@@ -671,7 +671,7 @@ export function buildShop() {
       </div>
 
       <!-- Customer Reviews & Rating Breakdown -->
-      <section id="reviews" class="mt-14 rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-10 shadow-sm">
+      <section id="reviews" class="mt-8 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:mt-14 sm:p-10">
         <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-6">
           <div>
             <h2 class="text-xl font-extrabold sm:text-2xl text-brand-ink">Customer Reviews</h2>

@@ -7,15 +7,15 @@ export function buildInfoSupport() {
   page("about.html", "About Us — Kartzo", "Learn about Kartzo's mission to deliver premium electronics, lifestyle, and home goods at direct honest pricing across India.", "about", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "About Us" }])}
 
-    <div class="pad site-max py-8">
+    <div class="pad site-max py-5 sm:py-8">
       <!-- Hero Intro -->
-      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="grid items-center gap-6 lg:grid-cols-2 lg:gap-16">
         <div>
           <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
             ${icon("sparkles", "h-3.5 w-3.5")}
             Our Purpose
           </span>
-          <h1 class="mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight text-brand-ink leading-tight">
+          <h1 class="mt-3 text-[1.7rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-5xl">
             Precision Essentials, Honestly Priced.
           </h1>
           <p class="mt-4 text-sm sm:text-base leading-relaxed text-slate-600">
@@ -37,14 +37,14 @@ export function buildInfoSupport() {
       </div>
 
       <!-- Core Brand Values (Clean Editorial Grid, Not Generic AI Boxes) -->
-      <div class="mt-20 border-t border-slate-200/80 pt-14">
+      <div class="mt-10 border-t border-slate-200/80 pt-8 sm:mt-20 sm:pt-14">
         <div class="max-w-xl">
           <span class="text-xs font-bold uppercase tracking-wider text-brand">Our Commitments</span>
           <h2 class="mt-1 text-2xl sm:text-3xl font-extrabold text-brand-ink">Built for Every Indian Shopper</h2>
           <p class="mt-2 text-xs sm:text-sm text-slate-500">How we maintain product integrity and customer trust at scale.</p>
         </div>
         
-        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-5 grid gap-3 sm:mt-8 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
             <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-soft text-brand">
               ${icon("shield-check", "h-5 w-5")}
@@ -70,7 +70,7 @@ export function buildInfoSupport() {
       </div>
 
       <!-- Trust Metrics Strip -->
-      <div class="mt-16 rounded-2xl bg-brand-ink p-8 sm:p-12 text-white">
+      <div class="mt-10 rounded-2xl bg-brand-ink p-5 text-white sm:mt-16 sm:p-12">
         <div class="grid gap-6 grid-cols-2 md:grid-cols-4 text-center">
           <div><span class="block text-3xl sm:text-4xl font-black text-white">100K+</span><span class="mt-1 block text-xs text-white/70">Verified Orders</span></div>
           <div><span class="block text-3xl sm:text-4xl font-black text-white">1,200+</span><span class="mt-1 block text-xs text-white/70">Tested Products</span></div>
@@ -87,22 +87,22 @@ export function buildInfoSupport() {
   page("contact.html", "Contact Customer Support — Kartzo", "Get in touch with the Kartzo team for order tracking, returns assistance, corporate inquiries, and support.", "contact", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Contact Us" }])}
 
-    <div class="pad site-max py-8">
-      <div class="mb-8 border-b border-slate-200/80 pb-6">
+    <div class="pad site-max py-5 sm:py-8">
+      <div class="mb-5 border-b border-slate-200/80 pb-4 sm:mb-8 sm:pb-6">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("help", "h-3.5 w-3.5")}
           Customer Help Desk
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           We're Here to Help
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Have a question regarding your order, delivery timeline, or returns? Reach out anytime.</p>
       </div>
 
-      <div class="grid gap-8 lg:grid-cols-[1fr_380px]">
+      <div class="grid gap-5 lg:grid-cols-[1fr_380px] lg:gap-8">
         
         <!-- Contact Form -->
-        <div class="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm">
+        <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-8">
           <h2 class="text-base sm:text-lg font-extrabold text-brand-ink">Send Us a Message</h2>
           <p class="mt-1 text-xs text-slate-500">Our customer care team typically responds within 2 business hours.</p>
 
@@ -126,13 +126,20 @@ export function buildInfoSupport() {
             </div>
 
             <label class="block text-xs font-bold text-slate-600">Subject *
-              <select name="subject" class="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink outline-none focus:border-brand focus:bg-white transition">
-                <option value="tracking">Order Tracking &amp; Delivery Inquiry</option>
-                <option value="return">Return or Doorstep Replacement</option>
-                <option value="warranty">Product Warranty Claim</option>
-                <option value="billing">Payment or Invoice Assistance</option>
-                <option value="general">General Feedback</option>
-              </select>
+              <input type="hidden" name="subject" id="subject-input" value="tracking">
+              <span class="relative mt-1.5 block" data-subject-wrap>
+                <button type="button" id="subject-btn" aria-haspopup="listbox" aria-expanded="false" class="flex min-h-11 w-full items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink outline-none transition focus:border-brand focus:bg-white">
+                  <span id="subject-label" class="truncate">Order Tracking &amp; Delivery Inquiry</span>
+                  ${icon("chevron-down", "h-4 w-4 shrink-0 text-slate-400")}
+                </button>
+                <span id="subject-menu" role="listbox" aria-label="Message subject" class="absolute inset-x-0 top-full z-30 mt-2 hidden overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-xl">
+                  ${[["tracking", "Order Tracking & Delivery Inquiry"], ["return", "Return or Doorstep Replacement"], ["warranty", "Product Warranty Claim"], ["billing", "Payment or Invoice Assistance"], ["general", "General Feedback"]].map(([v, l], i) => `
+                  <button type="button" role="option" data-subject="${v}" aria-selected="${i === 0 ? "true" : "false"}" class="subject-option flex min-h-11 w-full items-center justify-between gap-2 px-3.5 text-xs sm:text-sm font-semibold transition ${i === 0 ? "bg-brand-soft text-brand" : "text-slate-600 hover:bg-slate-50"}">
+                    <span class="truncate">${l}</span>
+                    <svg class="subject-tick h-4 w-4 shrink-0 ${i === 0 ? "" : "hidden"}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  </button>`).join("")}
+                </span>
+              </span>
             </label>
 
             <label class="block text-xs font-bold text-slate-600">Message Details *
@@ -149,7 +156,7 @@ export function buildInfoSupport() {
 
         <!-- Contact Channels Aside -->
         <aside class="space-y-4">
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6">
             <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Direct Support Channels</h3>
             <div class="mt-4 space-y-4 text-xs sm:text-sm text-slate-600">
               <div class="flex items-start gap-3">
@@ -203,6 +210,55 @@ export function buildInfoSupport() {
         if (btn) btn.disabled = true;
         if (msg) msg.classList.remove("hidden");
         form.reset();
+        var subjLabel = document.getElementById("subject-label");
+        var subjInput = document.getElementById("subject-input");
+        if (subjLabel) subjLabel.textContent = "Order Tracking & Delivery Inquiry";
+        if (subjInput) subjInput.value = "tracking";
+        document.querySelectorAll(".subject-option").forEach(function (o) {
+          var on = o.getAttribute("data-subject") === "tracking";
+          o.setAttribute("aria-selected", on ? "true" : "false");
+          o.classList.toggle("bg-brand-soft", on);
+          o.classList.toggle("text-brand", on);
+          o.classList.toggle("text-slate-600", !on);
+          var tick = o.querySelector(".subject-tick");
+          if (tick) tick.classList.toggle("hidden", !on);
+        });
+      });
+    }
+
+    var subjWrap = document.querySelector("[data-subject-wrap]");
+    var subjBtn = document.getElementById("subject-btn");
+    var subjMenu = document.getElementById("subject-menu");
+    if (subjBtn && subjMenu) {
+      subjBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = subjMenu.classList.toggle("hidden");
+        subjBtn.setAttribute("aria-expanded", open ? "false" : "true");
+      });
+      document.addEventListener("click", function (e) {
+        if (subjWrap && !subjWrap.contains(e.target)) { subjMenu.classList.add("hidden"); subjBtn.setAttribute("aria-expanded", "false"); }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { subjMenu.classList.add("hidden"); subjBtn.setAttribute("aria-expanded", "false"); }
+      });
+      document.querySelectorAll(".subject-option").forEach(function (o) {
+        o.addEventListener("click", function () {
+          var label = document.getElementById("subject-label");
+          var input = document.getElementById("subject-input");
+          if (label) label.textContent = o.querySelector("span").textContent;
+          if (input) input.value = o.getAttribute("data-subject");
+          document.querySelectorAll(".subject-option").forEach(function (x) {
+            var on = x === o;
+            x.setAttribute("aria-selected", on ? "true" : "false");
+            x.classList.toggle("bg-brand-soft", on);
+            x.classList.toggle("text-brand", on);
+            x.classList.toggle("text-slate-600", !on);
+            var tick = x.querySelector(".subject-tick");
+            if (tick) tick.classList.toggle("hidden", !on);
+          });
+          subjMenu.classList.add("hidden");
+          subjBtn.setAttribute("aria-expanded", "false");
+        });
       });
     }
   })();
@@ -214,7 +270,7 @@ export function buildInfoSupport() {
   page("faq.html", "Frequently Asked Questions & Support — Kartzo", "Find answers to top questions about ordering, shipping timelines, doorstep returns, warranties, and payments on Kartzo.", "contact", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Help & FAQs" }])}
 
-    <div class="pad site-max py-8 max-w-4xl mx-auto">
+    <div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
       <div class="mb-8 border-b border-slate-200/80 pb-6 text-center">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("help", "h-3.5 w-3.5")}
@@ -285,20 +341,20 @@ export function buildInfoSupport() {
   page("size-guide.html", "Size & Fit Guide — Kartzo", "Accurate sizing charts and measurement guidelines for apparel, footwear, and audio accessories on Kartzo.", "shop", `
     ${crumbs([{ href: "index.html", label: "Home" }, { label: "Size & Fit Guide" }])}
 
-    <div class="pad site-max py-8 max-w-4xl mx-auto">
-      <div class="mb-8 border-b border-slate-200/80 pb-6 text-center">
+    <div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
+      <div class="mb-5 border-b border-slate-200/80 pb-4 text-center sm:mb-8 sm:pb-6">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
           ${icon("sparkles", "h-3.5 w-3.5")}
           Measurement Precision
         </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
           Size &amp; Fit Guide
         </h1>
         <p class="mt-1 text-xs sm:text-sm text-slate-500">Find your exact measurements before ordering to ensure the ideal fit.</p>
       </div>
 
       <!-- Footwear Size Chart -->
-      <div class="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm">
+      <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-8">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
           <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Footwear Size Conversion (Men &amp; Women)</h2>
           <span class="text-xs text-slate-400">All sizes in standard UK/India</span>
@@ -325,7 +381,7 @@ export function buildInfoSupport() {
       </div>
 
       <!-- Apparel Size Chart -->
-      <div class="mt-6 rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm">
+      <div class="mt-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:mt-6 sm:p-8">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
           <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Apparel &amp; Outerwear Sizing</h2>
           <span class="text-xs text-slate-400">Regular fit specs</span>

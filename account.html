@@ -161,55 +161,67 @@
   </nav>
 
 
-    <div class="pad site-max py-8">
-      <!-- Welcome Header -->
-      <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-200/80 pb-6 gap-4">
-        <div class="flex items-center gap-4">
-          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-soft text-brand font-black text-xl">
-            RM
-          </div>
-          <div>
-            <h1 class="text-2xl font-extrabold text-brand-ink">Hello, Rahul Mehta</h1>
-            <p class="text-xs text-slate-500">rahul.mehta@example.com • Member since Jan 2025</p>
-          </div>
+    <div class="pad site-max py-5 sm:py-8">
+      <!-- Profile Header -->
+      <div class="mb-5 flex flex-row items-center gap-3 border-b border-slate-200/80 pb-4 sm:mb-8 sm:gap-4 sm:pb-6">
+        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand text-base font-black text-white shadow-md sm:h-16 sm:w-16 sm:text-lg">
+          RM
         </div>
-        <a href="login.html" class="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-          Sign Out
-        </a>
+        <div class="min-w-0">
+          <h1 class="truncate text-[1.35rem] font-extrabold leading-tight text-brand-ink sm:text-2xl">Hello, Rahul Mehta</h1>
+          <p class="mt-0.5 truncate text-xs text-slate-500 sm:text-sm">rahul.mehta@example.com</p>
+          <p class="text-[11px] text-slate-400">Member since Jan 2025</p>
+        </div>
       </div>
 
       <!-- Customer Account Layout -->
-      <div class="grid gap-8 lg:grid-cols-[260px_1fr]">
+      <div class="grid gap-5 lg:grid-cols-[260px_1fr] lg:gap-8">
         
         <!-- Account Sidebar Navigation -->
-        <aside class="space-y-1">
-          <a href="account.html" class="flex items-center gap-3 rounded-xl bg-brand-soft px-4 py-3 text-xs font-bold text-brand">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19"/></svg>
-            <span>Overview &amp; Profile</span>
+        <aside class="space-y-1.5" id="account-menu">
+          <a href="account.html#sec-details" data-sec-toggle="sec-details" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19"/></svg>
+            <span>Personal Details</span>
+            <svg class="h-5 w-5 ml-auto text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </a>
-          <a href="orders.html" class="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg>
+          <a href="orders.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg>
             <span>My Orders (4)</span>
+            <svg class="h-5 w-5 ml-auto text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </a>
-          <a href="wishlist.html" class="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+          <a href="wishlist.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
             <span>Saved Wishlist (4)</span>
+            <svg class="h-5 w-5 ml-auto text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </a>
-          <a href="tracking.html" class="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h13v10H2zM15 9h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+          <a href="tracking.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h13v10H2zM15 9h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
             <span>Track Shipments</span>
+            <svg class="h-5 w-5 ml-auto text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </a>
-          <a href="contact.html" class="flex items-center gap-3 rounded-xl px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
-            <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+          <a href="account.html#sec-addresses" data-sec-toggle="sec-addresses" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Saved Addresses</span>
+            <svg class="h-5 w-5 ml-auto text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+          <a href="contact.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+            <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
             <span>Help &amp; Support</span>
+            <svg class="h-5 w-5 ml-auto text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </a>
+          <div class="pt-2 mt-2 border-t border-slate-100">
+            <a href="login.html" class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-rose-600 hover:bg-rose-50 transition">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+              <span>Sign Out</span>
+            </a>
+          </div>
         </aside>
 
         <!-- Main Account Content Area -->
         <div class="space-y-8">
           
           <!-- Recent Order Snapshot -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
                 <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Most Recent Order</h2>
@@ -246,7 +258,7 @@
           </div>
 
           <!-- Saved Addresses Grid -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <div id="sec-addresses" class="hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6 scroll-mt-24">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Saved Delivery Addresses</h2>
               <button type="button" class="text-xs font-bold text-brand hover:underline">+ Add New</button>
@@ -276,7 +288,7 @@
           </div>
 
           <!-- Profile Details Form -->
-          <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <div id="sec-details" class="hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6 scroll-mt-24">
             <h2 class="text-sm sm:text-base font-extrabold text-brand-ink border-b border-slate-100 pb-4">Personal Details</h2>
             <form class="mt-4 grid gap-4 sm:grid-cols-2">
               <div>
@@ -288,7 +300,7 @@
                 <input class="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink" value="rahul.mehta@example.com">
               </div>
               <div class="sm:col-span-2">
-                <button type="button" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-brand px-6 text-xs sm:text-sm font-bold text-white hover:bg-brand-dark transition">
+                <button type="button" class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-brand px-6 text-xs sm:text-sm font-bold text-white hover:bg-brand-dark transition sm:w-auto">
                   Save Changes
                 </button>
               </div>
@@ -337,52 +349,48 @@
             <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Shop by Department</p>
             <a href="categories.html" class="text-[11px] font-bold text-brand hover:underline">View All</a>
           </div>
-          <div class="mt-2.5 space-y-1">
-            <a href="products.html?category=electronics" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+          <div class="mt-2 space-y-0.5">
+            <a href="products.html?category=electronics" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">🎧</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H4zM20 13v4a2 2 0 0 1-2 2h-1v-6h3z"/><path d="M12 19v2"/></svg></span>
                 <span>Audio &amp; Electronics</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">24 items</span>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <a href="products.html?category=fashion" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=fashion" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">👟</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2z"/><circle cx="7" cy="7" r=".5" fill="currentColor"/></svg></span>
                 <span>Footwear &amp; Fashion</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">36 items</span>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <a href="products.html?category=home" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=home" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">🏠</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9.5 9-7 9 7v10a1.5 1.5 0 0 1-1.5 1.5H15v-6a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v6H4.5A1.5 1.5 0 0 1 3 19.5z"/></svg></span>
                 <span>Home &amp; Living</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">18 items</span>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <a href="products.html?category=beauty" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=beauty" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">💄</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.91 5.82a2 2 0 0 0 1.27 1.27L21 12l-5.82 1.91a2 2 0 0 0-1.27 1.27L12 21l-1.91-5.82a2 2 0 0 0-1.27-1.27L3 12l5.82-1.91a2 2 0 0 0 1.27-1.27L12 3z"/></svg></span>
                 <span>Beauty &amp; Fragrances</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">15 items</span>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <a href="products.html?category=kitchen" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=kitchen" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">🍳</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
                 <span>Kitchen Appliances</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">12 items</span>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <a href="products.html?category=bags" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-brand-ink hover:bg-slate-50 transition">
+            <a href="products.html?category=bags" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-brand-ink transition hover:bg-slate-50">
               <span class="flex items-center gap-3">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand">🎒</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf1ff] text-brand"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg></span>
                 <span>Bags &amp; Travel Gear</span>
               </span>
-              <span class="text-[11px] font-normal text-slate-400">16 items</span>
-            </a>
-            <a href="products.html" class="flex items-center justify-between rounded-xl border border-dashed border-slate-200 px-3 py-2 text-xs font-bold text-brand hover:bg-brand-soft transition mt-2">
-              <span>Browse Complete Catalog</span>
-              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
           </div>
         </div>
@@ -390,27 +398,20 @@
         <!-- Orders & Account Management -->
         <div>
           <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">My Orders &amp; Account</p>
-          <nav class="mt-2 space-y-1">
-            <a href="tracking.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+          <nav class="mt-2 space-y-0.5">
+            <a href="tracking.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
               <span class="flex items-center gap-3">
                 <svg class="h-4 w-4 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h13v10H2zM15 9h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
-                Track Active Shipment
+                Track Shipment
               </span>
-              <span class="rounded bg-emerald-50 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">Live AWB</span>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <a href="orders.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+            <a href="orders.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
               <span class="flex items-center gap-3">
                 <svg class="h-4 w-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16.5 9.4-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg>
-                My Past Orders
+                My Orders
               </span>
-              <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-            <a href="account.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-              <span class="flex items-center gap-3">
-                <svg class="h-4 w-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19"/></svg>
-                Profile &amp; Saved Addresses
-              </span>
-              <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
           </nav>
         </div>
@@ -418,45 +419,22 @@
         <!-- Customer Care & Assistance -->
         <div>
           <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Customer Support</p>
-          <nav class="mt-2 space-y-1">
-            <a href="contact.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+          <nav class="mt-2 space-y-0.5">
+            <a href="contact.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
               <span class="flex items-center gap-3">
                 <svg class="h-4 w-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                 24/7 Support: +91 98765 43210
               </span>
-              <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <a href="returns-policy.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+            <a href="returns-policy.html" class="flex items-center justify-between rounded-xl px-3 py-3 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
               <span class="flex items-center gap-3">
                 <svg class="h-4 w-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
                 7-Day Doorstep Replacement
               </span>
-              <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-            <a href="size-guide.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-              <span class="flex items-center gap-3">
-                <svg class="h-4 w-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
-                Size &amp; Fit Guide
-              </span>
-              <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-            <a href="about.html" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-              <span class="flex items-center gap-3">
-                <svg class="h-4 w-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-                About Kartzo &amp; Quality Promise
-              </span>
-              <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              <svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
           </nav>
-        </div>
-
-        <!-- Service Assurance Strip -->
-        <div class="rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5 space-y-1.5 text-xs">
-          <div class="flex items-center gap-2 text-brand font-bold">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h13v10H2zM15 9h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
-            <span>Free Express Delivery</span>
-          </div>
-          <p class="text-[11px] text-slate-500 leading-relaxed">Orders ₹499+ qualify for free express delivery across all pin codes in India.</p>
         </div>
       </div>
 
@@ -466,6 +444,8 @@
           <a href="faq.html" class="hover:text-brand transition">FAQs</a>
           <span>•</span>
           <a href="shipping-policy.html" class="hover:text-brand transition">Shipping</a>
+          <span>•</span>
+          <a href="about.html" class="hover:text-brand transition">About</a>
           <span>•</span>
           <a href="privacy-policy.html" class="hover:text-brand transition">Privacy</a>
           <span>•</span>
@@ -776,6 +756,38 @@
   <script src="assets/kartzo.js"></script>
 
   <script src="assets/kartzo.js"></script>
-
+<script>
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll("#account-menu [data-sec-toggle]"));
+    var sections = {};
+    ["sec-details", "sec-addresses"].forEach(function (id) { sections[id] = document.getElementById(id); });
+    function paint(activeId) {
+      links.forEach(function (l) {
+        var on = l.getAttribute("data-sec-toggle") === activeId;
+        l.classList.toggle("bg-brand-soft", on);
+        l.classList.toggle("text-brand", on);
+        l.classList.toggle("text-slate-700", !on);
+        if (on) l.setAttribute("aria-current", "true"); else l.removeAttribute("aria-current");
+      });
+    }
+    links.forEach(function (l) {
+      l.addEventListener("click", function (e) {
+        e.preventDefault();
+        var id = l.getAttribute("data-sec-toggle");
+        var el = sections[id];
+        if (!el) return;
+        var willShow = el.classList.contains("hidden");
+        Object.keys(sections).forEach(function (k) { if (sections[k]) sections[k].classList.add("hidden"); });
+        if (willShow) {
+          el.classList.remove("hidden");
+          paint(id);
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          paint(null);
+        }
+      });
+    });
+  })();
+</script>
 </body>
 </html>
