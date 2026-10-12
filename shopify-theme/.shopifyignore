@@ -1,0 +1,6 @@
+# Files excluded from `shopify theme push` / `shopify theme pull`.
+# These are repository evidence and build sources, not storefront code.
+# (Supported by Shopify CLI; theme functionality is unaffected.)
+docs/
+.opencode/
+.kilo/

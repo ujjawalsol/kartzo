@@ -1,0 +1,19 @@
+{
+  "name": "Footer group",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer"
+    },
+    "cart-drawer": {
+      "type": "cart-drawer"
+    },
+    "search-modal": {
+      "type": "search-modal"
+    },
+    "wishlist-drawer": {
+      "type": "wishlist-drawer"
+    }
+  },
+  "order": ["footer", "cart-drawer", "search-modal", "wishlist-drawer"]
+}

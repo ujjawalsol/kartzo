@@ -1,0 +1,60 @@
+{% comment %} Size guide — merchant-managed measurement tables (no invented brand data). {% endcomment %}
+{% render 'breadcrumbs', trail: page.title %}
+
+<div class="pad mx-auto w-full max-w-4xl pb-12 pt-4 sm:pt-6">
+  <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{{ page.title | default: 'Size & Fit Guide' }}</h1>
+  {%- if page.content != blank -%}
+    <div class="mt-2 text-sm text-slate-600">{{ page.content }}</div>
+  {%- endif -%}
+  <div class="mt-5 space-y-6">
+    {%- for block in section.blocks -%}
+      <section class="overflow-hidden rounded-2xl border border-[#e6eefb]" {{ block.shopify_attributes }}>
+        <h2 class="bg-[#f8fbff] px-4 py-3 text-base font-extrabold">{{ block.settings.title }}</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[520px] text-left text-sm">
+            <thead>
+              {%- assign size_cols = block.settings.columns | split: '|' -%}
+              <tr class="border-b border-slate-100 text-xs uppercase tracking-wide text-slate-400">
+                {%- for col in size_cols -%}
+                  <th scope="col" class="px-4 py-2.5 font-extrabold">{{ col | strip }}</th>
+                {%- endfor -%}
+              </tr>
+            </thead>
+            <tbody>
+              {%- assign size_rows_html = block.settings.rows | newline_to_br -%}
+              {%- assign size_rows = size_rows_html | split: '<br />' -%}
+              {%- for row in size_rows -%}
+                {%- assign cells = row | split: '|' -%}
+                <tr class="border-b border-slate-50 last:border-0">
+                  {%- for cell in cells -%}
+                    <td class="px-4 py-2.5 {% if forloop.first %}font-bold{% endif %}">{{ cell | strip }}</td>
+                  {%- endfor -%}
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    {%- endfor -%}
+  </div>
+  {%- assign fashion_url = routes.search_url | append: '?q=fashion' -%}
+  <p class="mt-5 text-sm"><a class="font-bold text-brand hover:underline" href="{{ fashion_url }}">Shop fashion →</a></p>
+</div>
+
+{% schema %}
+{
+  "name": "Size guide",
+  "blocks": [
+    {
+      "type": "table",
+      "name": "Size table",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Table title", "default": "Footwear conversion" },
+        { "type": "text", "id": "columns", "label": "Columns (| separated)", "default": "UK | US | EU | Foot length (cm)" },
+        { "type": "textarea", "id": "rows", "label": "Rows (one per line, | separated cells)", "default": "6 | 7 | 40 | 25.0\n7 | 8 | 41 | 25.7\n8 | 9 | 42 | 26.0\n9 | 10 | 43 | 27.0\n10 | 11 | 44 | 28.3" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Size guide", "blocks": [{ "type": "table" }, { "type": "table" }] }]
+}
+{% endschema %}

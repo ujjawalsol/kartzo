@@ -1,0 +1,206 @@
+{% comment %}
+  Kartzo collection — real storefront filtering, sort_by, pagination. No decorative controls.
+{% endcomment %}
+{%- paginate collection.products by section.settings.per_page -%}
+  {% render 'breadcrumbs', trail: collection.title %}
+
+  <div class="pad mx-auto w-full max-w-7xl pb-10 pt-4 sm:pt-6">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}
+          <div class="mt-1 max-w-2xl text-sm text-slate-600">{{ collection.description }}</div>
+        {%- endif -%}
+        <p id="catalog-count" class="mt-1 text-sm font-semibold text-slate-500" role="status">
+          {{ collection.products_count }} {% if collection.products_count == 1 %}product{% else %}products{% endif %}
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" data-filter-drawer-open class="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-bold lg:hidden">
+          {% render 'icons', name: 'filter', class: 'h-4 w-4' %} {{ 'general.filters' | t }}
+        </button>
+        <form method="get" action="{{ collection.url }}" class="flex items-center gap-2">
+          {%- for filter in collection.filters -%}
+            {%- for value in filter.active_values -%}
+              <input type="hidden" name="{{ value.param_name }}" value="{{ value.value }}">
+            {%- endfor -%}
+          {%- endfor -%}
+          <label for="sort-by" class="sr-only">{{ 'general.sort' | t }}</label>
+          <select id="sort-by" name="sort_by" data-sort-select class="min-h-11 rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-brand-ink">
+            {%- assign sort_options = 'manual:Featured,best-selling:Best selling,title-ascending:Alphabetically,price-ascending:Price, low to high,price-descending:Price, high to low,created-descending:Newest' | split: ',' -%}
+            {%- for opt in sort_options -%}
+              {%- assign parts = opt | split: ':' -%}
+              <option value="{{ parts[0] }}" {% if collection.sort_by == parts[0] %}selected{% endif %}>{{ parts[1] }}</option>
+            {%- endfor -%}
+          </select>
+        </form>
+      </div>
+    </div>
+
+    {%- if collection.filters.size > 0 -%}
+      {%- assign has_active = false -%}
+      {%- for filter in collection.filters -%}
+        {%- if filter.active_values.size > 0 -%}{%- assign has_active = true -%}{%- endif -%}
+      {%- endfor -%}
+      {%- if has_active -%}
+        <div id="active-filters-bar" class="mt-3 flex flex-wrap items-center gap-2" aria-label="Active filters">
+          {%- for filter in collection.filters -%}
+            {%- for value in filter.active_values -%}
+              <a href="{{ value.url_to_remove }}" class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold text-brand hover:bg-[#dbe7ff]">
+                {{ value.label }} {% render 'icons', name: 'close', class: 'h-3 w-3' %}
+                <span class="sr-only">Remove filter</span>
+              </a>
+            {%- endfor -%}
+          {%- endfor -%}
+          <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="text-xs font-bold text-slate-500 hover:text-brand hover:underline">{{ 'general.clear_all' | t }}</a>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    <div class="mt-5 grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+      <aside class="hidden lg:block" aria-label="{{ 'general.filters' | t }}">
+        {%- if collection.filters.size > 0 -%}
+          <form method="get" action="{{ collection.url }}" data-filters-form>
+            <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+            {%- for filter in collection.filters -%}
+              {%- if filter.values.size > 0 or filter.type == 'price_range' -%}
+              <fieldset class="border-b border-slate-100 py-4">
+                <legend class="text-sm font-extrabold text-brand-ink">{{ filter.label }}</legend>
+                <div class="mt-2 space-y-1.5">
+                  {%- case filter.type -%}
+                    {%- when 'boolean', 'list' -%}
+                      {%- for value in filter.values -%}
+                        <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">
+                          <input
+                            type="checkbox"
+                            name="{{ value.param_name }}"
+                            value="{{ value.value }}"
+                            {% if value.active %}checked{% endif %}
+                            {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                            class="h-4 w-4 rounded border-slate-300 accent-[#1A56F0]"
+                          >
+                          <span class="flex-1">{{ value.label }} <span class="text-xs text-slate-400">({{ value.count }})</span></span>
+                        </label>
+                      {%- endfor -%}
+                    {%- when 'price_range' -%}
+                      <div class="flex items-center gap-2">
+                        <label class="sr-only" for="filter-min-{{ forloop.index }}">Minimum price</label>
+                        <input
+                          id="filter-min-{{ forloop.index }}"
+                          type="number"
+                          name="{{ filter.min_value.param_name }}"
+                          {% if filter.min_value.value %}value="{{ filter.min_value.value }}"{% endif %}
+                          min="0"
+                          placeholder="Min"
+                          class="min-h-11 w-full rounded-xl border border-slate-200 px-3 text-sm"
+                        >
+                        <span aria-hidden="true">–</span>
+                        <label class="sr-only" for="filter-max-{{ forloop.index }}">Maximum price</label>
+                        <input
+                          id="filter-max-{{ forloop.index }}"
+                          type="number"
+                          name="{{ filter.max_value.param_name }}"
+                          {% if filter.max_value.value %}value="{{ filter.max_value.value }}"{% endif %}
+                          min="0"
+                          placeholder="Max"
+                          class="min-h-11 w-full rounded-xl border border-slate-200 px-3 text-sm"
+                        >
+                      </div>
+                      <button type="submit" class="mt-2 inline-flex min-h-11 items-center rounded-xl bg-brand px-4 text-xs font-bold text-white hover:bg-brand-dark">Apply price</button>
+                  {%- endcase -%}
+                </div>
+              </fieldset>
+              {%- endif -%}
+            {%- endfor -%}
+          </form>
+        {%- else -%}
+          {% render 'collection-filters-fallback' %}
+        {%- endif -%}
+      </aside>
+
+      <div>
+        {%- if collection.products.size > 0 -%}
+          <div id="product-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+            {%- for product in collection.products -%}
+              {% render 'product-card', product: product %}
+            {%- endfor -%}
+          </div>
+          {%- if paginate.pages > 1 -%}
+            <nav class="mt-8 flex items-center justify-center gap-2" aria-label="Pagination">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-slate-200 px-3 text-sm font-bold hover:border-brand hover:text-brand" aria-label="Previous page">←</a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-slate-200 px-3 text-sm font-bold hover:border-brand hover:text-brand">{{ part.title }}</a>
+                {%- else -%}
+                  <span {% if part.title == paginate.current_page %}aria-current="page"{% endif %} class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl px-3 text-sm font-bold {% if part.title == paginate.current_page %}bg-brand text-white{% else %}text-slate-500{% endif %}">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-slate-200 px-3 text-sm font-bold hover:border-brand hover:text-brand" aria-label="Next page">→</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <div class="rounded-3xl border border-dashed border-slate-300 px-6 py-16 text-center">
+            <p class="text-lg font-extrabold">{{ 'general.no_results' | t }}</p>
+            <p class="mt-1 text-sm text-slate-500">Try removing some filters.</p>
+            <a href="{{ collection.url }}" class="mt-4 inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">{{ 'general.clear_all' | t }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div id="filter-drawer" class="drawer-backdrop fixed inset-0 z-[80] bg-slate-950/60 backdrop-blur-sm lg:hidden" role="dialog" aria-modal="true" aria-label="{{ 'general.filters' | t }}">
+    <div class="drawer-panel ml-auto flex h-full w-full max-w-xs flex-col bg-white shadow-2xl" tabindex="-1">
+      <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+        <h2 class="text-base font-extrabold">{{ 'general.filters' | t }}</h2>
+        <button type="button" data-filter-drawer-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100" aria-label="{{ 'general.close' | t }}">{% render 'icons', name: 'close', class: 'h-4 w-4' %}</button>
+      </div>
+      <div class="flex flex-1 flex-col overflow-hidden">
+        <div class="flex-1 overflow-y-auto px-5 py-4">
+          {%- if collection.filters.size > 0 -%}
+            <form id="mobile-filter-form" method="get" action="{{ collection.url }}">
+              <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+              {%- for filter in collection.filters -%}
+                {%- if filter.values.size > 0 -%}
+                <fieldset class="border-b border-slate-100 py-4">
+                  <legend class="text-sm font-extrabold">{{ filter.label }}</legend>
+                  <div class="mt-2 space-y-1.5">
+                    {%- for value in filter.values -%}
+                      <label class="flex items-center gap-2.5 rounded-lg px-2 py-2 text-sm font-semibold text-slate-600">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %} class="h-4 w-4 accent-[#1A56F0]">
+                        <span class="flex-1">{{ value.label }} <span class="text-xs text-slate-400">({{ value.count }})</span></span>
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                </fieldset>
+                {%- endif -%}
+              {%- endfor -%}
+            </form>
+          {%- else -%}
+            {% render 'collection-filters-fallback' %}
+          {%- endif -%}
+        </div>
+        {%- if collection.filters.size > 0 -%}
+          <div class="flex gap-2 border-t border-slate-200 p-4">
+            <a href="{{ collection.url }}" class="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl border border-slate-200 text-sm font-bold">{{ 'general.clear_all' | t }}</a>
+            <button type="submit" form="mobile-filter-form" class="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">Show results</button>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ],
+  "presets": [{ "name": "Collection" }]
+}
+{% endschema %}

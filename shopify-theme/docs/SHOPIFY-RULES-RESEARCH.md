@@ -1,0 +1,57 @@
+# SHOPIFY-RULES-RESEARCH — Official Documentation & Personal Store Rules (Oct 2026)
+
+This document synthesizes official Shopify Online Store 2.0 documentation and platform architecture rules relevant directly to the **Kartzo Shopify theme** development and testing in a personal development environment (e.g. VIORA test store).
+
+Every rule below distinguishes:
+- **[A] Personal Store Mandatory Constraints:** Enforced by Shopify core runtime, theme routing engine, and Online Store 2.0 architecture.
+- **[B] Recommended Engineering Practices:** Shopify performance, accessibility, and maintainability standards.
+- **[C] Theme Store Submission Requirements:** Rules that apply *only* when submitting a commercial theme to the Shopify Theme Store (not required for personal storefronts).
+- **[D] Plan-Specific Limitations:** Capabilities that depend on merchant plan tier.
+- **[E] Merchant Setup / Store Administration:** Configurations that must be toggled in Shopify Admin.
+
+---
+
+## 1. Templates & Homepage Routing Architecture
+
+| Official Topic & Doc | Platform Rule | Category | Consequence & Impact on Kartzo |
+|---|---|---|---|
+| **Theme Architecture & Directory Structure**<br>`storefronts/themes/architecture` | Shopify strictly requires standard top-level directories: `assets/`, `config/`, `layout/`, `locales/`, `sections/`, `snippets/`, `templates/`. A theme zip must place these directories directly at the root. If compressed inside a parent subfolder (e.g. `shopify-theme/layout/...`), Shopify Admin fails to resolve root files. | **[A]** | **Forensic Root Cause:** Uploading zips with nested directory trees causes template resolution failure, falling back to 404. `shopify theme package` strictly resolves this by archiving top-level folders at zip root (`Kartzo-1.0.0.zip`). |
+| **Homepage Template (`index.json`)**<br>`storefronts/themes/architecture/templates/index-template` | The root route `/` is resolved by Shopify's routing engine to `templates/index.json`. Shopify never routes `/` to `404.json` unless `index.json` is missing or corrupted. In JSON templates, sections are rendered dynamically via `{ "sections": { ... }, "order": [ ... ] }`. | **[A]** | Keep `index.json` valid. The homepage failure was caused by empty blocks/unbound merchant settings in sections, not by a routing bug. Never hide or modify `404.json` to fix `/`. |
+| **JSON Templates Specification**<br>`storefronts/themes/architecture/templates/json-templates` | Templates cannot exceed 25 sections. All referenced section names must exist in `sections/`. All block settings must match section schemas. Gift card template must remain Liquid (`templates/gift_card.liquid`). | **[A]** | `templates/index.json` has 13 sections (well within the 25 limit). All section schemas validated with 0 errors. |
+| **Layouts (`layout/theme.liquid`)**<br>`storefronts/themes/architecture/layouts` | `layout/theme.liquid` MUST contain `{{ content_for_header }}` in `<head>` and `{{ content_for_layout }}` in `<body>`. CSS, fonts, and preload tags should be placed above `content_for_header` for fast first-paint. | **[A]** | Layout strictly conforms. CSS (`theme.css`) and fonts load in `<head>` before `content_for_header`. |
+| **Password Gate vs 404**<br>`manual/online-store/themes/password-page` | When store password protection is enabled in Admin (*Online Store > Preferences*), unauthenticated requests to `/` return HTTP `302 Found` with `Location: /password`, serving `templates/password.json`. | **[A] + [E]** | Probed on VIORA (`https://viora-theme-test.myshopify.com/`): curl returns `302 /password` with `pageType="index"`. This proves that Shopify's routing engine correctly recognizes `/` as the index template; the password gate is a normal store setting, not a theme 404 defect. |
+| **Theme Editor Context**<br>`manual/online-store/themes/theme-structure` | The Shopify Theme Editor top selector allows switching between template previews (`Home page`, `Product`, `Collection`, `404 page`). Selecting `404 page` renders the 404 template in the editor canvas for editing purposes. | **[E]** | Seeing the 404 section in Theme Editor occurs when `404 page` is selected in the editor header, or when an invalid URL is previewed in the editor iframe. |
+
+---
+
+## 2. Sections, Blocks & Theme Editor Interoperability
+
+| Official Topic & Doc | Platform Rule | Category | Consequence & Impact on Kartzo |
+|---|---|---|---|
+| **Section Schemas & Limits**<br>`storefronts/themes/architecture/sections/section-schema` | Each section may have exactly one `{% schema %}` tag with valid JSON. Setting IDs must be unique within the section. Max 50 blocks per section. Sections must have `"presets"` to be discoverable in the Theme Editor "Add section" drawer. | **[A]** | All 33 sections have valid schemas and presets. Theme Check verified with 0 schema errors. |
+| **Fallback Assets & Blank Setting Resilience**<br>`storefronts/themes/best-practices/templates-sections-blocks` | Sections in a fresh theme installation must gracefully render when merchant settings (e.g. `section.settings.image` or `section.settings.collection`) are blank. If an image setting is nil, referencing `{{ image \| image_url }}` produces an empty string. | **[B]** | **Forensic Root Cause:** In `hero.liquid`, `category-row.liquid`, `promo-banner.liquid`, `collection-cards.liquid`, `featured-collection.liquid`, and `app-cta.liquid`, sections previously had no fallback asset references. When unconfigured in the store, sections rendered black/blank. Added fallback to bundled Kartzo `.webp` assets and rich demo product cards. |
+| **Editor Live Events**<br>`storefronts/themes/best-practices/editor/integrate-sections-and-blocks` | Theme Editor reloads sections via DOM replacement without refreshing the page. Scripts must listen for `shopify:section:load`, `shopify:section:select`, and `shopify:section:unload` to re-initialize interactive components (sliders, countdown, modals). Sections must attach `{{ block.shopify_attributes }}` to block wrappers. | **[A]** | `assets/kartzo.js` attaches listeners for `shopify:section:load` to re-init hero slider, countdown timers, and product card observers. Document-level event delegation handles drawer/modal overlays without listener leaks. |
+| **Image Dimensions Requirement**<br>`storefronts/themes/tools/theme-check/checks` | All static `<img>` tags in Liquid must include explicit `width` and `height` attributes to avoid Cumulative Layout Shift (CLS) and pass Theme Check (`ImgWidthAndHeight`). | **[B]** | All fallback `<img>` elements in `hero.liquid`, `category-row.liquid`, `promo-banner.liquid`, `collection-cards.liquid`, `featured-collection.liquid`, `app-cta.liquid`, and `blog-posts.liquid` have explicit width and height. |
+
+---
+
+## 3. Storefront Commerce APIs & Native Integrations
+
+| Official Topic & Doc | Platform Rule | Category | Consequence & Impact on Kartzo |
+|---|---|---|---|
+| **Shopify Ajax Cart API**<br>`api/ajax` | `/cart/add.js`, `/cart/change.js`, `/cart/clear.js`, and `/cart.js` are theme-hosted Ajax endpoints. All Ajax URLs must be prefixed with `window.Shopify.routes.root` for locale-aware multi-currency routing. Response format: JSON with `items`, `total_price`, `item_count`. | **[A]** | Implemented in `assets/kartzo.js`: `Shopify.routes.root + 'cart/add.js'`. Request sequencing counter prevents UI race conditions on rapid multi-clicks. |
+| **Product Variants & Native Forms**<br>`storefronts/themes/architecture/sections/main-product` | Variant changes must update form input `[name="id"]` with the active variant ID. Prices and availability must reactively update. Form actions must submit natively to `/cart/add` if JavaScript is disabled. | **[A]** | `sections/main-product.liquid` uses native `{% form 'product', product %}`. `paintVariant()` updates price, compare-at price, save percentage badge, SKU, availability status, and URL history state (`?variant=...`). |
+| **Storefront Filtering & Sorting**<br>`storefronts/themes/navigation-search/filtering/storefront-filtering` | Standard Online Store 2.0 filtering relies on `collection.filters` with URL query parameters (`filter.v.price.gte`, `filter.p.m.*`, etc.). Filters MUST be configured in Shopify Admin using the free **Shopify Search & Discovery** app. Liquid cannot create custom filter facets that do not exist in the store's filter settings. | **[A] + [E]** | `sections/main-collection.liquid` and `sections/main-search.liquid` render native `filter` loops with URL parameter serialization, mobile drawer, active filter pills, and price slider. Clear-all link points to `collection.url`. |
+| **Predictive Search API**<br>`api/ajax/predictive-search` | Predictive search endpoint `/search/suggest.json` returns suggestions for products, collections, articles, and pages. Price formatting in `suggest.json` can vary based on currency settings. | **[A]** | Implemented via `assets/kartzo.js` and `sections/search-modal.liquid`. Focus handoff from inline search triggers the modal; displays suggestions with titles, types, and images. |
+| **Device-Local Wishlist Scope** | Shopify does not provide a native customer wishlist API on standard plans without 3rd-party apps. A zero-app wishlist must use client-side `localStorage`. | **[A]** | Client-side wishlist implemented in `assets/kartzo.js` and `sections/wishlist.liquid`. Works instantly across page loads on the same browser/device with zero external apps. Accurately documented as device-local (no cross-device sync). |
+
+---
+
+## 4. Performance, Accessibility & Platform Hygiene
+
+| Standard / Doc | Platform Rule | Category | Consequence & Impact on Kartzo |
+|---|---|---|---|
+| **Performance Best Practices**<br>`storefronts/themes/best-practices/performance` | Eager load LCP images with `fetchpriority="high"`. Never lazy-load the first hero slide. Serve compiled, minified CSS (no runtime CSS compilers or CDN scripts). Scripts should be deferred (`defer`). | **[B]** | Tailwind compiled into single minified `assets/theme.css` (57 KB) via Tailwind v3.4.13. No runtime Tailwind CDN. Hero slide 1 is eager with `fetchpriority="high"`. |
+| **Accessibility (WCAG 2.1 AA)**<br>`storefronts/themes/best-practices/accessibility` | Visible focus rings on all interactive elements. Modals and drawers must trap focus, handle Escape key, and return focus to trigger element on close. Skip-to-content link pointing to `<main id="MainContent" tabindex="-1">`. Screen reader announcements for cart and variant changes (`aria-live`). | **[B]** | All drawers (Cart, Mobile Nav, Filters) and modals (Search, Quick-view) implement Escape-key listeners, backdrop click-to-close, focus restoration, and `tabindex="-1"` panel navigation. |
+| **Theme Store 60+ Lighthouse Rule**<br>`storefronts/themes/best-practices/performance` | Commercial themes submitted to the Shopify Theme Store require minimum Lighthouse score of 60. | **[C]** | Not applicable to a personal private store, but Kartzo conforms to all architectural performance practices (precompiled CSS, webp assets, lazy loading non-LCP images). |
+| **Development Previews & CLI Sync**<br>`api/shopify-cli/theme/theme-dev` | `shopify theme dev` serves local theme files directly as a temporary development theme in the connected store. Requires store login via interactive OAuth. Alternative: package with `shopify theme package` and upload `Kartzo-1.0.0.zip` to *Online Store > Themes* as an unpublished theme. | **[A]** | Full instructions documented in `docs/PREVIEW-UPLOAD.md`. |

@@ -1,0 +1,18 @@
+{
+  "current": {
+    "brand": "#1A56F0",
+    "brand_dark": "#123FBE",
+    "brand_bar": "#1246D0",
+    "ink": "#0E1730",
+    "muted": "#4E5D78",
+    "soft": "#F4F8FF",
+    "free_shipping_threshold": 49900,
+    "support_email": "support@kartzo.com",
+    "support_phone": "+91 98765 43210",
+    "support_address": "Indore, Madhya Pradesh, India",
+    "social_facebook": "https://facebook.com",
+    "social_instagram": "https://instagram.com",
+    "social_x": "https://x.com",
+    "social_youtube": "https://youtube.com"
+  }
+}

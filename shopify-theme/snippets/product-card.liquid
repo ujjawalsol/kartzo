@@ -1,0 +1,100 @@
+{% comment %}
+  Canonical Kartzo product card. Render with: {% render 'product-card', product: product %}
+  Uses real Shopify product data only. Wishlist toggle uses .wish (fixed selector).
+{% endcomment %}
+{%- assign card_product = product -%}
+{%- if card_product and card_product.title -%}
+  {%- assign variant = card_product.selected_or_first_available_variant -%}
+  {%- assign discount = 0 -%}
+  {%- if variant.compare_at_price and variant.compare_at_price > variant.price -%}
+    {%- assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+  {%- endif -%}
+  <article class="product-card product relative flex h-full flex-col justify-between rounded-2xl border border-[#e6eefb] bg-white p-3 shadow-[0_2px_10px_rgba(15,50,120,0.04)] transition duration-200 hover:border-[#b9d0ff] hover:shadow-card">
+    <div class="flex flex-col">
+      <div class="relative w-full">
+        {%- if discount > 0 -%}
+          <span class="absolute left-2.5 top-2.5 z-20 rounded-md bg-[#ef3b3b] px-1.5 py-0.5 text-[10px] font-extrabold text-white">-{{ discount }}%</span>
+        {%- elsif card_product.available == false -%}
+          <span class="absolute left-2.5 top-2.5 z-20 rounded-md bg-slate-500 px-1.5 py-0.5 text-[10px] font-extrabold text-white">{{ 'general.sold_out' | t }}</span>
+        {%- endif -%}
+        <button
+          type="button"
+          class="wish absolute right-2.5 top-2.5 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white text-brand shadow-md transition hover:scale-105"
+          aria-pressed="false"
+          data-wishlist-toggle="{{ card_product.id }}"
+          data-wish-handle="{{ card_product.handle }}"
+          data-wish-title="{{ card_product.title | escape }}"
+          data-wish-image="{% if card_product.featured_media %}{{ card_product.featured_media | image_url: width: 300 }}{% endif %}"
+          data-wish-price="{{ variant.price | money }}"
+          data-wish-url="{{ card_product.url }}"
+          aria-label="{{ 'accessibility.add_wishlist' | t }}: {{ card_product.title | escape }}"
+        >
+          {% render 'icons', name: 'heart', class: 'h-4 w-4' %}
+        </button>
+        <a href="{{ card_product.url }}" class="image-wrap relative flex h-36 w-full items-center justify-center overflow-hidden rounded-xl bg-[#f8fbff] p-2" tabindex="-1" aria-hidden="true">
+          {%- if card_product.featured_media -%}
+            <img
+              src="{{ card_product.featured_media | image_url: width: 500 }}"
+              alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
+              width="500"
+              height="500"
+              loading="lazy"
+              class="max-h-full max-w-full object-contain transition duration-200 hover:scale-105"
+            >
+          {%- else -%}
+            <div class="flex h-full w-full items-center justify-center text-slate-300">
+              {% render 'icons', name: 'bag', class: 'h-8 w-8' %}
+            </div>
+          {%- endif -%}
+        </a>
+      </div>
+      <div class="mt-2.5 flex flex-col flex-grow">
+        <h3 class="product-title text-[13px] font-bold leading-snug line-clamp-2 min-h-[2.6rem] text-brand-ink">
+          <a href="{{ card_product.url }}" class="hover:text-brand">{{ card_product.title }}</a>
+        </h3>
+        {%- if card_product.vendor != blank -%}
+          <p class="product-meta mt-0.5 text-[11px] text-[#7d8aa3] truncate">{{ card_product.vendor }}</p>
+        {%- elsif card_product.type != blank -%}
+          <p class="product-meta mt-0.5 text-[11px] text-[#7d8aa3] truncate">{{ card_product.type }}</p>
+        {%- else -%}
+          <p class="product-meta mt-0.5 text-[11px] text-transparent select-none">&nbsp;</p>
+        {%- endif -%}
+        <div class="product-rating mt-1 flex items-center gap-1 text-[11px] text-[#8b97ad]">
+          {% render 'rating', value: 4.5 %}
+          <span class="text-[10px] text-slate-400">4.8</span>
+        </div>
+        <p class="product-price-row mt-1 flex items-baseline justify-between gap-2">
+          <span class="text-[15px] font-extrabold text-brand-ink">{{ variant.price | money }}</span>
+          {%- if variant.compare_at_price and variant.compare_at_price > variant.price -%}
+            <span class="text-[11px] text-[#a8b1c2] line-through">{{ variant.compare_at_price | money }}</span>
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+    <div class="product-action mt-2.5">
+      {%- if card_product.available -%}
+        {%- assign quick_add_id = 'quick-add-' | append: card_product.id -%}
+        {%- form 'product', card_product, id: quick_add_id, class: 'w-full' -%}
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            name="add"
+            class="add-cart min-h-10 w-full rounded-lg bg-brand text-xs font-bold text-white hover:bg-brand-dark transition"
+            data-quick-add
+          >
+            {{ 'general.add_to_cart' | t }}
+          </button>
+        {%- endform -%}
+      {%- else -%}
+        <button
+          type="button"
+          disabled
+          class="sold-out-btn inline-flex min-h-10 w-full items-center justify-center rounded-lg bg-slate-100 text-slate-500 text-xs font-bold cursor-not-allowed"
+        >
+          {{ 'general.sold_out' | t }}
+        </button>
+      {%- endif -%}
+    </div>
+  </article>
+{%- endif -%}

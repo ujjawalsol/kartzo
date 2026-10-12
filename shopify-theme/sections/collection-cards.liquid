@@ -1,0 +1,77 @@
+{% comment %} Editorial collection cards (Electronics Sale / Top Brands / Make It Yours). {% endcomment %}
+<section aria-label="Featured collections" class="pad grid w-full items-stretch gap-4 lg:grid-cols-5">
+  {%- for block in section.blocks -%}
+    {%- assign target_url = block.settings.link -%}
+    {%- if target_url == blank and block.settings.collection -%}{%- assign target_url = block.settings.collection.url -%}{%- endif -%}
+    {%- if target_url == blank -%}{%- assign target_url = routes.all_products_collection_url -%}{%- endif -%}
+    {%- assign is_warm = false -%}
+    {%- if forloop.index == 2 or block.settings.heading contains 'Make It' -%}
+      {%- assign is_warm = true -%}
+    {%- endif -%}
+    <article class="relative flex flex-col justify-center min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] min-w-0 overflow-hidden rounded-[1.4rem] sm:rounded-3xl {% if forloop.first %}lg:col-span-3 bg-[#041868]{% else %}lg:col-span-2 bg-[#f4eadf]{% endif %}" {{ block.shopify_attributes }}>
+      {%- if block.settings.image -%}
+        {{ block.settings.image | image_url: width: 1600 | image_tag: widths: '750, 1200, 1600', loading: 'lazy', alt: block.settings.heading | default: '', class: 'absolute inset-0 h-full w-full object-cover object-right sm:object-center pointer-events-none' }}
+      {%- elsif forloop.first -%}
+        <img src="{{ 'electronics.webp' | asset_url }}" alt="" width="2113" height="619" class="absolute inset-0 h-full w-full object-cover object-center pointer-events-none" loading="lazy">
+      {%- else -%}
+        <img src="{{ 'home.webp' | asset_url }}" alt="" width="1912" height="662" class="absolute inset-0 h-full w-full object-cover object-right sm:object-center pointer-events-none" loading="lazy">
+      {%- endif -%}
+      {%- if is_warm -%}
+        <div class="absolute inset-0 bg-gradient-to-r from-[#f4eadf] via-[#f4eadf]/55 to-transparent" aria-hidden="true"></div>
+        <div class="relative z-10 flex h-full min-h-[inherit] max-w-[75%] flex-col justify-center p-5 sm:max-w-[80%] sm:p-6 lg:p-8">
+          {%- if block.settings.kicker != blank -%}
+            <p class="text-xs font-bold uppercase tracking-wide text-[#805729]">{{ block.settings.kicker }}</p>
+          {%- endif -%}
+          <h2 class="mt-2 text-2xl font-extrabold leading-tight text-brand-ink sm:text-[28px]">{{ block.settings.heading | newline_to_br }}</h2>
+          {%- if block.settings.sub != blank -%}
+            <p class="mt-2 max-w-[26ch] text-sm leading-relaxed text-brand-muted">{{ block.settings.sub }}</p>
+          {%- endif -%}
+          <div class="mt-5">
+            <a href="{{ target_url }}" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-ink px-4 py-3 text-sm font-bold text-white transition hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-ink">
+              {{ block.settings.cta_label | default: 'Shop Home' }} <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      {%- else -%}
+        <div class="absolute inset-0 bg-gradient-to-r from-[#041868]/95 via-[#041868]/40 to-transparent" aria-hidden="true"></div>
+        <div class="relative z-10 flex h-full min-h-[inherit] max-w-[75%] flex-col justify-center p-5 text-white sm:max-w-[62%] sm:p-6 lg:p-8">
+          {%- if block.settings.kicker != blank -%}
+            <p class="text-xs font-bold uppercase tracking-wide text-white/80">{{ block.settings.kicker }}</p>
+          {%- endif -%}
+          <h2 class="mt-2 text-2xl font-extrabold leading-tight sm:text-[28px]">{{ block.settings.heading | newline_to_br }}</h2>
+          {%- if block.settings.sub != blank -%}
+            <p class="mt-2 text-sm text-white/80">{{ block.settings.sub }}</p>
+          {%- endif -%}
+          <div class="mt-5">
+            <a href="{{ target_url }}" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-brand-dark transition hover:bg-[#eef4ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+              {{ block.settings.cta_label | default: 'Shop now' }} <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      {%- endif -%}
+    </article>
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "Collection cards",
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Background image" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "url", "id": "link", "label": "Custom link (overrides collection)" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Electronics Sale" },
+        { "type": "textarea", "id": "heading", "label": "Heading", "default": "Top Brands Up to 50% OFF" },
+        { "type": "text", "id": "sub", "label": "Subtext" },
+        { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop now" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Collection cards", "blocks": [{ "type": "card" }, { "type": "card" }] }]
+}
+{% endschema %}

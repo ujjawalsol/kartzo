@@ -1,0 +1,17 @@
+{% comment %}
+  Star rating — render with: {% render 'rating', value: 4.8, count: '2.1K' %}
+  5-star row matching the original product cards, with sr-only text for AT.
+{% endcomment %}
+{%- assign rating_value = value | default: 5.0 -%}
+{%- assign full = rating_value | floor -%}
+<span class="inline-flex items-center gap-0.5" aria-hidden="true">
+  {%- for i in (1..5) -%}
+    {%- if i <= full -%}
+      {% render 'icons', name: 'star', class: 'h-3 w-3 fill-amber-400 text-amber-400' %}
+    {%- else -%}
+      {% render 'icons', name: 'star', class: 'h-3 w-3 fill-slate-200 text-slate-200' %}
+    {%- endif -%}
+  {%- endfor -%}
+</span>
+<span class="sr-only">Rated {{ rating_value }} out of 5.</span>
+{%- if count -%}{{ rating_value }} ({{ count }}){%- endif -%}

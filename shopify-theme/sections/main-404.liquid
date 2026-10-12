@@ -1,0 +1,24 @@
+{% comment %} 404 — same centered error + real search as the original. {% endcomment %}
+<div class="pad mx-auto flex w-full max-w-xl flex-col items-center pb-16 pt-12 text-center sm:pt-16">
+  <p class="text-6xl font-black text-brand-soft" aria-hidden="true" style="color: #dbe7ff;">404</p>
+  <h1 class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">{{ 'general.not_found_heading' | t }}</h1>
+  <p class="mt-2 text-sm text-slate-500">{{ 'general.not_found_sub' | t }}</p>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="mt-5 flex min-h-[48px] w-full items-center gap-2 rounded-full bg-[#f3f7ff] py-2.5 pl-4 pr-2">
+    {% render 'icons', name: 'search', class: 'h-5 w-5 shrink-0 text-brand' %}
+    <label for="notfound-search" class="sr-only">{{ 'general.search_label' | t }}</label>
+    <input id="notfound-search" name="q" type="search" placeholder="{{ 'general.search_placeholder' | t }}" class="min-w-0 w-full appearance-none border-0 bg-transparent text-[15px] font-medium outline-none placeholder:text-[#93a0b8]">
+    <button type="submit" class="inline-flex h-9 shrink-0 items-center rounded-full bg-brand px-5 text-sm font-bold text-white hover:bg-brand-dark">{{ 'general.search' | t }}</button>
+  </form>
+  <div class="mt-5 flex flex-wrap justify-center gap-3">
+    <a href="{{ routes.root_url }}" class="inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">{{ 'general.back_home' | t }}</a>
+    <a href="{{ routes.all_products_collection_url }}" class="inline-flex min-h-11 items-center rounded-xl border border-slate-200 px-6 text-sm font-bold hover:border-brand hover:text-brand">{{ 'general.browse_catalog' | t }}</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404 content",
+  "settings": [],
+  "presets": [{ "name": "404 content" }]
+}
+{% endschema %}

@@ -1,0 +1,157 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "kicker": "Featured collection",
+            "heading": "Upgrade your",
+            "heading_accent": "everyday.",
+            "sub_mobile": "Top brands, great deals",
+            "sub": "Smart tech, home upgrades and daily essentials — curated for better living and better value.",
+            "cta_label": "Shop collection",
+            "cta2_label": "View hot deals"
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "kicker": "Tech week is live",
+            "heading": "Big screen.",
+            "heading_accent": "Bigger deals.",
+            "sub_mobile": "Big brands, bigger savings",
+            "sub": "Bring home the gadgets you have been waiting for with limited-time prices across electronics.",
+            "cta_label": "Shop electronics",
+            "cta2_label": "Save up to 50%"
+          }
+        },
+        "slide-3": {
+          "type": "slide",
+          "settings": {
+            "kicker": "Home refresh",
+            "heading": "Make space",
+            "heading_accent": "for better.",
+            "sub_mobile": "Stylish picks for your home",
+            "sub": "Small upgrades, smarter routines and home essentials that look as good as they work.",
+            "cta_label": "Shop home",
+            "cta2_label": "Explore categories"
+          }
+        }
+      },
+      "block_order": ["slide-1", "slide-2", "slide-3"]
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "b-1": { "type": "benefit", "settings": { "title": "Free Shipping", "sub": "On qualifying orders", "icon": "truck" } },
+        "b-2": { "type": "benefit", "settings": { "title": "Secure Payment", "sub": "100% Safe & Secure", "icon": "shield" } },
+        "b-3": { "type": "benefit", "settings": { "title": "Easy Returns", "sub": "7 Days Hassle Free", "icon": "refresh" } },
+        "b-4": { "type": "benefit", "settings": { "title": "24/7 Support", "sub": "We're Always Here", "icon": "headset" } }
+      },
+      "block_order": ["b-1", "b-2", "b-3", "b-4"]
+    },
+    "categories": {
+      "type": "category-row",
+      "blocks": {
+        "c-1": { "type": "category", "settings": { "title": "Electronics", "fallback_image": "p-headphones.webp" } },
+        "c-2": { "type": "category", "settings": { "title": "Fashion", "fallback_image": "c-fashion.webp" } },
+        "c-3": { "type": "category", "settings": { "title": "Home & Living", "fallback_image": "c-home.webp" } },
+        "c-4": { "type": "category", "settings": { "title": "Beauty", "fallback_image": "p-perfume.webp" } },
+        "c-5": { "type": "category", "settings": { "title": "Kitchen", "fallback_image": "p-fryer.webp" } },
+        "c-6": { "type": "category", "settings": { "title": "Sports", "fallback_image": "p-shoes.webp" } },
+        "c-7": { "type": "category", "settings": { "title": "Toys & Games", "fallback_image": "c-toys.webp" } },
+        "c-8": { "type": "category", "settings": { "title": "Mobile & Accessories", "fallback_image": "p-phone.webp" } },
+        "c-9": { "type": "category", "settings": { "title": "Bags & Luggage", "fallback_image": "p-backpack.webp" } },
+        "c-10": { "type": "category", "settings": { "title": "Health & Wellness", "fallback_image": "c-health.webp" } }
+      },
+      "block_order": ["c-1", "c-2", "c-3", "c-4", "c-5", "c-6", "c-7", "c-8", "c-9", "c-10"]
+    },
+    "deals": {
+      "type": "promo-banner",
+      "settings": {
+        "kicker": "Limited Time Offer",
+        "heading": "Big Deals, Bigger Savings",
+        "sub": "Up to 60% OFF — limited time only.",
+        "cta_label": "Shop Deals",
+        "badge": "60%"
+      }
+    },
+    "best": {
+      "type": "featured-collection",
+      "settings": { "heading_first": "Best", "heading_accent": "Sellers", "collection": "frontpage", "limit": 6 },
+      "blocks": {
+        "p-1": { "type": "prop", "settings": { "title": "Wide Product Range", "sub": "Everything you need in one place.", "icon": "bag" } },
+        "p-2": { "type": "prop", "settings": { "title": "Best Prices", "sub": "Get the best deals always.", "icon": "tag" } },
+        "p-3": { "type": "prop", "settings": { "title": "Trusted by Thousands", "sub": "10K+ happy customers.", "icon": "shield" } },
+        "p-4": { "type": "prop", "settings": { "title": "Fast & Reliable Delivery", "sub": "On-time at your doorstep.", "icon": "truck" } }
+      },
+      "block_order": ["p-1", "p-2", "p-3", "p-4"]
+    },
+    "cards": {
+      "type": "collection-cards",
+      "blocks": {
+        "card-1": { "type": "card", "settings": { "kicker": "Electronics Sale", "heading": "Top Brands Up to 50% OFF", "cta_label": "Shop now" } },
+        "card-2": { "type": "card", "settings": { "kicker": "Home & Living", "heading": "Make It Yours", "cta_label": "Shop Home", "sub": "Stylish, comfortable and modern products for your home." } }
+      },
+      "block_order": ["card-1", "card-2"]
+    },
+    "new": {
+      "type": "featured-collection",
+      "settings": { "heading_first": "New", "heading_accent": "Arrivals", "collection": "frontpage", "limit": 6 }
+    },
+    "why": {
+      "type": "why-choose",
+      "settings": { "heading_first": "Why Choose", "heading_accent": "Kartzo?" },
+      "blocks": {
+        "f-1": { "type": "feature", "settings": { "title": "Premium Quality", "sub": "Only genuine products", "icon": "shield" } },
+        "f-2": { "type": "feature", "settings": { "title": "Best Prices", "sub": "Unbeatable deals", "icon": "tag" } },
+        "f-3": { "type": "feature", "settings": { "title": "Secure Shopping", "sub": "100% safe payments", "icon": "shield" } },
+        "f-4": { "type": "feature", "settings": { "title": "Easy Returns", "sub": "7 days hassle free", "icon": "refresh" } },
+        "f-5": { "type": "feature", "settings": { "title": "Fast Delivery", "sub": "On-time delivery", "icon": "truck" } },
+        "f-6": { "type": "feature", "settings": { "title": "24/7 Support", "sub": "Always here to help", "icon": "headset" } }
+      },
+      "block_order": ["f-1", "f-2", "f-3", "f-4", "f-5", "f-6"]
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": { "heading_first": "What Our", "heading_accent": "Customers Say" },
+      "blocks": {
+        "r-1": {
+          "type": "review",
+          "settings": {
+            "name": "Rahul Mehta",
+            "detail": "Verified Buyer",
+            "quote": "Amazing quality products and super fast delivery. Kartzo is now my go-to store!",
+            "stars": 5,
+            "avatar_asset": "avatar-rahul.webp"
+          }
+        },
+        "r-2": {
+          "type": "review",
+          "settings": {
+            "name": "Priya Sharma",
+            "detail": "Verified Buyer",
+            "quote": "Loved the shopping experience. Great prices on products and excellent customer support.",
+            "stars": 5,
+            "avatar_asset": "avatar-priya.webp"
+          }
+        },
+        "r-3": {
+          "type": "review",
+          "settings": {
+            "name": "Amit Verma",
+            "detail": "Verified Buyer",
+            "quote": "Wide range of products and genuine quality. Highly recommend Kartzo!",
+            "stars": 5,
+            "avatar_asset": "avatar-amit.webp"
+          }
+        }
+      },
+      "block_order": ["r-1", "r-2", "r-3"]
+    },
+    "newsletter": { "type": "newsletter" }
+  },
+  "order": ["hero", "benefits", "categories", "deals", "best", "cards", "new", "why", "reviews", "newsletter"]
+}

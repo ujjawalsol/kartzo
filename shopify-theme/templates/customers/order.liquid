@@ -1,0 +1,31 @@
+{% comment %} Legacy single-order view fallback. {% endcomment %}
+{% render 'breadcrumbs', trail: order.name %}
+
+<div class="pad mx-auto w-full max-w-3xl pb-12 pt-4 sm:pt-6">
+  <h1 class="text-2xl font-extrabold tracking-tight">Order {{ order.name }}</h1>
+  <p class="mt-1 text-sm text-slate-500">Placed {{ order.created_at | date: '%d %b %Y' }}</p>
+
+  <div class="mt-5 space-y-3">
+    {%- for line_item in order.line_items -%}
+      <div class="flex items-center gap-4 rounded-2xl border border-[#e6eefb] bg-white p-4">
+        {%- if line_item.image -%}
+          {{ line_item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '', class: 'h-16 w-16 rounded-xl object-contain bg-slate-50' }}
+        {%- endif -%}
+        <div class="min-w-0 flex-1">
+          <p class="truncate text-sm font-bold">{{ line_item.title }}</p>
+          <p class="text-xs text-slate-500">Qty {{ line_item.quantity }}</p>
+        </div>
+        <p class="text-sm font-extrabold">{{ line_item.final_price | times: line_item.quantity | money }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <dl class="mt-5 space-y-2 rounded-2xl bg-[#f8fbff] p-5 text-sm">
+    <div class="flex justify-between"><dt class="text-slate-600">Subtotal</dt><dd class="font-bold">{{ order.subtotal_price | money }}</dd></div>
+    <div class="flex justify-between"><dt class="text-slate-600">Shipping</dt><dd class="font-bold">{{ order.shipping_price | money }}</dd></div>
+    <div class="flex justify-between"><dt class="text-slate-600">Tax</dt><dd class="font-bold">{{ order.tax_price | money }}</dd></div>
+    <div class="flex justify-between border-t border-slate-200 pt-2 text-base font-extrabold"><dt>Total</dt><dd class="text-brand">{{ order.total_price | money }}</dd></div>
+  </dl>
+
+  <a href="{{ routes.account_url }}" class="mt-4 inline-flex items-center gap-1 text-sm font-bold text-brand hover:underline">← Back to my orders</a>
+</div>

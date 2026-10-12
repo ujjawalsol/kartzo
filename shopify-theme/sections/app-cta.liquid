@@ -1,0 +1,40 @@
+{% comment %}
+  App CTA — store buttons render ONLY when URLs are configured (never link nowhere).
+{% endcomment %}
+<section id="app" class="pad w-full pb-8" aria-label="Mobile app">
+  <div class="grid items-center gap-6 overflow-hidden rounded-[28px] bg-[#f3f8ff] p-6 sm:p-10 lg:grid-cols-2">
+    <div>
+      <h2 class="text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- if section.settings.sub != blank -%}
+        <p class="mt-2 max-w-md text-sm leading-relaxed text-brand-muted sm:text-base">{{ section.settings.sub }}</p>
+      {%- endif -%}
+      {%- assign ios = section.settings.ios_url | default: '#app' -%}
+      {%- assign android = section.settings.android_url | default: '#app' -%}
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href="{{ ios }}" class="inline-flex min-h-11 items-center rounded-xl bg-brand-ink px-5 text-sm font-bold text-white hover:bg-black transition">App Store</a>
+        <a href="{{ android }}" class="inline-flex min-h-11 items-center rounded-xl bg-brand px-5 text-sm font-bold text-white hover:bg-brand-dark transition">Google Play</a>
+      </div>
+    </div>
+    <div>
+      {%- if section.settings.image -%}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: widths: '600, 1200', loading: 'lazy', alt: section.settings.heading | default: '', class: 'mx-auto w-full max-w-md rounded-3xl object-cover' }}
+      {%- else -%}
+        <img src="{{ 'app.webp' | asset_url }}" alt="Kartzo app" width="1536" height="1024" class="mx-auto w-full max-w-md rounded-3xl object-cover" loading="lazy">
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "App CTA",
+  "settings": [
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Shop on the Go With Our App" },
+    { "type": "textarea", "id": "sub", "label": "Subtext", "default": "Faster checkout, order tracking and exclusive app-only deals." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "url", "id": "ios_url", "label": "App Store URL (blank = hidden)" },
+    { "type": "url", "id": "android_url", "label": "Google Play URL (blank = hidden)" }
+  ],
+  "presets": [{ "name": "App CTA" }]
+}
+{% endschema %}

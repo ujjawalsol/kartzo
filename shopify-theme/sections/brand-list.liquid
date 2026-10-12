@@ -1,0 +1,56 @@
+{% comment %} Brand chips — text-based brand links (no invented logos). {% endcomment %}
+<section id="brands" class="pad hidden w-full pb-2 sm:block" aria-label="Brands">
+  <div class="mb-5 flex items-center justify-between gap-3">
+    <h2 class="text-xl font-extrabold tracking-tight sm:text-2xl">{{ section.settings.heading_first }} <span class="text-brand">{{ section.settings.heading_accent }}</span></h2>
+    <a href="{{ routes.all_products_collection_url }}" class="text-sm font-bold text-brand hover:underline">{{ 'general.view_all' | t }} →</a>
+  </div>
+  {%- if section.blocks.size > 0 -%}
+    <ul class="no-scrollbar flex items-center gap-3 overflow-x-auto pb-2">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }} class="shrink-0">
+          <a
+            href="{% if block.settings.link %}{{ block.settings.link }}{% else %}{{ routes.search_url }}?q={{ block.settings.name | url_encode }}{% endif %}"
+            class="flex min-h-11 items-center rounded-full border border-[#dbe7ff] bg-[#f3f7ff] px-5 text-sm font-extrabold text-brand-ink transition hover:border-brand hover:text-brand"
+          >
+            {{ block.settings.name }}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <ul class="no-scrollbar flex items-center gap-3 overflow-x-auto pb-2">
+      {%- assign default_brands = 'Apple,SAMSUNG,Nike,adidas,boAt,JBL,Lenovo,Canon,PHILIPS,mi' | split: ',' -%}
+      {%- for brand in default_brands -%}
+        <li class="shrink-0">
+          <a
+            href="{{ routes.search_url }}?q={{ brand | url_encode }}"
+            class="flex min-h-11 items-center rounded-full border border-[#dbe7ff] bg-[#f3f7ff] px-5 text-sm font-extrabold text-brand-ink transition hover:border-brand hover:text-brand"
+          >
+            {{ brand }}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Brand list",
+  "settings": [
+    { "type": "text", "id": "heading_first", "label": "Heading (dark part)", "default": "Shop Top" },
+    { "type": "text", "id": "heading_accent", "label": "Heading (brand part)", "default": "Brands" }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Brand name", "default": "Brand" },
+        { "type": "url", "id": "link", "label": "Custom link (defaults to brand search)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Brand list", "blocks": [{ "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }] }]
+}
+{% endschema %}

@@ -1,0 +1,154 @@
+{% comment %} Product grid from a real collection + value props (reused for Best Sellers / New Arrivals). {% endcomment %}
+<section id="products-{{ section.id }}" class="pad w-full pb-6 pt-4 sm:py-8">
+  <div class="mb-5 flex items-center justify-between gap-3">
+    <h2 class="text-xl font-extrabold tracking-tight sm:text-2xl">{{ section.settings.heading_first }} <span class="text-brand">{{ section.settings.heading_accent }}</span></h2>
+    {%- if section.settings.collection -%}
+      <a href="{{ section.settings.collection.url }}" class="text-sm font-bold text-brand hover:underline">{{ 'general.view_all' | t }} →</a>
+    {%- else -%}
+      <a href="{{ routes.all_products_collection_url }}" class="text-sm font-bold text-brand hover:underline">{{ 'general.view_all' | t }} →</a>
+    {%- endif -%}
+  </div>
+  {%- assign target_col = section.settings.collection -%}
+  {%- if target_col == blank or target_col.products.size == 0 -%}
+    {%- if collections['all'] and collections['all'].products.size > 0 -%}
+      {%- assign target_col = collections['all'] -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if target_col and target_col.products.size > 0 -%}
+    <div id="best-grid-{{ section.id }}" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 items-stretch">
+      {%- for product in target_col.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- assign is_new = false -%}
+    {%- if section.settings.heading_accent contains 'Arrival' or section.settings.heading_first contains 'New' -%}
+      {%- assign is_new = true -%}
+    {%- endif -%}
+    <div id="best-grid-{{ section.id }}" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 items-stretch">
+      {%- if is_new -%}
+        {%- comment -%} Kartzo New Arrivals Demo Grid {%- endcomment -%}
+        {%- assign new_titles = 'TWS Earbuds,Premium Perfume,Portable Blender,UV Sunglasses,Travel Luggage,Gaming Chair' | split: ',' -%}
+        {%- assign new_subs = 'Noise Cancellation,Long Lasting,USB Rechargeable,Stylish & Comfortable,Durable & Light,Ergonomic Design' | split: ',' -%}
+        {%- assign new_images = 'p-earbuds.webp,p-perfume.webp,p-blender.webp,p-sunglasses.webp,p-luggage.webp,p-chair.webp' | split: ',' -%}
+        {%- assign new_prices = '₹1,999,₹1,299,₹1,799,₹1,399,₹2,999,₹8,999' | split: ',' -%}
+        {%- assign new_compares = '₹2,799,₹1,999,₹2,399,₹1,999,₹4,499,₹12,999' | split: ',' -%}
+        {%- assign new_ratings = '4.7,4.5,4.6,4.4,4.6,4.8' | split: ',' -%}
+        {%- assign new_counts = '1.5K,1.3K,982,654,1.1K,765' | split: ',' -%}
+        {%- for title in new_titles limit: section.settings.limit -%}
+          {%- assign idx = forloop.index0 -%}
+          <article class="product-card product relative flex h-full flex-col justify-between rounded-2xl border border-[#e6eefb] bg-white p-3 shadow-[0_2px_10px_rgba(15,50,120,0.04)] transition duration-200 hover:border-[#b9d0ff] hover:shadow-card">
+            <div class="flex flex-col">
+              <div class="relative w-full">
+                <span class="absolute left-2.5 top-2.5 z-20 rounded-md bg-brand px-1.5 py-0.5 text-[10px] font-extrabold text-white">New</span>
+                <button type="button" class="wish absolute right-2.5 top-2.5 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white text-brand shadow-md transition hover:scale-105" aria-pressed="false" data-wishlist-toggle="demo-new-{{ forloop.index }}" data-wish-title="{{ title }}" data-wish-image="{{ new_images[idx] | asset_url }}" data-wish-price="{{ new_prices[idx] }}" data-wish-url="{{ routes.all_products_collection_url }}" aria-label="Add {{ title }} to wishlist">
+                  {% render 'icons', name: 'heart', class: 'h-4 w-4' %}
+                </button>
+                <a href="{{ routes.all_products_collection_url }}" class="image-wrap relative flex h-36 w-full items-center justify-center overflow-hidden rounded-xl bg-[#f8fbff] p-2">
+                  <img src="{{ new_images[idx] | asset_url }}" alt="{{ title }}" width="500" height="500" class="max-h-full max-w-full object-contain transition duration-200 hover:scale-105" loading="lazy">
+                </a>
+              </div>
+              <div class="mt-2.5 flex flex-col flex-grow">
+                <h3 class="product-title text-[13px] font-bold leading-snug line-clamp-2 min-h-[2.6rem] text-brand-ink"><a href="{{ routes.all_products_collection_url }}" class="hover:text-brand">{{ title }}</a></h3>
+                <p class="product-meta mt-0.5 text-[11px] text-[#7d8aa3] truncate">{{ new_subs[idx] }}</p>
+                <div class="product-rating mt-1 flex items-center gap-1 text-[11px] text-[#8b97ad]">
+                  {% render 'rating', value: 4.5 %}
+                  <span class="text-[10px] text-slate-400">{{ new_ratings[idx] }} ({{ new_counts[idx] }})</span>
+                </div>
+                <p class="product-price-row mt-1 flex items-baseline justify-between gap-2">
+                  <span class="text-[15px] font-extrabold text-brand-ink">{{ new_prices[idx] }}</span>
+                  <span class="text-[11px] text-[#a8b1c2] line-through">{{ new_compares[idx] }}</span>
+                </p>
+              </div>
+            </div>
+            <div class="product-action mt-2.5">
+              <a href="{{ routes.all_products_collection_url }}" class="add-cart inline-flex min-h-10 w-full items-center justify-center rounded-lg bg-brand text-xs font-bold text-white hover:bg-brand-dark transition">Shop Now</a>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Kartzo Best Sellers Demo Grid {%- endcomment -%}
+        {%- assign best_titles = 'Wireless Headphones,Smart Watch,Men’s Running Shoes,Smartphone 128GB,Air Fryer 5L,Laptop Backpack' | split: ',' -%}
+        {%- assign best_subs = 'Bluetooth 5.3,with AMOLED Display,Comfort & Style,Super Retina Display,Healthy Cooking,Water Resistant' | split: ',' -%}
+        {%- assign best_images = 'p-headphones.webp,p-watch.webp,p-shoes.webp,p-phone.webp,p-fryer.webp,p-backpack.webp' | split: ',' -%}
+        {%- assign best_prices = '₹2,799,₹3,499,₹2,399,₹54,999,₹4,499,₹1,299' | split: ',' -%}
+        {%- assign best_compares = '₹3,999,₹5,832,₹3,998,₹73,332,₹5,999,₹1,856' | split: ',' -%}
+        {%- assign best_discounts = '-30%,-40%,-40%,-25%,-25%,-30%' | split: ',' -%}
+        {%- assign best_ratings = '4.8,4.6,4.7,4.8,4.5,4.6' | split: ',' -%}
+        {%- assign best_counts = '2.1K,1.8K,2.6K,4.1K,1.3K,2.5K' | split: ',' -%}
+        {%- for title in best_titles limit: section.settings.limit -%}
+          {%- assign idx = forloop.index0 -%}
+          <article class="product-card product relative flex h-full flex-col justify-between rounded-2xl border border-[#e6eefb] bg-white p-3 shadow-[0_2px_10px_rgba(15,50,120,0.04)] transition duration-200 hover:border-[#b9d0ff] hover:shadow-card">
+            <div class="flex flex-col">
+              <div class="relative w-full">
+                <span class="absolute left-2.5 top-2.5 z-20 rounded-md bg-[#ef3b3b] px-1.5 py-0.5 text-[10px] font-extrabold text-white">{{ best_discounts[idx] }}</span>
+                <button type="button" class="wish absolute right-2.5 top-2.5 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white text-brand shadow-md transition hover:scale-105" aria-pressed="false" data-wishlist-toggle="demo-best-{{ forloop.index }}" data-wish-title="{{ title }}" data-wish-image="{{ best_images[idx] | asset_url }}" data-wish-price="{{ best_prices[idx] }}" data-wish-url="{{ routes.all_products_collection_url }}" aria-label="Add {{ title }} to wishlist">
+                  {% render 'icons', name: 'heart', class: 'h-4 w-4' %}
+                </button>
+                <a href="{{ routes.all_products_collection_url }}" class="image-wrap relative flex h-36 w-full items-center justify-center overflow-hidden rounded-xl bg-[#f8fbff] p-2">
+                  <img src="{{ best_images[idx] | asset_url }}" alt="{{ title }}" width="500" height="500" class="max-h-full max-w-full object-contain transition duration-200 hover:scale-105" loading="lazy">
+                </a>
+              </div>
+              <div class="mt-2.5 flex flex-col flex-grow">
+                <h3 class="product-title text-[13px] font-bold leading-snug line-clamp-2 min-h-[2.6rem] text-brand-ink"><a href="{{ routes.all_products_collection_url }}" class="hover:text-brand">{{ title }}</a></h3>
+                <p class="product-meta mt-0.5 text-[11px] text-[#7d8aa3] truncate">{{ best_subs[idx] }}</p>
+                <div class="product-rating mt-1 flex items-center gap-1 text-[11px] text-[#8b97ad]">
+                  {% render 'rating', value: 4.5 %}
+                  <span class="text-[10px] text-slate-400">{{ best_ratings[idx] }} ({{ best_counts[idx] }})</span>
+                </div>
+                <p class="product-price-row mt-1 flex items-baseline justify-between gap-2">
+                  <span class="text-[15px] font-extrabold text-brand-ink">{{ best_prices[idx] }}</span>
+                  <span class="text-[11px] text-[#a8b1c2] line-through">{{ best_compares[idx] }}</span>
+                </p>
+              </div>
+            </div>
+            <div class="product-action mt-2.5">
+              <a href="{{ routes.all_products_collection_url }}" class="add-cart inline-flex min-h-10 w-full items-center justify-center rounded-lg bg-brand text-xs font-bold text-white hover:bg-brand-dark transition">Shop Now</a>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <ul class="mt-8 hidden grid-cols-2 gap-3 sm:grid lg:grid-cols-4">
+      {%- for block in section.blocks -%}
+        <li class="flex items-center gap-3 rounded-2xl border border-[#e7eefb] bg-[#f8fbff] px-3 py-3" {{ block.shopify_attributes }}>
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e7efff] text-brand" aria-hidden="true">{% render 'icons', name: block.settings.icon, class: 'h-5 w-5' %}</span>
+          <span><span class="block text-sm font-extrabold">{{ block.settings.title }}</span><span class="block text-xs text-brand-muted">{{ block.settings.sub }}</span></span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    { "type": "text", "id": "heading_first", "label": "Heading (dark part)", "default": "Best" },
+    { "type": "text", "id": "heading_accent", "label": "Heading (brand part)", "default": "Sellers" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 4, "max": 12, "step": 2, "default": 6 }
+  ],
+  "blocks": [
+    {
+      "type": "prop",
+      "name": "Value prop",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Wide Product Range" },
+        { "type": "text", "id": "sub", "label": "Subtitle", "default": "Everything you need in one place." },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "bag", "options": [
+          { "value": "bag", "label": "Bag" },
+          { "value": "tag", "label": "Tag" },
+          { "value": "shield", "label": "Shield" },
+          { "value": "truck", "label": "Truck" }
+        ]}
+      ]
+    }
+  ],
+  "presets": [{ "name": "Featured collection" }]
+}
+{% endschema %}

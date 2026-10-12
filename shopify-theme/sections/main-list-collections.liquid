@@ -1,0 +1,47 @@
+{% comment %} All collections hub — replaces categories.html department cards with real collections. {% endcomment %}
+{% render 'breadcrumbs', trail: 'Categories' %}
+
+<div class="pad mx-auto w-full max-w-7xl pb-10 pt-4 sm:pt-6">
+  <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{{ section.settings.heading | default: 'Shop by Category' }}</h1>
+  {%- if section.settings.sub != blank -%}
+    <p class="mt-1 text-sm text-slate-600">{{ section.settings.sub }}</p>
+  {%- endif -%}
+
+  {%- if collections.size > 0 -%}
+    <div id="cat-grid" class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      {%- for collection in collections -%}
+        {%- unless collection.handle == 'frontpage' and collection.products_count == 0 -%}
+          <a href="{{ collection.url }}" class="cat-card group flex flex-col overflow-hidden rounded-2xl border border-[#e6eefb] bg-white transition hover:border-[#b9d0ff] hover:shadow-card">
+            <span class="cat-media block aspect-[4/3] overflow-hidden bg-[#F6F8FB]">
+              {%- if collection.featured_image -%}
+                {{ collection.featured_image | image_url: width: 600 | image_tag: widths: '300, 600', loading: 'lazy', alt: collection.title, class: 'h-full w-full object-cover transition duration-200 group-hover:scale-105' }}
+              {%- elsif collection.products.first.featured_media -%}
+                {{ collection.products.first.featured_media | image_url: width: 600 | image_tag: widths: '300, 600', loading: 'lazy', alt: collection.title, class: 'h-full w-full object-cover transition duration-200 group-hover:scale-105' }}
+              {%- endif -%}
+            </span>
+            <span class="cat-body flex flex-1 items-center justify-between gap-2 p-3">
+              <span class="min-w-0">
+                <span class="block truncate text-sm font-extrabold">{{ collection.title }}</span>
+                <span class="block text-xs text-slate-500">{{ collection.products_count }} {% if collection.products_count == 1 %}product{% else %}products{% endif %}</span>
+              </span>
+              <span class="cat-arrow hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand" aria-hidden="true">{% render 'icons', name: 'chevron-right', class: 'h-4 w-4' %}</span>
+            </span>
+          </a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <p class="mt-5 rounded-xl bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-dark">Collections will appear here once created in the admin.</p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by Category" },
+    { "type": "text", "id": "sub", "label": "Subheading", "default": "Explore every department in one place." }
+  ],
+  "presets": [{ "name": "Collection list" }]
+}
+{% endschema %}

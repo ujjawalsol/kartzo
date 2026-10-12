@@ -1,0 +1,49 @@
+{% comment %}
+  Slide-over Wishlist Drawer — device-local wishlist rendered by kartzo.js.
+  Allows immediate viewing, removing, and quick adding of wishlisted items to cart.
+{% endcomment %}
+<div
+  id="wishlist-drawer"
+  class="drawer-backdrop fixed inset-0 z-[80] bg-slate-950/60 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="wishlist-drawer-title"
+>
+  <div class="drawer-panel ml-auto flex h-full w-full max-w-md flex-col bg-white shadow-2xl" tabindex="-1">
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
+      <div class="flex items-center gap-2.5">
+        <h2 id="wishlist-drawer-title" class="text-base font-extrabold text-brand-ink">My Wishlist</h2>
+        <span id="wishlist-drawer-count" data-wishlist-count class="rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-black text-rose-500">0</span>
+      </div>
+      <button type="button" data-wishlist-drawer-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition" aria-label="{{ 'general.close' | t }}">
+        {% render 'icons', name: 'close', class: 'h-4 w-4' %}
+      </button>
+    </div>
+
+    <!-- Wishlist Items Container -->
+    <div class="flex-1 space-y-4 overflow-y-auto p-6" id="wishlist-drawer-items" data-wishlist-items>
+      <!-- Populated dynamically by kartzo.js -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="border-t border-slate-200 p-6 bg-slate-50/50" data-wishlist-drawer-footer>
+      <div class="flex flex-col gap-2.5">
+        <a href="{% if pages['wishlist'] %}{{ pages['wishlist'].url }}{% else %}/collections/all?view=wishlist{% endif %}" class="flex min-h-11 items-center justify-center rounded-xl bg-brand text-xs sm:text-sm font-bold text-white hover:bg-brand-dark transition shadow-sm">
+          Go to Full Wishlist Page
+        </a>
+        <button type="button" data-wishlist-drawer-close class="flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist drawer",
+  "settings": [],
+  "presets": [{ "name": "Wishlist drawer" }]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+{% comment %}
+  Category circles — collection blocks with image fallback; unresolvable links fall back
+  to search so no tile ever 404s.
+{% endcomment %}
+<section id="categories" class="w-full pb-2 pt-6 sm:py-8" aria-label="Categories">
+  <div class="pad grid auto-cols-[6.5rem] grid-flow-col gap-3 overflow-x-auto pb-2 pt-1 sm:auto-cols-[7rem] sm:gap-4 xl:grid-flow-row xl:grid-cols-10 xl:overflow-visible">
+    {%- for block in section.blocks -%}
+      {%- assign target_url = block.settings.link -%}
+      {%- assign label = block.settings.title -%}
+      {%- assign tile_image = block.settings.image -%}
+      {%- if block.settings.collection -%}
+        {%- assign target_url = block.settings.collection.url -%}
+        {%- if label == blank -%}{%- assign label = block.settings.collection.title -%}{%- endif -%}
+        {%- if tile_image == blank -%}
+          {%- if block.settings.collection.featured_image -%}
+            {%- assign tile_image = block.settings.collection.featured_image -%}
+          {%- elsif block.settings.collection.products.first.featured_media -%}
+            {%- assign tile_image = block.settings.collection.products.first.featured_media -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if target_url == blank -%}
+        {%- assign target_url = routes.search_url | append: '?q=' | append: label -%}
+      {%- endif -%}
+      {%- if tile_image == blank and block.settings.fallback_image != blank -%}
+        {%- assign tile_fallback = block.settings.fallback_image -%}
+      {%- elsif tile_image == blank -%}
+        {%- assign tile_lbl = label | downcase -%}
+        {%- if tile_lbl contains 'electr' -%}{%- assign tile_fallback = 'p-headphones.webp' -%}
+        {%- elsif tile_lbl contains 'fash' -%}{%- assign tile_fallback = 'c-fashion.webp' -%}
+        {%- elsif tile_lbl contains 'home' -%}{%- assign tile_fallback = 'c-home.webp' -%}
+        {%- elsif tile_lbl contains 'beaut' -%}{%- assign tile_fallback = 'p-perfume.webp' -%}
+        {%- elsif tile_lbl contains 'kitch' -%}{%- assign tile_fallback = 'p-fryer.webp' -%}
+        {%- elsif tile_lbl contains 'sport' -%}{%- assign tile_fallback = 'p-shoes.webp' -%}
+        {%- elsif tile_lbl contains 'toy' -%}{%- assign tile_fallback = 'c-toys.webp' -%}
+        {%- elsif tile_lbl contains 'mobil' -%}{%- assign tile_fallback = 'p-phone.webp' -%}
+        {%- elsif tile_lbl contains 'bag' or tile_lbl contains 'lugg' -%}{%- assign tile_fallback = 'p-backpack.webp' -%}
+        {%- elsif tile_lbl contains 'health' -%}{%- assign tile_fallback = 'c-health.webp' -%}
+        {%- endif -%}
+      {%- endif -%}
+      <a href="{{ target_url }}" class="group flex min-w-0 flex-col items-center gap-2" {{ block.shopify_attributes }}>
+        <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand">
+          {%- if tile_image -%}
+            {{ tile_image | image_url: width: 300 | image_tag: widths: '150, 300', loading: 'lazy', alt: label | default: '', class: 'h-full w-full rounded-full object-cover' }}
+          {%- elsif tile_fallback != blank -%}
+            <img src="{{ tile_fallback | asset_url }}" alt="{{ label | escape }}" width="300" height="300" class="h-full w-full rounded-full object-cover" loading="lazy">
+          {%- endif -%}
+        </span>
+        <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">{{ label }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category circles",
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Label (falls back to collection title)", "default": "Electronics" },
+        { "type": "image_picker", "id": "image", "label": "Image (falls back to collection image)" },
+        { "type": "text", "id": "fallback_image", "label": "Theme asset image fallback" },
+        { "type": "url", "id": "link", "label": "Custom link (overrides collection)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Category circles", "blocks": [{ "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }] }]
+}
+{% endschema %}

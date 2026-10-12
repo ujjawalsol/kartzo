@@ -1,0 +1,38 @@
+{% comment %}
+  Order tracking — honest lookup guidance. No fake AWB/timelines: guests are directed to
+  their account/order-status page or support; the form below opens the account orders view.
+{% endcomment %}
+{% render 'breadcrumbs', trail: page.title %}
+
+<div class="pad mx-auto w-full max-w-2xl pb-12 pt-4 sm:pt-6">
+  <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{{ page.title | default: 'Track Your Order' }}</h1>
+  {%- if page.content != blank -%}
+    <div class="mt-2 text-sm text-slate-600">{{ page.content }}</div>
+  {%- endif -%}
+
+  <div class="mt-5 rounded-3xl border border-[#e6eefb] bg-white p-5 sm:p-7">
+    <h2 class="text-lg font-extrabold">Find your order</h2>
+    <p class="mt-1 text-sm text-slate-500">Signed-in customers can see live status on their orders page. You can also contact support with your order number.</p>
+    <div class="mt-4 flex flex-col gap-2.5 sm:flex-row">
+      <a href="{{ routes.account_url }}" class="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">View my orders</a>
+      {%- assign contact_page = pages['contact'] -%}
+      <a href="{% if contact_page %}{{ contact_page.url }}{% else %}/pages/contact{% endif %}" class="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl border border-slate-200 px-6 text-sm font-bold hover:border-brand hover:text-brand">Contact support</a>
+    </div>
+  </div>
+
+  <div class="mt-4 rounded-2xl bg-brand-soft p-5">
+    <h2 class="text-sm font-extrabold">What you'll need</h2>
+    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600">
+      <li>Your order confirmation number (from your confirmation email).</li>
+      <li>The email address used at checkout.</li>
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Order tracking",
+  "settings": [],
+  "presets": [{ "name": "Order tracking" }]
+}
+{% endschema %}

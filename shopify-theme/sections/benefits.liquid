@@ -1,0 +1,38 @@
+{% comment %} Shopping benefits strip (desktop) — 4 merchant-editable benefit blocks. {% endcomment %}
+<section aria-label="Shopping benefits" class="hidden border-b border-[#eef2f8] bg-white sm:block">
+  <ul class="pad grid w-full grid-cols-2 gap-x-4 gap-y-5 py-5 lg:grid-cols-4 lg:gap-6 lg:py-6">
+    {%- for block in section.blocks -%}
+      <li class="flex min-w-0 flex-col items-center gap-2 text-center sm:flex-row sm:gap-3 sm:text-left" {{ block.shopify_attributes }}>
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eaf1ff] text-brand" aria-hidden="true">{% render 'icons', name: block.settings.icon, class: 'h-5 w-5' %}</span>
+        <span class="min-w-0">
+          <span class="block text-sm font-bold leading-5">{{ block.settings.title }}</span>
+          <span class="mt-0.5 block text-xs leading-5 text-brand-muted">{{ block.settings.sub }}</span>
+        </span>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits strip",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Free Shipping" },
+        { "type": "text", "id": "sub", "label": "Subtitle", "default": "On qualifying orders" },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "truck", "options": [
+          { "value": "truck", "label": "Truck" },
+          { "value": "shield", "label": "Shield" },
+          { "value": "refresh", "label": "Returns" },
+          { "value": "headset", "label": "Support" }
+        ]}
+      ]
+    }
+  ],
+  "presets": [{ "name": "Benefits strip", "blocks": [{ "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }] }]
+}
+{% endschema %}

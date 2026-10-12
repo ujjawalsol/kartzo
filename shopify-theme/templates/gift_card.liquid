@@ -1,0 +1,44 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Gift card for {{ shop.name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body class="bg-white font-sans text-brand-ink antialiased">
+  <main class="pad mx-auto flex min-h-screen w-full max-w-md flex-col items-center justify-center py-12 text-center">
+    <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="541" height="168" class="h-10 w-auto">
+    <p class="mt-4 text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand">Gift Card</p>
+    <h1 class="mt-2 text-3xl font-black">{{ gift_card.balance | money }}</h1>
+    {%- if gift_card.enabled == false -%}
+      <p class="mt-2 rounded-xl bg-rose-50 px-4 py-2 text-sm font-bold text-rose-600" role="alert">This gift card is disabled.</p>
+    {%- endif -%}
+    {%- if gift_card.expired -%}
+      <p class="mt-2 rounded-xl bg-rose-50 px-4 py-2 text-sm font-bold text-rose-600" role="alert">This gift card expired on {{ gift_card.expires_on | date: '%d %b %Y' }}.</p>
+    {%- endif -%}
+    <div class="mt-4 w-full rounded-3xl border border-[#e6eefb] bg-[#f8fbff] p-5">
+      <p class="text-xs font-bold text-slate-500">Gift card code</p>
+      <p class="mt-1 font-mono text-lg font-extrabold tracking-widest" aria-label="Gift card code">{{ gift_card.code | format_code }}</p>
+      <button type="button" id="gift-copy" data-code="{{ gift_card.code }}" class="mt-3 inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">Copy code</button>
+    </div>
+    {%- if gift_card.expires_on -%}
+      <p class="mt-3 text-xs text-slate-500">Expires {{ gift_card.expires_on | date: '%d %b %Y' }}</p>
+    {%- endif -%}
+    <a href="{{ routes.root_url }}" class="mt-5 inline-flex min-h-11 items-center rounded-xl border border-slate-200 px-6 text-sm font-bold hover:border-brand hover:text-brand">Back to {{ shop.name }}</a>
+    <script>
+      document.getElementById('gift-copy').addEventListener('click', function () {
+        var code = this.getAttribute('data-code');
+        if (navigator.clipboard) { navigator.clipboard.writeText(code); }
+        this.textContent = 'Copied!';
+      });
+    </script>
+  </main>
+</body>
+</html>

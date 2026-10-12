@@ -1,0 +1,55 @@
+{% comment %} Deals promo banner with optional countdown (merchant-set end time; hidden past expiry). {% endcomment %}
+<section id="deals-{{ section.id }}" class="pad {% if section.settings.show_mobile %}w-full{% else %}hidden w-full sm:block{% endif %}">
+  <div class="relative overflow-hidden rounded-[1.4rem] bg-[#0b47e8] sm:rounded-3xl">
+    {%- if section.settings.image -%}
+      {{ section.settings.image | image_url: width: 2100 | image_tag: widths: '750, 1500, 2100', loading: 'lazy', alt: section.settings.heading | default: '', class: 'h-[190px] w-full object-cover object-right sm:h-[250px]' }}
+    {%- else -%}
+      <img src="{{ 'deals.webp' | asset_url }}" alt="{{ section.settings.heading | escape }}" width="2150" height="439" class="h-[190px] w-full object-cover object-right sm:h-[250px]" loading="lazy">
+    {%- endif -%}
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0837c4] via-[#0837c4]/75 to-transparent sm:via-[#0837c4]/25"></div>
+    <div class="absolute inset-0 flex items-center justify-between gap-4 px-4 sm:px-5">
+      <div class="max-w-md text-white">
+        {%- if section.settings.kicker != blank -%}
+          <p class="inline-flex rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">{{ section.settings.kicker }}</p>
+        {%- endif -%}
+        <h2 class="mt-1.5 text-[1.45rem] font-extrabold leading-[1.05] tracking-tight sm:mt-2 sm:text-4xl">{{ section.settings.heading }}</h2>
+        {%- if section.settings.sub != blank -%}
+          <p class="mt-1.5 text-[13px] text-white/85 sm:mt-2 sm:text-sm">{{ section.settings.sub }}</p>
+        {%- endif -%}
+        {%- if section.settings.countdown_end != blank -%}
+          <p class="mt-2 flex items-center gap-1.5 text-sm font-extrabold tabular-nums" data-countdown="{{ section.settings.countdown_end }}" role="timer" aria-label="Deal ends in">
+            <span data-cd-h>00</span>:<span data-cd-m>00</span>:<span data-cd-s>00</span>
+          </p>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="mt-3 inline-flex min-h-11 items-center rounded-lg bg-white px-5 text-sm font-bold text-brand-dark hover:bg-[#eef4ff] sm:mt-4">{{ section.settings.cta_label }} →</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.badge != blank -%}
+        <div class="hidden h-[118px] w-[118px] shrink-0 flex-col items-center justify-center rounded-full bg-[#eef6ff] text-brand shadow-lg sm:flex" aria-hidden="true">
+          <span class="text-[11px] font-bold tracking-wide">UP TO</span>
+          <span class="text-[2rem] font-black leading-none">{{ section.settings.badge }}</span>
+          <span class="text-sm font-extrabold tracking-wide">OFF</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "checkbox", "id": "show_mobile", "label": "Show on mobile", "default": false },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Limited Time Offer" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Big Deals, Bigger Savings" },
+    { "type": "text", "id": "sub", "label": "Subtext", "default": "Up to 60% OFF — limited time only." },
+    { "type": "text", "id": "countdown_end", "label": "Countdown end (YYYY-MM-DDTHH:MM, blank = no countdown)" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop Deals" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "text", "id": "badge", "label": "Badge percent (e.g. 60%)", "default": "60%" }
+  ],
+  "presets": [{ "name": "Promo banner" }]
+}
+{% endschema %}

@@ -1,0 +1,102 @@
+{% comment %} Kartzo search — real /search results with filters, sort, pagination, empty state. {% endcomment %}
+{%- paginate search.results by section.settings.per_page -%}
+  {% render 'breadcrumbs', trail: 'Search' %}
+
+  <div class="pad mx-auto w-full max-w-7xl pb-10 pt-4 sm:pt-6">
+    <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">
+      {%- if search.performed -%}
+        Results for “{{ search.terms | escape }}”
+      {%- else -%}
+        {{ 'general.search' | t }}
+      {%- endif -%}
+    </h1>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="mt-4 flex min-h-[48px] w-full max-w-xl items-center gap-2 rounded-full bg-[#f3f7ff] py-2.5 pl-4 pr-2">
+      {% render 'icons', name: 'search', class: 'h-5 w-5 shrink-0 text-brand' %}
+      <label for="search-page-input" class="sr-only">{{ 'general.search_label' | t }}</label>
+      <input id="search-page-input" name="q" type="search" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}" class="min-w-0 w-full appearance-none border-0 bg-transparent text-[15px] font-medium text-brand-ink outline-none placeholder:text-[#93a0b8]">
+      <button type="submit" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand text-white hover:bg-brand-dark" aria-label="{{ 'general.search' | t }}">
+        {% render 'icons', name: 'search', class: 'h-4 w-4' %}
+      </button>
+    </form>
+
+    {%- if search.performed -%}
+      <p id="search-results-count" class="mt-3 text-sm font-semibold text-slate-500" role="status">
+        {{ search.results_count }} {% if search.results_count == 1 %}result{% else %}results{% endif %}
+      </p>
+
+      {%- if search.filters.size > 0 -%}
+        <form method="get" action="{{ routes.search_url }}" data-filters-form class="mt-3 flex flex-wrap items-center gap-2">
+          <input type="hidden" name="q" value="{{ search.terms | escape }}">
+          <input type="hidden" name="options[prefix]" value="last">
+          {%- for filter in search.filters -%}
+            {%- case filter.type -%}
+              {%- when 'boolean', 'list' -%}
+                {%- for value in filter.values -%}
+                  <label class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold {% if value.active %}border-brand bg-brand-soft text-brand{% else %}border-slate-200 text-slate-600{% endif %}">
+                    <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} class="sr-only">
+                    {{ value.label }} ({{ value.count }})
+                  </label>
+                {%- endfor -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </form>
+      {%- endif -%}
+
+      {%- if search.results_count > 0 -%}
+        <div id="search-grid" class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- elsif item.object_type == 'article' -%}
+              <article class="flex flex-col rounded-2xl border border-[#e6eefb] bg-white p-3">
+                <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Article</p>
+                <h3 class="mt-1 text-sm font-bold leading-snug"><a href="{{ item.url }}" class="hover:text-brand">{{ item.title }}</a></h3>
+                <a href="{{ item.url }}" class="mt-2 inline-flex min-h-11 items-center justify-center rounded-lg bg-brand-soft text-xs font-bold text-brand">Read guide</a>
+              </article>
+            {%- elsif item.object_type == 'page' -%}
+              <article class="flex flex-col rounded-2xl border border-[#e6eefb] bg-white p-3">
+                <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Page</p>
+                <h3 class="mt-1 text-sm font-bold leading-snug"><a href="{{ item.url }}" class="hover:text-brand">{{ item.title }}</a></h3>
+                <a href="{{ item.url }}" class="mt-2 inline-flex min-h-11 items-center justify-center rounded-lg bg-brand-soft text-xs font-bold text-brand">Open page</a>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav class="mt-8 flex items-center justify-center gap-2" aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-slate-200 px-3 text-sm font-bold hover:border-brand hover:text-brand" aria-label="Previous page">←</a>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-slate-200 px-3 text-sm font-bold hover:border-brand hover:text-brand">{{ part.title }}</a>
+              {%- else -%}
+                <span {% if part.title == paginate.current_page %}aria-current="page"{% endif %} class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl px-3 text-sm font-bold {% if part.title == paginate.current_page %}bg-brand text-white{% else %}text-slate-500{% endif %}">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-slate-200 px-3 text-sm font-bold hover:border-brand hover:text-brand" aria-label="Next page">→</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <div id="search-none" class="mt-5 rounded-3xl border border-dashed border-slate-300 px-6 py-16 text-center">
+          <p class="text-lg font-extrabold">{{ 'general.no_results' | t }}</p>
+          <p class="mt-1 text-sm text-slate-500">Try different keywords or browse the catalog.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="mt-4 inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">{{ 'general.browse_catalog' | t }}</a>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Results per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ],
+  "presets": [{ "name": "Search results" }]
+}
+{% endschema %}

@@ -1,0 +1,29 @@
+{% comment %} Wishlist page — device-local wishlist rendered by kartzo.js (honest, no fake sync). {% endcomment %}
+{% render 'breadcrumbs', trail: page.title %}
+
+<div class="pad mx-auto w-full max-w-7xl pb-12 pt-4 sm:pt-6">
+  <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">
+    {{ page.title | default: 'My Wishlist' }} <span id="wishlist-page-count" class="text-base font-bold text-slate-400">(0 saved)</span>
+  </h1>
+  {%- if page.content != blank -%}
+    <div class="mt-2 max-w-2xl text-sm text-slate-600">{{ page.content }}</div>
+  {%- endif -%}
+
+  <div id="wishlist-grid" class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"></div>
+
+  <div id="wishlist-empty" hidden class="mt-5 rounded-3xl border border-dashed border-slate-300 px-6 py-16 text-center">
+    {% render 'icons', name: 'heart', class: 'mx-auto h-12 w-12 text-slate-300' %}
+    <p class="mt-3 text-lg font-extrabold">Your Wishlist is Empty</p>
+    <p class="mt-1 text-sm text-slate-500">Tap the heart on any product to save it here on this device.</p>
+    <a href="{{ routes.all_products_collection_url }}" class="mt-4 inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">Discover More</a>
+  </div>
+  <p class="mt-4 text-xs text-slate-400">Saved on this device only — sign-in sync is not included in this theme.</p>
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "settings": [],
+  "presets": [{ "name": "Wishlist" }]
+}
+{% endschema %}

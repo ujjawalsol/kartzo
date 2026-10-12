@@ -1,0 +1,32 @@
+{% comment %} Kartzo announcement bar — preserves the original 3-message utility strip. {% endcomment %}
+{%- assign threshold_money = settings.free_shipping_threshold | default: 49900 | money_without_trailing_zeros -%}
+<div class="hidden bg-brand-bar text-white lg:block" role="region" aria-label="Store benefits">
+  <div class="pad flex h-10 w-full items-center justify-between gap-4 text-[12.5px] font-semibold sm:h-11 sm:text-[13px]">
+    <p class="flex min-w-0 items-center gap-2">
+      {% render 'icons', name: 'truck', class: 'h-4 w-4 shrink-0' %}
+      <span class="truncate">{{ section.settings.message_left | default: 'Free Shipping on orders over THRESHOLD' | replace: 'THRESHOLD', threshold_money }}</span>
+    </p>
+    <ul class="hidden items-center gap-8 md:flex">
+      <li class="flex items-center gap-2">
+        {% render 'icons', name: 'refresh', class: 'h-4 w-4' %}
+        {{ section.settings.message_mid | default: '7 Days Easy Returns' }}
+      </li>
+      <li class="flex items-center gap-2">
+        {% render 'icons', name: 'shield', class: 'h-4 w-4' %}
+        {{ section.settings.message_right | default: '100% Secure Payment' }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    { "type": "text", "id": "message_left", "label": "Left message (THRESHOLD = free-shipping amount)", "default": "Free Shipping on orders over THRESHOLD" },
+    { "type": "text", "id": "message_mid", "label": "Middle message", "default": "7 Days Easy Returns" },
+    { "type": "text", "id": "message_right", "label": "Right message", "default": "100% Secure Payment" }
+  ],
+  "presets": [{ "name": "Announcement bar" }]
+}
+{% endschema %}

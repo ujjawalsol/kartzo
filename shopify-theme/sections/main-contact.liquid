@@ -1,0 +1,80 @@
+{% comment %} Contact page — native contact form; channels render only when configured. {% endcomment %}
+{% render 'breadcrumbs', trail: page.title %}
+
+<div class="pad mx-auto w-full max-w-7xl pb-12 pt-4 sm:pt-6">
+  <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{{ page.title | default: 'Contact Us' }}</h1>
+  {%- if page.content != blank -%}
+    <div class="mt-2 max-w-2xl text-sm text-slate-600">{{ page.content }}</div>
+  {%- endif -%}
+
+  <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div class="rounded-3xl border border-[#e6eefb] bg-white p-5 sm:p-7">
+      <h2 class="text-lg font-extrabold">Send Us a Message</h2>
+      {%- form 'contact' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="mt-3 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-700" role="status" tabindex="-1" autofocus>
+            Thanks for reaching out — we'll reply as soon as possible.
+          </p>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <div class="mt-3 rounded-xl bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="contact-name" class="text-xs font-bold text-slate-600">Full name</label>
+            <input id="contact-name" name="contact[name]" type="text" required autocomplete="name" value="{% if form.name %}{{ form.name }}{% endif %}" class="mt-1 min-h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-brand">
+          </div>
+          <div>
+            <label for="contact-email" class="text-xs font-bold text-slate-600">Email</label>
+            <input id="contact-email" name="contact[email]" type="email" required autocomplete="email" value="{% if form.email %}{{ form.email }}{% endif %}" class="mt-1 min-h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-brand">
+          </div>
+          <div>
+            <label for="contact-phone" class="text-xs font-bold text-slate-600">Phone (optional)</label>
+            <input id="contact-phone" name="contact[phone]" type="tel" autocomplete="tel" value="{% if form.phone %}{{ form.phone }}{% endif %}" class="mt-1 min-h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-brand">
+          </div>
+          <div>
+            <label for="contact-subject" class="text-xs font-bold text-slate-600">Topic</label>
+            <select id="contact-subject" name="contact[topic]" class="mt-1 min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-brand">
+              <option value="Order support">Order support</option>
+              <option value="Returns & refunds">Returns &amp; refunds</option>
+              <option value="Product question">Product question</option>
+              <option value="Billing">Billing</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="contact-body" class="text-xs font-bold text-slate-600">Message</label>
+            <textarea id="contact-body" name="contact[body]" rows="5" required class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-brand">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          </div>
+        </div>
+        <button type="submit" class="mt-4 inline-flex min-h-11 items-center rounded-xl bg-brand px-8 text-sm font-extrabold text-white hover:bg-brand-dark transition">Send message</button>
+      {%- endform -%}
+    </div>
+
+    <aside class="h-fit space-y-3 rounded-3xl border border-[#e6eefb] bg-[#f8fbff] p-5">
+      <h2 class="text-base font-extrabold">Support channels</h2>
+      <a href="mailto:{{ settings.support_email | default: 'support@kartzo.com' }}" class="flex items-center gap-3 rounded-2xl bg-white p-3 text-sm font-bold hover:text-brand transition shadow-sm">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e7efff] text-brand">{% render 'icons', name: 'mail', class: 'h-5 w-5' %}</span>
+        <span class="break-all">{{ settings.support_email | default: 'support@kartzo.com' }}</span>
+      </a>
+      <a href="tel:{{ settings.support_phone | default: '+919876543210' }}" class="flex items-center gap-3 rounded-2xl bg-white p-3 text-sm font-bold hover:text-brand transition shadow-sm">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e7efff] text-brand">{% render 'icons', name: 'phone', class: 'h-5 w-5' %}</span>
+        <span>{{ settings.support_phone | default: '+91 98765 43210' }}</span>
+      </a>
+      <p class="flex items-center gap-3 rounded-2xl bg-white p-3 text-sm font-semibold text-slate-600 shadow-sm">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e7efff] text-brand">{% render 'icons', name: 'pin', class: 'h-5 w-5' %}</span>
+        <span>{{ settings.support_address | default: 'Indore, Madhya Pradesh, India' }}</span>
+      </p>
+    </aside>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact page",
+  "settings": [],
+  "presets": [{ "name": "Contact page" }]
+}
+{% endschema %}

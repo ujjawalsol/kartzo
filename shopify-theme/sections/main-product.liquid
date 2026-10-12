@@ -1,0 +1,231 @@
+{% comment %} Kartzo product page — native product form, real variants, galleries, honest states. {% endcomment %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+{% render 'breadcrumbs', trail: product.title %}
+
+<div class="pad mx-auto w-full max-w-7xl pb-10 pt-4 sm:pt-6">
+  <div class="grid gap-8 lg:grid-cols-2 lg:gap-12">
+    <div>
+      <div class="overflow-hidden rounded-3xl border border-[#e6eefb] bg-[#F6F8FB]">
+        {%- if product.featured_media -%}
+          {{ product.featured_media | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', fetchpriority: 'high', alt: product.featured_media.alt | default: product.title, id: 'main-product-img', class: 'aspect-square w-full object-contain p-4' }}
+        {%- endif -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="mt-3 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Product images">
+          {%- for media in product.media limit: 6 -%}
+            <button
+              type="button"
+              data-gallery-thumb
+              data-full="{{ media | image_url: width: 1200 }}"
+              class="h-20 w-20 shrink-0 overflow-hidden rounded-2xl border p-1.5 {% if forloop.first %}border-brand ring-2 ring-brand{% else %}border-[#e6eefb]{% endif %}"
+              aria-label="View image {{ forloop.index }}"
+            >
+              {{ media | image_url: width: 200 | image_tag: loading: 'lazy', alt: media.alt | default: product.title, class: 'h-full w-full object-contain' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div id="pdp-main-cta">
+      {%- if product.vendor != blank -%}
+        <p class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">{{ product.vendor }}</p>
+      {%- endif -%}
+      <h1 class="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">{{ product.title }}</h1>
+
+      <div class="mt-2 flex flex-wrap items-baseline gap-2" aria-live="polite">
+        <span data-product-price class="text-2xl font-black text-brand-ink">{{ current_variant.price | money }}</span>
+        <span data-product-compare class="text-base text-[#a8b1c2] line-through" {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}>
+          {%- if current_variant.compare_at_price > current_variant.price -%}{{ current_variant.compare_at_price | money }}{%- endif -%}
+        </span>
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+          <span data-save-badge class="rounded-md bg-[#ef3b3b] px-1.5 py-0.5 text-[11px] font-extrabold text-white">
+            Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}
+          </span>
+        {%- else -%}
+          <span data-save-badge hidden class="rounded-md bg-[#ef3b3b] px-1.5 py-0.5 text-[11px] font-extrabold text-white"></span>
+        {%- endif -%}
+      </div>
+      <p class="mt-1 text-xs text-slate-500" data-variant-status aria-live="polite">
+        {%- if product.available -%}In stock{%- else -%}{{ 'general.sold_out' | t }}{%- endif -%}
+      </p>
+
+      {%- form 'product', product, data-product-form: true, data-main-product-form: true -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <fieldset class="mt-5" data-swatch-group>
+              <legend class="text-sm font-bold text-brand-ink">
+                {{ option.name }}: <span class="font-semibold text-slate-500" {% if option.name == 'Color' or option.name == 'Colour' %}id="selected-color-label"{% endif %}>{{ option.selected_value }}</span>
+              </legend>
+              <div class="mt-2 flex flex-wrap gap-2" role="radiogroup" aria-label="{{ option.name }}">
+                {%- for value in option.values -%}
+                  {%- assign opt_id = 'opt-' | append: option.position | append: '-' | append: forloop.index -%}
+                  <span>
+                    <input
+                      type="radio"
+                      id="{{ opt_id }}"
+                      name="option{{ option.position }}"
+                      value="{{ value | escape }}"
+                      class="peer sr-only"
+                      {% if option.selected_value == value %}checked{% endif %}
+                    >
+                    <label
+                      for="{{ opt_id }}"
+                      class="swatch-btn inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-xl border border-[#d9e4f7] bg-[#f3f7ff] px-3 py-2 text-sm font-bold text-brand-ink transition peer-checked:border-brand peer-checked:bg-brand-soft peer-checked:ring-2 peer-checked:ring-brand peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-brand"
+                    >
+                      {{ value }}
+                    </label>
+                  </span>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="mt-5 flex flex-wrap items-center gap-3">
+          <div data-qty data-min="1" data-max="10" class="inline-flex items-center rounded-xl border border-slate-200 bg-slate-50">
+            <button type="button" class="qty-btn qty-minus flex h-11 w-11 items-center justify-center text-slate-600 hover:text-slate-900" aria-label="Decrease quantity">{% render 'icons', name: 'minus', class: 'h-4 w-4' %}</button>
+            <input data-qty-input type="number" name="quantity" value="1" min="1" max="10" aria-label="{{ 'general.quantity' | t }}" class="w-12 border-0 bg-transparent text-center text-sm font-bold text-brand-ink outline-none">
+            <button type="button" class="qty-btn qty-plus flex h-11 w-11 items-center justify-center text-slate-600 hover:text-slate-900" aria-label="Increase quantity">{% render 'icons', name: 'plus', class: 'h-4 w-4' %}</button>
+          </div>
+          <button
+            type="submit"
+            name="add"
+            data-add-label="{{ 'general.add_to_cart' | t }}"
+            class="add-cart inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-brand px-6 text-sm font-extrabold text-white hover:bg-brand-dark transition disabled:cursor-not-allowed disabled:bg-slate-300"
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            {%- if current_variant.available -%}{{ 'general.add_to_cart' | t }}{%- else -%}{{ 'general.sold_out' | t }}{%- endif -%}
+          </button>
+          <button
+            type="button"
+            class="wish inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-[#d9e4f7] text-brand transition hover:bg-brand-soft"
+            data-wishlist-toggle="{{ product.id }}"
+            data-wish-handle="{{ product.handle }}"
+            data-wish-title="{{ product.title | escape }}"
+            data-wish-image="{% if product.featured_media %}{{ product.featured_media | image_url: width: 300 }}{% endif %}"
+            data-wish-price="{{ current_variant.price | money }}"
+            data-wish-url="{{ product.url }}"
+            aria-pressed="false"
+            aria-label="{{ 'accessibility.add_wishlist' | t }}: {{ product.title | escape }}"
+          >
+            {% render 'icons', name: 'heart', class: 'h-5 w-5' %}
+          </button>
+        </div>
+
+        {%- if section.settings.show_dynamic_checkout -%}
+          <div class="mt-3">{{ form | payment_button }}</div>
+        {%- endif -%}
+      {%- endform -%}
+
+      <div class="mt-5 rounded-2xl border border-[#e6eefb] bg-[#f8fbff] p-4">
+        <label for="pincode-input" class="text-sm font-bold text-brand-ink">Delivery pincode</label>
+        <div class="mt-2 flex gap-2">
+          <input id="pincode-input" inputmode="numeric" maxlength="6" placeholder="e.g. 452001" class="min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-brand">
+          <button id="pincode-check-btn" type="button" class="inline-flex min-h-11 shrink-0 items-center rounded-xl bg-brand-ink px-4 text-sm font-bold text-white">Check</button>
+        </div>
+        <div id="pincode-result" hidden class="mt-2" role="status"></div>
+      </div>
+
+      <ul class="mt-5 grid grid-cols-2 gap-3">
+        {%- for block in section.blocks -%}
+          <li class="flex items-center gap-3 rounded-2xl border border-[#e7eefb] bg-[#f8fbff] px-3 py-3" {{ block.shopify_attributes }}>
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e7efff] text-brand" aria-hidden="true">{% render 'icons', name: block.settings.icon, class: 'h-5 w-5' %}</span>
+            <span><span class="block text-sm font-extrabold">{{ block.settings.title }}</span><span class="block text-xs text-brand-muted">{{ block.settings.sub }}</span></span>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="mt-6 space-y-3">
+        <details class="rounded-2xl border border-[#e6eefb] px-4 py-3" open>
+          <summary class="flex cursor-pointer items-center justify-between text-sm font-bold">Description {% render 'icons', name: 'chevron-down', class: 'accordion-chevron h-4 w-4' %}</summary>
+          <div class="prose-kartzo mt-2 text-sm leading-relaxed text-slate-600">{{ product.description }}</div>
+        </details>
+        <details class="rounded-2xl border border-[#e6eefb] px-4 py-3">
+          <summary class="flex cursor-pointer items-center justify-between text-sm font-bold">Product details {% render 'icons', name: 'chevron-down', class: 'accordion-chevron h-4 w-4' %}</summary>
+          <dl class="mt-2 space-y-1 text-sm text-slate-600">
+            <div class="flex gap-2"><dt class="font-bold">SKU:</dt><dd data-variant-sku>{{ current_variant.sku | default: '—' }}</dd></div>
+            <div class="flex gap-2"><dt class="font-bold">Type:</dt><dd>{{ product.type | default: '—' }}</dd></div>
+            <div class="flex gap-2"><dt class="font-bold">Vendor:</dt><dd>{{ product.vendor | default: '—' }}</dd></div>
+          </dl>
+        </details>
+        {%- assign shipping_page = pages['shipping-policy'] -%}
+        {%- assign returns_page = pages['returns-policy'] -%}
+        {%- if shipping_page or returns_page -%}
+          <details class="rounded-2xl border border-[#e6eefb] px-4 py-3">
+            <summary class="flex cursor-pointer items-center justify-between text-sm font-bold">Shipping &amp; returns {% render 'icons', name: 'chevron-down', class: 'accordion-chevron h-4 w-4' %}</summary>
+            <div class="mt-2 space-y-1 text-sm text-slate-600">
+              {%- if shipping_page -%}<p><a class="font-bold text-brand hover:underline" href="{{ shipping_page.url }}">Shipping &amp; delivery policy</a></p>{%- endif -%}
+              {%- if returns_page -%}<p><a class="font-bold text-brand hover:underline" href="{{ returns_page.url }}">7-day return &amp; refund policy</a></p>{%- endif -%}
+            </div>
+          </details>
+        {%- endif -%}
+        {%- assign size_page = pages['size-guide'] -%}
+        {%- if size_page -%}
+          <p class="text-sm"><a class="font-bold text-brand hover:underline" href="{{ size_page.url }}">Size &amp; fit guide</a></p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="sticky-pdp-bar" class="sticky-mobile-bar fixed inset-x-0 bottom-[68px] z-40 border-t border-[#e8eef8] bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
+  <div class="flex items-center gap-3">
+    <div class="min-w-0 flex-1">
+      <p class="truncate text-sm font-bold">{{ product.title }}</p>
+      <p class="text-sm font-extrabold text-brand">{{ current_variant.price | money }}</p>
+    </div>
+    <a href="#pdp-main-cta" class="inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white">View options</a>
+  </div>
+</div>
+
+<script type="application/json" id="product-json">{{ product | json }}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ shop.url | append: product.url | json }},
+  {%- if product.featured_media -%}"image": {{ product.featured_media | image_url: width: 1200 | prepend: 'https:' | json }},{%- endif -%}
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": "{{ current_variant.price | divided_by: 100.0 }}",
+    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout button", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust badge",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Authentic products" },
+        { "type": "text", "id": "sub", "label": "Subtitle", "default": "Sourced from verified sellers" },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "shield", "options": [
+          { "value": "shield", "label": "Shield" },
+          { "value": "truck", "label": "Truck" },
+          { "value": "refresh", "label": "Returns" },
+          { "value": "headset", "label": "Support" },
+          { "value": "lock", "label": "Lock" },
+          { "value": "check", "label": "Check" }
+        ]}
+      ]
+    }
+  ],
+  "presets": [{ "name": "Product information", "blocks": [{ "type": "trust" }, { "type": "trust" }, { "type": "trust" }, { "type": "trust" }] }]
+}
+{% endschema %}
