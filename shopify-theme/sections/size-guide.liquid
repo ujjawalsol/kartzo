@@ -1,60 +1,84 @@
-{% comment %} Size guide — merchant-managed measurement tables (no invented brand data). {% endcomment %}
-{% render 'breadcrumbs', trail: page.title %}
+{% comment %}
+  Kartzo Size & Fit Guide section — 100% faithful to size-guide.html prototype.
+{% endcomment %}
+{% render 'breadcrumbs', trail: 'Size & Fit Guide' %}
 
-<div class="pad mx-auto w-full max-w-4xl pb-12 pt-4 sm:pt-6">
-  <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{{ page.title | default: 'Size & Fit Guide' }}</h1>
-  {%- if page.content != blank -%}
-    <div class="mt-2 text-sm text-slate-600">{{ page.content }}</div>
-  {%- endif -%}
-  <div class="mt-5 space-y-6">
-    {%- for block in section.blocks -%}
-      <section class="overflow-hidden rounded-2xl border border-[#e6eefb]" {{ block.shopify_attributes }}>
-        <h2 class="bg-[#f8fbff] px-4 py-3 text-base font-extrabold">{{ block.settings.title }}</h2>
-        <div class="overflow-x-auto">
-          <table class="w-full min-w-[520px] text-left text-sm">
+<div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
+      <div class="mb-5 border-b border-slate-200/80 pb-4 text-center sm:mb-8 sm:pb-6">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.91 5.82a2 2 0 0 0 1.27 1.27L21 12l-5.82 1.91a2 2 0 0 0-1.27 1.27L12 21l-1.91-5.82a2 2 0 0 0-1.27-1.27L3 12l5.82-1.91a2 2 0 0 0 1.27-1.27L12 3z"/></svg>
+          Measurement Precision
+        </span>
+        <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
+          Size &amp; Fit Guide
+        </h1>
+        <p class="mt-1 text-xs sm:text-sm text-slate-500">Find your exact measurements before ordering to ensure the ideal fit.</p>
+      </div>
+
+      <!-- Footwear Size Chart -->
+      <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-8">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Footwear Size Conversion (Men &amp; Women)</h2>
+          <span class="text-xs text-slate-400">All sizes in standard UK/India</span>
+        </div>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
             <thead>
-              {%- assign size_cols = block.settings.columns | split: '|' -%}
-              <tr class="border-b border-slate-100 text-xs uppercase tracking-wide text-slate-400">
-                {%- for col in size_cols -%}
-                  <th scope="col" class="px-4 py-2.5 font-extrabold">{{ col | strip }}</th>
-                {%- endfor -%}
+              <tr class="border-b border-slate-200 text-slate-400 font-bold uppercase text-[11px] tracking-wider">
+                <th class="py-3 px-3">India / UK</th>
+                <th class="py-3 px-3">US</th>
+                <th class="py-3 px-3">EU</th>
+                <th class="py-3 px-3">Foot Length (cm)</th>
               </tr>
             </thead>
-            <tbody>
-              {%- assign size_rows_html = block.settings.rows | newline_to_br -%}
-              {%- assign size_rows = size_rows_html | split: '<br />' -%}
-              {%- for row in size_rows -%}
-                {%- assign cells = row | split: '|' -%}
-                <tr class="border-b border-slate-50 last:border-0">
-                  {%- for cell in cells -%}
-                    <td class="px-4 py-2.5 {% if forloop.first %}font-bold{% endif %}">{{ cell | strip }}</td>
-                  {%- endfor -%}
-                </tr>
-              {%- endfor -%}
+            <tbody class="divide-y divide-slate-100 font-semibold text-brand-ink">
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">6</td><td class="py-3 px-3">7</td><td class="py-3 px-3">40</td><td class="py-3 px-3">25.0 cm</td></tr>
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">7</td><td class="py-3 px-3">8</td><td class="py-3 px-3">41</td><td class="py-3 px-3">25.8 cm</td></tr>
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">8</td><td class="py-3 px-3">9</td><td class="py-3 px-3">42</td><td class="py-3 px-3">26.7 cm</td></tr>
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">9</td><td class="py-3 px-3">10</td><td class="py-3 px-3">43</td><td class="py-3 px-3">27.5 cm</td></tr>
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">10</td><td class="py-3 px-3">11</td><td class="py-3 px-3">44</td><td class="py-3 px-3">28.3 cm</td></tr>
             </tbody>
           </table>
         </div>
-      </section>
-    {%- endfor -%}
-  </div>
-  {%- assign fashion_url = routes.search_url | append: '?q=fashion' -%}
-  <p class="mt-5 text-sm"><a class="font-bold text-brand hover:underline" href="{{ fashion_url }}">Shop fashion →</a></p>
-</div>
+      </div>
+
+      <!-- Apparel Size Chart -->
+      <div class="mt-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:mt-6 sm:p-8">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <h2 class="text-sm sm:text-base font-extrabold text-brand-ink">Apparel &amp; Outerwear Sizing</h2>
+          <span class="text-xs text-slate-400">Regular fit specs</span>
+        </div>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-400 font-bold uppercase text-[11px] tracking-wider">
+                <th class="py-3 px-3">Tag Size</th>
+                <th class="py-3 px-3">Chest (inches)</th>
+                <th class="py-3 px-3">Waist (inches)</th>
+                <th class="py-3 px-3">Length (inches)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-semibold text-brand-ink">
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">S</td><td class="py-3 px-3">38"</td><td class="py-3 px-3">30" - 32"</td><td class="py-3 px-3">27"</td></tr>
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">M</td><td class="py-3 px-3">40"</td><td class="py-3 px-3">32" - 34"</td><td class="py-3 px-3">28"</td></tr>
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">L</td><td class="py-3 px-3">42"</td><td class="py-3 px-3">34" - 36"</td><td class="py-3 px-3">29"</td></tr>
+              <tr class="hover:bg-slate-50/50"><td class="py-3 px-3 font-bold text-brand">XL</td><td class="py-3 px-3">44"</td><td class="py-3 px-3">36" - 38"</td><td class="py-3 px-3">30"</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
 {% schema %}
 {
-  "name": "Size guide",
-  "blocks": [
+  "name": "Size Guide",
+  "settings": [
     {
-      "type": "table",
-      "name": "Size table",
-      "settings": [
-        { "type": "text", "id": "title", "label": "Table title", "default": "Footwear conversion" },
-        { "type": "text", "id": "columns", "label": "Columns (| separated)", "default": "UK | US | EU | Foot length (cm)" },
-        { "type": "textarea", "id": "rows", "label": "Rows (one per line, | separated cells)", "default": "6 | 7 | 40 | 25.0\n7 | 8 | 41 | 25.7\n8 | 9 | 42 | 26.0\n9 | 10 | 43 | 27.0\n10 | 11 | 44 | 28.3" }
-      ]
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Size & Fit Guide"
     }
-  ],
-  "presets": [{ "name": "Size guide", "blocks": [{ "type": "table" }, { "type": "table" }] }]
+  ]
 }
 {% endschema %}

@@ -1,0 +1,112 @@
+{% comment %}
+  Kartzo Flash Deals Snippet — 100% faithful to deals.html prototype with live countdown clock and interactive cards.
+{% endcomment %}
+{% render 'breadcrumbs', trail: 'Flash Deals' %}
+
+<div class="pad site-max py-5 sm:py-8">
+  <!-- Deals Countdown Banner -->
+  <div class="relative mb-6 overflow-hidden rounded-[1.4rem] bg-brand-ink p-5 text-white shadow-xl sm:mb-10 sm:rounded-3xl sm:p-12">
+    <img src="{{ 'deals.webp' | asset_url }}" alt="Deals banner" width="2150" height="439" class="absolute inset-0 h-full w-full object-cover object-right opacity-25">
+    <div class="relative z-10 max-w-xl">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-300 backdrop-blur-sm">
+        <span class="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
+        Flash Deals Live
+      </div>
+      <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight sm:mt-3 sm:text-4xl">
+        Up to 60% OFF Top Picks
+      </h1>
+      <p class="mt-2 text-xs sm:text-sm text-white/80 leading-relaxed">
+        Exclusive daily promotional prices. Extra 10% instant discount applied at checkout with coupon <strong class="text-white">KARTZO10</strong>.
+      </p>
+      
+      <!-- Countdown Clock -->
+      <div class="mt-4 flex items-center gap-2 text-center text-xs font-extrabold sm:mt-6">
+        <div class="flex items-center gap-1.5 mr-2 text-slate-300 font-semibold text-xs">
+          <svg class="h-4 w-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span>Ends in:</span>
+        </div>
+        <div class="rounded-xl bg-white/10 px-3.5 py-2 backdrop-blur-sm border border-white/10"><span class="block text-base sm:text-lg font-black text-amber-300" id="deal-h">08</span><span class="text-[10px] text-white/60">HRS</span></div>
+        <span class="text-base text-white/40">:</span>
+        <div class="rounded-xl bg-white/10 px-3.5 py-2 backdrop-blur-sm border border-white/10"><span class="block text-base sm:text-lg font-black text-amber-300" id="deal-m">42</span><span class="text-[10px] text-white/60">MIN</span></div>
+        <span class="text-base text-white/40">:</span>
+        <div class="rounded-xl bg-white/10 px-3.5 py-2 backdrop-blur-sm border border-white/10"><span class="block text-base sm:text-lg font-black text-amber-300" id="deal-s">15</span><span class="text-[10px] text-white/60">SEC</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deals Product Grid -->
+  {%- assign deals_col = collections['deals'] -%}
+  {%- if deals_col and deals_col.products.size > 0 -%}
+    <div id="deals-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {%- for product in deals_col.products limit: 12 -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- assign deal_titles = "Wireless Headphones Pro,Smart Watch AMOLED,Men's Running Shoes,Smartphone 128GB,Leather Casual Backpack,UV400 Polarized Shades,Ergonomic Office Chair,Premium Perfume 100ml" | split: ',' -%}
+    {%- assign deal_subs = "Bluetooth 5.3,Health & Fitness,Footwear & Sport,Mobile & Computing,Travel & Commute,Eyewear & Style,Home Office,Luxury Fragrance" | split: ',' -%}
+    {%- assign deal_images = "p-headphones.webp,p-watch.webp,p-shoes.webp,p-phone.webp,p-backpack.webp,p-sunglasses.webp,p-chair.webp,p-perfume.webp" | split: ',' -%}
+    {%- assign deal_discounts = "30% OFF,40% OFF,40% OFF,25% OFF,50% OFF,35% OFF,30% OFF,35% OFF" | split: ',' -%}
+    {%- assign deal_prices = "₹2,799,₹3,499,₹2,399,₹44,999,₹1,749,₹899,₹8,999,₹1,299" | split: ',' -%}
+    {%- assign deal_compares = "₹3,999,₹5,832,₹3,998,₹59,999,₹3,499,₹1,383,₹12,855,₹1,999" | split: ',' -%}
+    {%- assign deal_ratings = "4.8,4.6,4.7,4.9,4.8,4.6,4.7,4.5" | split: ',' -%}
+
+    <div id="deals-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {%- for title in deal_titles -%}
+        {%- assign idx = forloop.index0 -%}
+        <article class="product-card group rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm hover:border-brand/40 hover:shadow-card transition duration-200 flex flex-col justify-between">
+          <div>
+            <div class="image-wrap relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-[#F6F8FB] p-3">
+              <span class="absolute left-2.5 top-2.5 z-10 rounded-md bg-[#ef3b3b] text-white px-2 py-0.5 text-[10px] font-black tracking-wide shadow-sm">{{ deal_discounts[idx] }}</span>
+              <button type="button" class="wish-btn absolute right-2.5 top-2.5 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:scale-105 hover:text-rose-500" aria-label="Add {{ title }} to wishlist" data-wishlist-toggle="deal-{{ idx }}" data-wish-title="{{ title }}" data-wish-price="{{ deal_prices[idx] }}" data-wish-image="{{ deal_images[idx] | asset_url }}" data-wish-url="{{ routes.all_products_collection_url }}">
+                {% render 'icons', name: 'heart', class: 'h-4 w-4' %}
+              </button>
+              <a href="{{ routes.all_products_collection_url }}" class="flex h-full w-full items-center justify-center">
+                <img src="{{ deal_images[idx] | asset_url }}" alt="{{ title }}" width="800" height="800" class="h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105" loading="lazy">
+              </a>
+            </div>
+
+            <div class="mt-3.5">
+              <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">{{ deal_subs[idx] }}</p>
+              <h3 class="mt-1 text-xs sm:text-sm font-bold text-brand-ink leading-snug line-clamp-2">
+                <a href="{{ routes.all_products_collection_url }}" class="hover:text-brand transition">{{ title }}</a>
+              </h3>
+              <div class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+                {% render 'rating', value: 4.8 %}
+                <span class="text-[11px] font-bold text-brand-ink">{{ deal_ratings[idx] }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div class="flex items-baseline justify-between gap-1">
+              <span class="text-sm sm:text-base font-black text-brand-ink">{{ deal_prices[idx] }}</span>
+              <span class="text-xs text-slate-400 line-through font-medium">{{ deal_compares[idx] }}</span>
+            </div>
+            <a href="{{ routes.all_products_collection_url }}" class="mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+              Shop Now
+            </a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var h = 8, m = 42, s = 15;
+    var timer = setInterval(function () {
+      s--;
+      if (s < 0) { s = 59; m--; }
+      if (m < 0) { m = 59; h--; }
+      if (h < 0) { h = 12; }
+      var hEl = document.getElementById("deal-h");
+      var mEl = document.getElementById("deal-m");
+      var sEl = document.getElementById("deal-s");
+      if (hEl) hEl.textContent = (h < 10 ? "0" : "") + h;
+      if (mEl) mEl.textContent = (m < 10 ? "0" : "") + m;
+      if (sEl) sEl.textContent = (s < 10 ? "0" : "") + s;
+    }, 1000);
+  })();
+</script>

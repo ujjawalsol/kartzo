@@ -1,29 +1,198 @@
-{% comment %} Wishlist page — device-local wishlist rendered by kartzo.js (honest, no fake sync). {% endcomment %}
-{% render 'breadcrumbs', trail: page.title %}
+{% comment %}
+  Kartzo Wishlist section — 100% faithful to wishlist.html prototype.
+{% endcomment %}
+{% render 'breadcrumbs', trail: 'My Wishlist' %}
 
-<div class="pad mx-auto w-full max-w-7xl pb-12 pt-4 sm:pt-6">
-  <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">
-    {{ page.title | default: 'My Wishlist' }} <span id="wishlist-page-count" class="text-base font-bold text-slate-400">(0 saved)</span>
-  </h1>
-  {%- if page.content != blank -%}
-    <div class="mt-2 max-w-2xl text-sm text-slate-600">{{ page.content }}</div>
-  {%- endif -%}
+<div class="pad site-max py-5 sm:py-8">
+      <div class="mb-5 flex flex-row items-end justify-between gap-3 border-b border-slate-200/80 pb-4 sm:mb-8 sm:pb-6">
+        <div>
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-600">
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+            Saved Items
+          </span>
+          <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight text-brand-ink sm:text-4xl">
+            My Wishlist
+          </h1>
+          <p class="mt-1 text-xs sm:text-sm text-slate-500">
+            <span id="wishlist-page-count" class="font-bold text-brand-ink">4</span> saved products ready to purchase.
+          </p>
+        </div>
+        <a href="{{ routes.all_products_collection_url }}" class="inline-flex shrink-0 items-center gap-1 pb-1 text-xs sm:text-sm font-bold text-brand hover:underline">
+          <span>Discover More</span>
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
 
-  <div id="wishlist-grid" class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"></div>
+      <!-- Wishlist Product Grid Using Canonical Master ProductCard Component -->
+      <div id="wishlist-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        
+    <article class="product-card group rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm hover:border-brand/40 hover:shadow-card transition duration-200" data-name="electronics headphones bluetooth audio" data-cat="electronics">
+      <div class="image-wrap relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-[#F6F8FB] p-3">
+        <span class="absolute left-2.5 top-2.5 z-10 rounded-md bg-rose-500 text-white px-2 py-0.5 text-[10px] font-black tracking-wide shadow-sm">30% OFF</span>
+        <button type="button" class="wish-btn absolute right-2.5 top-2.5 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:scale-105 hover:text-rose-500" aria-pressed="false" aria-label="Add Wireless Headphones Pro to wishlist">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+        </button>
+        <a href="product.html" class="flex h-full w-full items-center justify-center">
+          <img src="{{ 'p-headphones.webp' | asset_url }}" alt="Wireless Headphones" width="800" height="800" class="h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105" loading="lazy">
+        </a>
+      </div>
 
-  <div id="wishlist-empty" hidden class="mt-5 rounded-3xl border border-dashed border-slate-300 px-6 py-16 text-center">
-    {% render 'icons', name: 'heart', class: 'mx-auto h-12 w-12 text-slate-300' %}
-    <p class="mt-3 text-lg font-extrabold">Your Wishlist is Empty</p>
-    <p class="mt-1 text-sm text-slate-500">Tap the heart on any product to save it here on this device.</p>
-    <a href="{{ routes.all_products_collection_url }}" class="mt-4 inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">Discover More</a>
-  </div>
-  <p class="mt-4 text-xs text-slate-400">Saved on this device only — sign-in sync is not included in this theme.</p>
-</div>
+      <div class="mt-3.5 flex flex-1 flex-col justify-between">
+        <div>
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Bluetooth 5.3</p>
+          <h3 class="mt-1 text-xs sm:text-sm font-bold text-brand-ink leading-snug line-clamp-2">
+            <a href="product.html" class="hover:text-brand transition">Wireless Headphones Pro</a>
+          </h3>
+          <div class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+            <span class="inline-flex items-center gap-0.5" aria-hidden="true"><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-slate-200 fill-slate-200" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg></span>
+            <span class="text-[11px] font-bold text-brand-ink">4.8</span>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="flex items-baseline justify-between gap-1">
+            <span class="text-sm sm:text-base font-black text-brand-ink">₹2,799</span>
+            <span class="text-xs text-slate-400 line-through font-medium">₹3,999</span>
+          </div>
+          <button type="button" class="add-cart quick-add-btn mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </article>
+        
+    <article class="product-card group rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm hover:border-brand/40 hover:shadow-card transition duration-200" data-name="electronics watch amoled wearables" data-cat="electronics">
+      <div class="image-wrap relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-[#F6F8FB] p-3">
+        <span class="absolute left-2.5 top-2.5 z-10 rounded-md bg-rose-500 text-white px-2 py-0.5 text-[10px] font-black tracking-wide shadow-sm">40% OFF</span>
+        <button type="button" class="wish-btn absolute right-2.5 top-2.5 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:scale-105 hover:text-rose-500" aria-pressed="false" aria-label="Add Smart Watch AMOLED to wishlist">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+        </button>
+        <a href="product.html" class="flex h-full w-full items-center justify-center">
+          <img src="{{ 'p-watch.webp' | asset_url }}" alt="Smart Watch" width="800" height="800" class="h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105" loading="lazy">
+        </a>
+      </div>
+
+      <div class="mt-3.5 flex flex-1 flex-col justify-between">
+        <div>
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Health & Fitness</p>
+          <h3 class="mt-1 text-xs sm:text-sm font-bold text-brand-ink leading-snug line-clamp-2">
+            <a href="product.html" class="hover:text-brand transition">Smart Watch AMOLED</a>
+          </h3>
+          <div class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+            <span class="inline-flex items-center gap-0.5" aria-hidden="true"><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-slate-200 fill-slate-200" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg></span>
+            <span class="text-[11px] font-bold text-brand-ink">4.6</span>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="flex items-baseline justify-between gap-1">
+            <span class="text-sm sm:text-base font-black text-brand-ink">₹3,499</span>
+            <span class="text-xs text-slate-400 line-through font-medium">₹5,832</span>
+          </div>
+          <button type="button" class="add-cart quick-add-btn mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </article>
+        
+    <article class="product-card group rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm hover:border-brand/40 hover:shadow-card transition duration-200" data-name="fashion shoes running sneakers" data-cat="fashion">
+      <div class="image-wrap relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-[#F6F8FB] p-3">
+        <span class="absolute left-2.5 top-2.5 z-10 rounded-md bg-rose-500 text-white px-2 py-0.5 text-[10px] font-black tracking-wide shadow-sm">40% OFF</span>
+        <button type="button" class="wish-btn absolute right-2.5 top-2.5 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:scale-105 hover:text-rose-500" aria-pressed="false" aria-label="Add Men's Running Shoes to wishlist">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+        </button>
+        <a href="product.html" class="flex h-full w-full items-center justify-center">
+          <img src="{{ 'p-shoes.webp' | asset_url }}" alt="Running Shoes" width="800" height="800" class="h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105" loading="lazy">
+        </a>
+      </div>
+
+      <div class="mt-3.5 flex flex-1 flex-col justify-between">
+        <div>
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Footwear & Sport</p>
+          <h3 class="mt-1 text-xs sm:text-sm font-bold text-brand-ink leading-snug line-clamp-2">
+            <a href="product.html" class="hover:text-brand transition">Men's Running Shoes</a>
+          </h3>
+          <div class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+            <span class="inline-flex items-center gap-0.5" aria-hidden="true"><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-slate-200 fill-slate-200" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg></span>
+            <span class="text-[11px] font-bold text-brand-ink">4.7</span>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="flex items-baseline justify-between gap-1">
+            <span class="text-sm sm:text-base font-black text-brand-ink">₹2,399</span>
+            <span class="text-xs text-slate-400 line-through font-medium">₹3,998</span>
+          </div>
+          <button type="button" class="add-cart quick-add-btn mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </article>
+        
+    <article class="product-card group rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm hover:border-brand/40 hover:shadow-card transition duration-200" data-name="electronics mobile phone smartphone" data-cat="electronics">
+      <div class="image-wrap relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-[#F6F8FB] p-3">
+        <span class="absolute left-2.5 top-2.5 z-10 rounded-md bg-rose-500 text-white px-2 py-0.5 text-[10px] font-black tracking-wide shadow-sm">25% OFF</span>
+        <button type="button" class="wish-btn absolute right-2.5 top-2.5 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:scale-105 hover:text-rose-500" aria-pressed="false" aria-label="Add Smartphone 128GB to wishlist">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+        </button>
+        <a href="product.html" class="flex h-full w-full items-center justify-center">
+          <img src="{{ 'p-phone.webp' | asset_url }}" alt="Smartphone" width="800" height="800" class="h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105" loading="lazy">
+        </a>
+      </div>
+
+      <div class="mt-3.5 flex flex-1 flex-col justify-between">
+        <div>
+          <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Mobile Tech</p>
+          <h3 class="mt-1 text-xs sm:text-sm font-bold text-brand-ink leading-snug line-clamp-2">
+            <a href="product.html" class="hover:text-brand transition">Smartphone 128GB</a>
+          </h3>
+          <div class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+            <span class="inline-flex items-center gap-0.5" aria-hidden="true"><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg><svg class="h-3.5 w-3.5 text-slate-200 fill-slate-200" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 18.25l-6.18 3.26L7 14.63l-5-4.87 6.91-1L12 2.5z"/></svg></span>
+            <span class="text-[11px] font-bold text-brand-ink">4.8</span>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="flex items-baseline justify-between gap-1">
+            <span class="text-sm sm:text-base font-black text-brand-ink">₹54,999</span>
+            <span class="text-xs text-slate-400 line-through font-medium">₹73,332</span>
+          </div>
+          <button type="button" class="add-cart quick-add-btn mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </article>
+      </div>
+
+      <!-- Empty State -->
+      <div id="wishlist-empty-state" class="hidden rounded-2xl border border-slate-200/80 bg-white p-12 text-center shadow-sm">
+        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-rose-50 text-rose-500">
+          <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+        </div>
+        <h2 class="mt-4 text-lg font-extrabold text-brand-ink">Your Wishlist is Empty</h2>
+        <p class="mt-1 text-xs sm:text-sm text-slate-500">Explore our catalog and click the heart icon on items you love.</p>
+        <div class="mt-6">
+          <a href="{{ routes.all_products_collection_url }}" class="inline-flex min-h-11 items-center gap-2 rounded-xl bg-brand px-6 text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-brand-dark transition">
+            <span>Start Shopping</span>
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
 {% schema %}
 {
   "name": "Wishlist",
-  "settings": [],
-  "presets": [{ "name": "Wishlist" }]
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "My Wishlist"
+    }
+  ]
 }
 {% endschema %}

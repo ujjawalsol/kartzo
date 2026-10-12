@@ -37,7 +37,12 @@
   {% sections 'header-group' %}
 
   <main id="main" role="main" tabindex="-1">
-    {{ content_for_layout }}
+    {%- if request.page_type == 'policy' -%}
+      {% section 'main-policy' %}
+      <div style="display:none;" aria-hidden="true">{{ content_for_layout }}</div>
+    {%- else -%}
+      {{ content_for_layout }}
+    {%- endif -%}
   </main>
 
   {% sections 'footer-group' %}

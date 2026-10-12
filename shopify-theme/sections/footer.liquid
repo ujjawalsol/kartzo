@@ -2,16 +2,17 @@
   Kartzo footer — brand column + 3 link columns + payment bar.
   Visible across all screen sizes (responsive grid on mobile & desktop).
 {% endcomment %}
-{%- assign size_page = pages['size-guide'] -%}
-{%- assign tracking_page = pages['tracking'] -%}
-{%- assign contact_page = pages['contact'] -%}
-{%- assign faq_page = pages['faq'] -%}
-{%- assign shipping_page = pages['shipping-policy'] -%}
-{%- assign returns_page = pages['returns-policy'] -%}
-{%- assign cancel_page = pages['cancellation-policy'] -%}
-{%- assign about_page = pages['about'] -%}
-{%- assign privacy_page = pages['privacy-policy'] -%}
-{%- assign terms_page = pages['terms-conditions'] -%}
+{%- assign deals_url = pages['deals'].url | default: section.settings.deals_url | default: '/pages/deals' -%}
+{%- assign about_url = pages['about'].url | default: pages['about-us'].url | default: section.settings.about_url | default: '/pages/about' -%}
+{%- assign contact_url = pages['contact'].url | default: section.settings.contact_url | default: '/pages/contact' -%}
+{%- assign faq_url = pages['faq'].url | default: section.settings.faq_url | default: '/pages/faq' -%}
+{%- assign tracking_url = pages['tracking'].url | default: section.settings.tracking_url | default: '/pages/tracking' -%}
+{%- assign size_url = pages['size-guide'].url | default: section.settings.size_url | default: '/pages/size-guide' -%}
+{%- assign returns_url = pages['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/returns-policy' -%}
+{%- assign shipping_url = pages['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/shipping-policy' -%}
+{%- assign cancel_url = pages['cancellation-policy'].url | default: '/pages/cancellation-policy' -%}
+{%- assign privacy_url = pages['privacy-policy'].url | default: shop.privacy_policy.url | default: '/pages/privacy-policy' -%}
+{%- assign terms_url = pages['terms-conditions'].url | default: shop.terms_of_service.url | default: '/pages/terms-conditions' -%}
 
 <footer class="border-t border-[#e8eef8] bg-white pb-[76px] lg:pb-0">
   <div class="pad mx-auto w-full grid grid-cols-1 gap-8 py-10 sm:grid-cols-2 lg:grid-cols-5">
@@ -67,12 +68,8 @@
       <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
         <li><a href="{{ routes.all_products_collection_url }}" class="hover:text-brand transition">All Products</a></li>
         <li><a href="{{ routes.collections_url }}" class="hover:text-brand transition">Shop by Category</a></li>
-        {%- assign deals_page = pages['deals'] -%}
-        {%- assign deals_url = section.settings.deals_url | default: deals_page.url -%}
-        {%- if deals_url == blank -%}{%- assign deals_url = '/collections/all?view=deals' -%}{%- endif -%}
         <li><a href="{{ deals_url }}" class="hover:text-brand transition">Flash Deals</a></li>
-        <li><a href="{{ routes.search_url }}?q=electronics" class="hover:text-brand transition">Audio &amp; Electronics</a></li>
-        {%- assign size_url = size_page.url | default: '/collections/all?view=size-guide' -%}
+        <li><a href="{{ routes.all_products_collection_url }}?q=electronics" class="hover:text-brand transition">Audio &amp; Electronics</a></li>
         <li><a href="{{ size_url }}" class="hover:text-brand transition">Size &amp; Fit Guide</a></li>
       </ul>
     </nav>
@@ -81,15 +78,7 @@
     <nav aria-label="Customer Care">
       <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Customer Care</h3>
       <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
-        {%- assign track_url = tracking_page.url | default: '/collections/all?view=tracking' -%}
-        {%- assign contact_url = contact_page.url | default: '/pages/contact' -%}
-        {%- assign faq_url = faq_page.url | default: '/collections/all?view=faq' -%}
-        {%- assign shipping_url = shipping_page.url | default: shop.shipping_policy.url -%}
-        {%- if shipping_url == blank -%}{%- assign shipping_url = '/collections/all?view=shipping-policy' -%}{%- endif -%}
-        {%- assign returns_url = returns_page.url | default: shop.refund_policy.url -%}
-        {%- if returns_url == blank -%}{%- assign returns_url = '/collections/all?view=returns-policy' -%}{%- endif -%}
-        {%- assign cancel_url = cancel_page.url | default: '/collections/all?view=cancellation-policy' -%}
-        <li><a href="{{ track_url }}" class="hover:text-brand transition">Track Your Parcel</a></li>
+        <li><a href="{{ tracking_url }}" class="hover:text-brand transition">Track Your Parcel</a></li>
         <li><a href="{{ contact_url }}" class="hover:text-brand transition">Contact Support</a></li>
         <li><a href="{{ faq_url }}" class="hover:text-brand transition">Help &amp; FAQs</a></li>
         <li><a href="{{ shipping_url }}" class="hover:text-brand transition">Shipping Policy</a></li>
@@ -102,11 +91,6 @@
     <nav aria-label="Company">
       <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Company</h3>
       <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
-        {%- assign about_url = about_page.url | default: '/collections/all?view=about' -%}
-        {%- assign privacy_url = privacy_page.url | default: shop.privacy_policy.url -%}
-        {%- if privacy_url == blank -%}{%- assign privacy_url = '/collections/all?view=privacy-policy' -%}{%- endif -%}
-        {%- assign terms_url = terms_page.url | default: shop.terms_of_service.url -%}
-        {%- if terms_url == blank -%}{%- assign terms_url = '/collections/all?view=terms-conditions' -%}{%- endif -%}
         <li><a href="{{ about_url }}" class="hover:text-brand transition">About {{ shop.name }}</a></li>
         <li><a href="{{ routes.account_url }}" class="hover:text-brand transition">Customer Account</a></li>
         <li><a href="{{ privacy_url }}" class="hover:text-brand transition">Privacy Policy</a></li>
@@ -116,7 +100,7 @@
   </div>
 
   <!-- Bottom bar (visible on all screens) -->
-  <div class="border-t border-slate-100 bg-slate-50/70">
+  <div class="border-t border-slate-100 bg-slate-50">
     <div class="pad mx-auto flex w-full flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between text-xs text-slate-500 font-medium">
       <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
       {%- assign payment_methods = 'Visa,Mastercard,RuPay,UPI,Net Banking,COD' | split: ',' -%}

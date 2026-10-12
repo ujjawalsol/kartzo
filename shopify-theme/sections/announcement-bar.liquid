@@ -1,19 +1,24 @@
 {% comment %} Kartzo announcement bar — preserves the original 3-message utility strip. {% endcomment %}
 {%- assign threshold_money = settings.free_shipping_threshold | default: 49900 | money_without_trailing_zeros -%}
+{%- assign returns_url = pages['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/returns-policy' -%}
+{%- assign shipping_url = pages['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/shipping-policy' -%}
+
 <div class="hidden bg-brand-bar text-white lg:block" role="region" aria-label="Store benefits">
   <div class="pad flex h-10 w-full items-center justify-between gap-4 text-[12.5px] font-semibold sm:h-11 sm:text-[13px]">
     <p class="flex min-w-0 items-center gap-2">
       {% render 'icons', name: 'truck', class: 'h-4 w-4 shrink-0' %}
-      <span class="truncate">{{ section.settings.message_left | default: 'Free Shipping on orders over THRESHOLD' | replace: 'THRESHOLD', threshold_money }}</span>
+      <a href="{{ shipping_url }}" class="truncate hover:underline transition">{{ section.settings.message_left | default: 'Free Shipping on orders over THRESHOLD' | replace: 'THRESHOLD', threshold_money }}</a>
     </p>
     <ul class="hidden items-center gap-8 md:flex">
-      <li class="flex items-center gap-2">
-        {% render 'icons', name: 'refresh', class: 'h-4 w-4' %}
-        {{ section.settings.message_mid | default: '7 Days Easy Returns' }}
+      <li>
+        <a href="{{ returns_url }}" class="flex items-center gap-2 hover:underline transition">
+          {% render 'icons', name: 'refresh', class: 'h-4 w-4' %}
+          <span>{{ section.settings.message_mid | default: '7 Days Easy Returns' }}</span>
+        </a>
       </li>
       <li class="flex items-center gap-2">
         {% render 'icons', name: 'shield', class: 'h-4 w-4' %}
-        {{ section.settings.message_right | default: '100% Secure Payment' }}
+        <span>{{ section.settings.message_right | default: '100% Secure Payment' }}</span>
       </li>
     </ul>
   </div>

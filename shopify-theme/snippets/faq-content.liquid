@@ -1,0 +1,102 @@
+{% comment %}
+  Kartzo FAQ Snippet — 100% faithful to faq.html prototype with 6 rich accordion Q&As.
+{% endcomment %}
+{% render 'breadcrumbs', trail: 'Help & FAQs' %}
+
+<div class="pad site-max py-5 sm:py-8 max-w-4xl mx-auto">
+  <div class="mb-8 border-b border-slate-200/80 pb-6 text-center">
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
+      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+      Knowledge Base
+    </span>
+    <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+      Frequently Asked Questions
+    </h1>
+    <p class="mt-1 text-xs sm:text-sm text-slate-500">Instant answers to the most common queries from Kartzo shoppers.</p>
+  </div>
+
+  <!-- FAQ Accordions -->
+  <div class="space-y-3">
+    <details class="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition" open>
+      <summary class="flex cursor-pointer items-center justify-between font-extrabold text-sm sm:text-base text-brand-ink">
+        <span>How long does delivery take across India?</span>
+        <span class="text-slate-400 group-open:rotate-180 transition duration-200">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </summary>
+      <div class="mt-3.5 border-t border-slate-100 pt-3.5 text-xs sm:text-sm leading-relaxed text-slate-600">
+        We dispatch all confirmed orders within 24 hours from regional fulfillment centers in Mumbai and Delhi. Metro deliveries typically arrive in 2-3 business days, while other regional destinations take 3-5 business days. You can track live parcel milestones on our <a href="{{ pages['tracking'].url | default: '/pages/tracking' }}" class='text-brand font-bold hover:underline'>Order Tracking</a> page.
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition">
+      <summary class="flex cursor-pointer items-center justify-between font-extrabold text-sm sm:text-base text-brand-ink">
+        <span>How does the 7-Day Doorstep Replacement Guarantee work?</span>
+        <span class="text-slate-400 group-open:rotate-180 transition duration-200">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </summary>
+      <div class="mt-3.5 border-t border-slate-100 pt-3.5 text-xs sm:text-sm leading-relaxed text-slate-600">
+        If your product is physically damaged on arrival, defective in audio/function, or incorrect in size, you can initiate a doorstep return within 7 calendar days of delivery via your <a href="{{ routes.account_url }}" class='text-brand font-bold hover:underline'>Orders page</a>. Our courier will inspect and pick up the item directly from your home address. Learn more in our <a href="{{ pages['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/returns-policy' }}" class='text-brand font-bold hover:underline'>Returns Policy</a>.
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition">
+      <summary class="flex cursor-pointer items-center justify-between font-extrabold text-sm sm:text-base text-brand-ink">
+        <span>Is Cash on Delivery (COD) supported?</span>
+        <span class="text-slate-400 group-open:rotate-180 transition duration-200">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </summary>
+      <div class="mt-3.5 border-t border-slate-100 pt-3.5 text-xs sm:text-sm leading-relaxed text-slate-600">
+        Yes! Cash on Delivery is supported across 19,000+ PIN codes in India for orders up to ₹10,000. You can also pay the delivery agent via UPI QR scan at your doorstep upon receiving the parcel.
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition">
+      <summary class="flex cursor-pointer items-center justify-between font-extrabold text-sm sm:text-base text-brand-ink">
+        <span>How do I claim brand warranty on electronics?</span>
+        <span class="text-slate-400 group-open:rotate-180 transition duration-200">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </summary>
+      <div class="mt-3.5 border-t border-slate-100 pt-3.5 text-xs sm:text-sm leading-relaxed text-slate-600">
+        All consumer electronics purchased on Kartzo are 100% genuine sealed retail units and include official manufacturer warranty cards. Simply keep your digital tax invoice (downloadable from your <a href="{{ routes.account_url }}" class='text-brand font-bold hover:underline'>Orders page</a>) and present it at any authorized service center.
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition">
+      <summary class="flex cursor-pointer items-center justify-between font-extrabold text-sm sm:text-base text-brand-ink">
+        <span>How do I apply promotional coupon KARTZO10?</span>
+        <span class="text-slate-400 group-open:rotate-180 transition duration-200">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </summary>
+      <div class="mt-3.5 border-t border-slate-100 pt-3.5 text-xs sm:text-sm leading-relaxed text-slate-600">
+        During checkout or inside your <a href="{{ routes.cart_url }}" class='text-brand font-bold hover:underline'>Shopping Cart</a>, enter <strong>KARTZO10</strong> in the voucher code field and click Apply to instantly deduct 10% from your order total.
+      </div>
+    </details>
+
+    <details class="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm transition">
+      <summary class="flex cursor-pointer items-center justify-between font-extrabold text-sm sm:text-base text-brand-ink">
+        <span>What if I need to cancel my order before dispatch?</span>
+        <span class="text-slate-400 group-open:rotate-180 transition duration-200">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </summary>
+      <div class="mt-3.5 border-t border-slate-100 pt-3.5 text-xs sm:text-sm leading-relaxed text-slate-600">
+        You can cancel your order at zero charge prior to courier dispatch by navigating to <a href="{{ routes.account_url }}" class='text-brand font-bold hover:underline'>My Orders</a> and clicking 'Cancel Order'. If already in transit, you may simply refuse delivery at your doorstep for an automatic refund.
+      </div>
+    </details>
+  </div>
+
+  <!-- Support Shortcut Box -->
+  <div class="mt-12 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-8 text-center">
+    <h2 class="text-base sm:text-lg font-extrabold text-brand-ink">Still have an unanswered question?</h2>
+    <p class="mt-1 text-xs sm:text-sm text-slate-500">Our customer care team is standing by to resolve any issue.</p>
+    <a href="{{ pages['contact'].url | default: '/pages/contact' }}" class="mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl bg-brand px-6 text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-brand-dark transition">
+      <span>Contact Customer Support</span>
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</div>

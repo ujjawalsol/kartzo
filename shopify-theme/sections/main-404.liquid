@@ -1,19 +1,111 @@
-{% comment %} 404 — same centered error + real search as the original. {% endcomment %}
-<div class="pad mx-auto flex w-full max-w-xl flex-col items-center pb-16 pt-12 text-center sm:pt-16">
-  <p class="text-6xl font-black text-brand-soft" aria-hidden="true" style="color: #dbe7ff;">404</p>
-  <h1 class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">{{ 'general.not_found_heading' | t }}</h1>
-  <p class="mt-2 text-sm text-slate-500">{{ 'general.not_found_sub' | t }}</p>
-  <form action="{{ routes.search_url }}" method="get" role="search" class="mt-5 flex min-h-[48px] w-full items-center gap-2 rounded-full bg-[#f3f7ff] py-2.5 pl-4 pr-2">
-    {% render 'icons', name: 'search', class: 'h-5 w-5 shrink-0 text-brand' %}
-    <label for="notfound-search" class="sr-only">{{ 'general.search_label' | t }}</label>
-    <input id="notfound-search" name="q" type="search" placeholder="{{ 'general.search_placeholder' | t }}" class="min-w-0 w-full appearance-none border-0 bg-transparent text-[15px] font-medium outline-none placeholder:text-[#93a0b8]">
-    <button type="submit" class="inline-flex h-9 shrink-0 items-center rounded-full bg-brand px-5 text-sm font-bold text-white hover:bg-brand-dark">{{ 'general.search' | t }}</button>
-  </form>
-  <div class="mt-5 flex flex-wrap justify-center gap-3">
-    <a href="{{ routes.root_url }}" class="inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">{{ 'general.back_home' | t }}</a>
-    <a href="{{ routes.all_products_collection_url }}" class="inline-flex min-h-11 items-center rounded-xl border border-slate-200 px-6 text-sm font-bold hover:border-brand hover:text-brand">{{ 'general.browse_catalog' | t }}</a>
+{% comment %} 404 — instant zero-flash smart rescue fallback for uncreated merchant pages or prototypes {% endcomment %}
+{%- assign raw_path = request.path | append: ' ' | append: canonical_url | append: ' ' | append: request.page_type | downcase -%}
+
+{%- if raw_path contains 'faq' or raw_path contains 'help' -%}
+  {% render 'faq-content' %}
+
+{%- elsif raw_path contains 'about' -%}
+  {% render 'about-content' %}
+
+{%- elsif raw_path contains 'deal' -%}
+  {% render 'deals-content' %}
+
+{%- elsif raw_path contains 'privacy' or raw_path contains 'policy' or raw_path contains 'shipping' or raw_path contains 'return' or raw_path contains 'refund' or raw_path contains 'cancel' or raw_path contains 'terms' -%}
+  {% render 'policy-content' %}
+
+{%- else -%}
+  <style>
+    /* CRITICAL ANTI-FLASH RULE: Hide 404 box by default so user NEVER sees '404' while smart route is checked */
+    #standard-404-box {
+      display: none !important;
+    }
+    html.is-genuine-404 #standard-404-box {
+      display: flex !important;
+    }
+    html.smart-route-faq #fallback-faq {
+      display: block !important;
+    }
+    html.smart-route-about #fallback-about {
+      display: block !important;
+    }
+    html.smart-route-deals #fallback-deals {
+      display: block !important;
+    }
+    html.smart-route-policy #fallback-policy {
+      display: block !important;
+    }
+  </style>
+
+  <script>
+    (function() {
+      var p = (window.location.pathname + window.location.search + window.location.hash).toLowerCase();
+      var doc = document.documentElement;
+
+      if (p.indexOf('faq') !== -1 || p.indexOf('help') !== -1) {
+        doc.classList.add('smart-route-faq');
+        document.title = 'Frequently Asked Questions — ' + {{ shop.name | json }};
+      } else if (p.indexOf('about') !== -1) {
+        doc.classList.add('smart-route-about');
+        document.title = 'About Us — ' + {{ shop.name | json }};
+      } else if (p.indexOf('deal') !== -1) {
+        doc.classList.add('smart-route-deals');
+        document.title = 'Flash Deals & Offers — ' + {{ shop.name | json }};
+      } else if (
+        p.indexOf('return') !== -1 ||
+        p.indexOf('refund') !== -1 ||
+        p.indexOf('shipping') !== -1 ||
+        p.indexOf('cancel') !== -1 ||
+        p.indexOf('term') !== -1 ||
+        p.indexOf('privacy') !== -1 ||
+        p.indexOf('policy') !== -1
+      ) {
+        doc.classList.add('smart-route-policy');
+        var t = 'Privacy Policy';
+        if (p.indexOf('shipping') !== -1) t = 'Shipping Policy';
+        else if (p.indexOf('return') !== -1 || p.indexOf('refund') !== -1) t = '7-Day Returns & Exchange Policy';
+        else if (p.indexOf('cancel') !== -1) t = 'Order Cancellation Policy';
+        else if (p.indexOf('term') !== -1) t = 'Terms & Conditions';
+        document.title = t + ' — ' + {{ shop.name | json }};
+      } else {
+        doc.classList.add('is-genuine-404');
+      }
+    })();
+  </script>
+
+  <!-- Pre-rendered fallback modules for uncreated Shopify pages (Zero-flash instant display) -->
+  <div id="fallback-faq" style="display:none;">
+    {% render 'faq-content' %}
   </div>
-</div>
+
+  <div id="fallback-about" style="display:none;">
+    {% render 'about-content' %}
+  </div>
+
+  <div id="fallback-deals" style="display:none;">
+    {% render 'deals-content' %}
+  </div>
+
+  <div id="fallback-policy" style="display:none;">
+    {% render 'policy-content' %}
+  </div>
+
+  <!-- Standard 404 block for genuinely missing products/urls -->
+  <div id="standard-404-box" class="pad mx-auto flex w-full max-w-xl flex-col items-center pb-16 pt-12 text-center sm:pt-16">
+    <p class="text-6xl font-black text-brand-soft" aria-hidden="true" style="color: #dbe7ff;">404</p>
+    <h1 class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">{{ 'general.not_found_heading' | t }}</h1>
+    <p class="mt-2 text-sm text-slate-500">{{ 'general.not_found_sub' | t }}</p>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="mt-5 flex min-h-[48px] w-full items-center gap-2 rounded-full bg-[#f3f7ff] py-2.5 pl-4 pr-2">
+      {% render 'icons', name: 'search', class: 'h-5 w-5 shrink-0 text-brand' %}
+      <label for="notfound-search" class="sr-only">{{ 'general.search_label' | t }}</label>
+      <input id="notfound-search" name="q" type="search" placeholder="{{ 'general.search_placeholder' | t }}" class="min-w-0 w-full appearance-none border-0 bg-transparent text-[15px] font-medium outline-none placeholder:text-[#93a0b8]">
+      <button type="submit" class="inline-flex h-9 shrink-0 items-center rounded-full bg-brand px-5 text-sm font-bold text-white hover:bg-brand-dark">{{ 'general.search' | t }}</button>
+    </form>
+    <div class="mt-5 flex flex-wrap justify-center gap-3">
+      <a href="{{ routes.root_url }}" class="inline-flex min-h-11 items-center rounded-xl bg-brand px-6 text-sm font-bold text-white hover:bg-brand-dark">{{ 'general.back_home' | t }}</a>
+      <a href="{{ routes.all_products_collection_url }}" class="inline-flex min-h-11 items-center rounded-xl border border-slate-200 px-6 text-sm font-bold hover:border-brand hover:text-brand">{{ 'general.browse_catalog' | t }}</a>
+    </div>
+  </div>
+{%- endif -%}
 
 {% schema %}
 {
