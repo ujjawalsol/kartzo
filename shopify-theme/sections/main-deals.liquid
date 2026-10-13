@@ -1,19 +1,346 @@
 {% comment %}
-  Kartzo Flash Deals section — 100% faithful to deals.html prototype.
+  Kartzo Flash Deals section — Fully customizable in Shopify Theme Editor.
+  Supports:
+  1. Blocks: Add individual deal products with custom photos, titles, discounts, and prices.
+  2. Collection Picker: Select any collection (e.g. 'Flash Sale') to auto-populate products.
+  3. Fallback: Automatically shows 8 curated prototype deal cards if unconfigured.
 {% endcomment %}
-{% render 'deals-content' %}
+{% render 'breadcrumbs', trail: 'Flash Deals' %}
+
+{%- assign banner_img = section.settings.banner_image -%}
+{%- assign badge = section.settings.badge_text | default: 'Flash Deals Live' -%}
+{%- assign heading = section.settings.heading | default: 'Up to 60% OFF Top Picks' -%}
+{%- assign subtext = section.settings.subtext | default: 'Exclusive daily promotional prices. Extra 10% instant discount applied at checkout with coupon KARTZO10.' -%}
+{%- assign coupon = section.settings.coupon_code | default: 'KARTZO10' -%}
+{%- assign cd_hours = section.settings.countdown_hours | default: 8 -%}
+
+<div class="pad site-max py-5 sm:py-8">
+  <!-- Deals Countdown Banner (Customizable via Theme Editor) -->
+  <div class="relative mb-6 overflow-hidden rounded-[1.4rem] bg-brand-ink p-5 text-white shadow-xl sm:mb-10 sm:rounded-3xl sm:p-12">
+    {%- if banner_img -%}
+      {{ banner_img | image_url: width: 2000 | image_tag: widths: '600, 1000, 1500, 2000', alt: heading, class: 'absolute inset-0 h-full w-full object-cover object-right opacity-25' }}
+    {%- else -%}
+      <img src="{{ 'deals.webp' | asset_url }}" alt="{{ heading | escape }}" width="2150" height="439" class="absolute inset-0 h-full w-full object-cover object-right opacity-25">
+    {%- endif -%}
+
+    <div class="relative z-10 max-w-xl">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-300 backdrop-blur-sm">
+        <span class="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
+        {{ badge }}
+      </div>
+      <h1 class="mt-2 text-[1.45rem] font-extrabold leading-tight tracking-tight sm:mt-3 sm:text-4xl">
+        {{ heading }}
+      </h1>
+      <p class="mt-2 text-xs sm:text-sm text-white/80 leading-relaxed">
+        {{ subtext | replace: 'KARTZO10', coupon }}
+      </p>
+      
+      <!-- Countdown Clock -->
+      <div class="mt-4 flex items-center gap-2 text-center text-xs font-extrabold sm:mt-6">
+        <div class="flex items-center gap-1.5 mr-2 text-slate-300 font-semibold text-xs">
+          <svg class="h-4 w-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span>Ends in:</span>
+        </div>
+        <div class="rounded-xl bg-white/10 px-3.5 py-2 backdrop-blur-sm border border-white/10"><span class="block text-base sm:text-lg font-black text-amber-300" id="deal-h">0{{ cd_hours }}</span><span class="text-[10px] text-white/60">HRS</span></div>
+        <span class="text-base text-white/40">:</span>
+        <div class="rounded-xl bg-white/10 px-3.5 py-2 backdrop-blur-sm border border-white/10"><span class="block text-base sm:text-lg font-black text-amber-300" id="deal-m">42</span><span class="text-[10px] text-white/60">MIN</span></div>
+        <span class="text-base text-white/40">:</span>
+        <div class="rounded-xl bg-white/10 px-3.5 py-2 backdrop-blur-sm border border-white/10"><span class="block text-base sm:text-lg font-black text-amber-300" id="deal-s">15</span><span class="text-[10px] text-white/60">SEC</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deals Product Grid -->
+  {%- if section.blocks.size > 0 -%}
+    <!-- 1. Merchant-Configured Custom Product Blocks -->
+    <div id="deals-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- assign item_title = block.settings.custom_title -%}
+        {%- if item_title == blank and p != blank -%}{%- assign item_title = p.title -%}{%- endif -%}
+        {%- if item_title == blank -%}{%- assign item_title = 'Featured Deal Product' -%}{%- endif -%}
+
+        {%- assign item_url = block.settings.custom_link -%}
+        {%- if item_url == blank and p != blank -%}{%- assign item_url = p.url -%}{%- endif -%}
+        {%- if item_url == blank -%}{%- assign item_url = routes.all_products_collection_url -%}{%- endif -%}
+
+        {%- assign item_price = block.settings.custom_price -%}
+        {%- if item_price == blank and p != blank -%}{%- assign item_price = p.price | money -%}{%- endif -%}
+        {%- if item_price == blank -%}{%- assign item_price = '₹1,999' -%}{%- endif -%}
+
+        {%- assign item_compare = block.settings.custom_compare -%}
+        {%- if item_compare == blank and p != blank and p.compare_at_price > p.price -%}{%- assign item_compare = p.compare_at_price | money -%}{%- endif -%}
+
+        {%- assign item_badge = block.settings.custom_badge | default: '30% OFF' -%}
+        {%- assign item_sub = block.settings.custom_sub -%}
+        {%- if item_sub == blank and p != blank and p.vendor != blank -%}{%- assign item_sub = p.vendor -%}{%- endif -%}
+        {%- if item_sub == blank -%}{%- assign item_sub = 'Limited Deal' -%}{%- endif -%}
+
+        <article class="product-card group rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm hover:border-brand/40 hover:shadow-card transition duration-200 flex flex-col justify-between" {{ block.shopify_attributes }}>
+          <div>
+            <div class="image-wrap relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-[#F6F8FB] p-3">
+              {%- if item_badge != blank -%}
+                <span class="absolute left-2.5 top-2.5 z-10 rounded-md bg-[#ef3b3b] text-white px-2 py-0.5 text-[10px] font-black tracking-wide shadow-sm">{{ item_badge }}</span>
+              {%- endif -%}
+              
+              <button type="button" class="wish-btn absolute right-2.5 top-2.5 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:scale-105 hover:text-rose-500" aria-label="Add {{ item_title }} to wishlist" data-wishlist-toggle="deal-block-{{ block.id }}" data-wish-title="{{ item_title }}" data-wish-price="{{ item_price }}" data-wish-url="{{ item_url }}">
+                {% render 'icons', name: 'heart', class: 'h-4 w-4' %}
+              </button>
+
+              <a href="{{ item_url }}" class="flex h-full w-full items-center justify-center">
+                {%- if block.settings.custom_image -%}
+                  {{ block.settings.custom_image | image_url: width: 800 | image_tag: widths: '400, 800', alt: item_title, class: 'h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105' }}
+                {%- elsif p.featured_image -%}
+                  {{ p.featured_image | image_url: width: 800 | image_tag: widths: '400, 800', alt: item_title, class: 'h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105' }}
+                {%- else -%}
+                  {%- assign fallback_deal_img = block.settings.demo_image | default: 'p-headphones.webp' -%}
+                  <img src="{{ fallback_deal_img | asset_url }}" alt="{{ item_title | escape }}" width="800" height="800" class="h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105" loading="lazy">
+                {%- endif -%}
+              </a>
+            </div>
+
+            <div class="mt-3.5">
+              <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">{{ item_sub }}</p>
+              <h3 class="mt-1 text-xs sm:text-sm font-bold text-brand-ink leading-snug line-clamp-2">
+                <a href="{{ item_url }}" class="hover:text-brand transition">{{ item_title }}</a>
+              </h3>
+              <div class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+                {% render 'rating', value: 4.8 %}
+                <span class="text-[11px] font-bold text-brand-ink">{{ block.settings.custom_rating | default: '4.8' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div class="flex items-baseline justify-between gap-1">
+              <span class="text-sm sm:text-base font-black text-brand-ink">{{ item_price }}</span>
+              {%- if item_compare != blank -%}
+                <span class="text-xs text-slate-400 line-through font-medium">{{ item_compare }}</span>
+              {%- endif -%}
+            </div>
+            
+            {%- if p != blank and p.available -%}
+              {%- form 'product', p, class: 'mt-2.5 w-full' -%}
+                <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+                <button type="submit" class="quick-add-btn flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+                  Add to Cart
+                </button>
+              {%- endform -%}
+            {%- else -%}
+              <a href="{{ item_url }}" class="mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+                Shop Now
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+  {%- elsif section.settings.collection != blank and section.settings.collection.products.size > 0 -%}
+    <!-- 2. Auto-Populated from Merchant-Selected Collection -->
+    <div id="deals-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {%- for product in section.settings.collection.products limit: section.settings.products_limit -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
+
+  {%- else -%}
+    <!-- 3. Curated Default Deals (8 Prototype Items) -->
+    {%- assign deal_titles = "Wireless Headphones Pro,Smart Watch AMOLED,Men's Running Shoes,Smartphone 128GB,Leather Casual Backpack,UV400 Polarized Shades,Ergonomic Office Chair,Premium Perfume 100ml" | split: ',' -%}
+    {%- assign deal_subs = "Bluetooth 5.3,Health & Fitness,Footwear & Sport,Mobile & Computing,Travel & Commute,Eyewear & Style,Home Office,Luxury Fragrance" | split: ',' -%}
+    {%- assign deal_images = "p-headphones.webp,p-watch.webp,p-shoes.webp,p-phone.webp,p-backpack.webp,p-sunglasses.webp,p-chair.webp,p-perfume.webp" | split: ',' -%}
+    {%- assign deal_discounts = "30% OFF,40% OFF,40% OFF,25% OFF,50% OFF,35% OFF,30% OFF,35% OFF" | split: ',' -%}
+    {%- assign deal_prices = "₹2,799,₹3,499,₹2,399,₹44,999,₹1,749,₹899,₹8,999,₹1,299" | split: ',' -%}
+    {%- assign deal_compares = "₹3,999,₹5,832,₹3,998,₹59,999,₹3,499,₹1,383,₹12,855,₹1,999" | split: ',' -%}
+    {%- assign deal_ratings = "4.8,4.6,4.7,4.9,4.8,4.6,4.7,4.5" | split: ',' -%}
+
+    <div id="deals-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {%- for title in deal_titles -%}
+        {%- assign idx = forloop.index0 -%}
+        <article class="product-card group rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-4 shadow-sm hover:border-brand/40 hover:shadow-card transition duration-200 flex flex-col justify-between">
+          <div>
+            <div class="image-wrap relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-[#F6F8FB] p-3">
+              <span class="absolute left-2.5 top-2.5 z-10 rounded-md bg-[#ef3b3b] text-white px-2 py-0.5 text-[10px] font-black tracking-wide shadow-sm">{{ deal_discounts[idx] }}</span>
+              <button type="button" class="wish-btn absolute right-2.5 top-2.5 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:scale-105 hover:text-rose-500" aria-label="Add {{ title }} to wishlist" data-wishlist-toggle="deal-{{ idx }}" data-wish-title="{{ title }}" data-wish-price="{{ deal_prices[idx] }}" data-wish-image="{{ deal_images[idx] | asset_url }}" data-wish-url="{{ routes.all_products_collection_url }}">
+                {% render 'icons', name: 'heart', class: 'h-4 w-4' %}
+              </button>
+              <a href="{{ routes.all_products_collection_url }}" class="flex h-full w-full items-center justify-center">
+                <img src="{{ deal_images[idx] | asset_url }}" alt="{{ title }}" width="800" height="800" class="h-full w-auto max-h-[85%] object-contain transition duration-200 group-hover:scale-105" loading="lazy">
+              </a>
+            </div>
+
+            <div class="mt-3.5">
+              <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">{{ deal_subs[idx] }}</p>
+              <h3 class="mt-1 text-xs sm:text-sm font-bold text-brand-ink leading-snug line-clamp-2">
+                <a href="{{ routes.all_products_collection_url }}" class="hover:text-brand transition">{{ title }}</a>
+              </h3>
+              <div class="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+                {% render 'rating', value: 4.8 %}
+                <span class="text-[11px] font-bold text-brand-ink">{{ deal_ratings[idx] }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div class="flex items-baseline justify-between gap-1">
+              <span class="text-sm sm:text-base font-black text-brand-ink">{{ deal_prices[idx] }}</span>
+              <span class="text-xs text-slate-400 line-through font-medium">{{ deal_compares[idx] }}</span>
+            </div>
+            <a href="{{ routes.all_products_collection_url }}" class="mt-2.5 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand text-xs font-bold text-white hover:bg-brand-dark transition active:scale-[0.98]">
+              Shop Now
+            </a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var h = {{ cd_hours }}, m = 42, s = 15;
+    var timer = setInterval(function () {
+      s--;
+      if (s < 0) { s = 59; m--; }
+      if (m < 0) { m = 59; h--; }
+      if (h < 0) { h = 12; }
+      var hEl = document.getElementById("deal-h");
+      var mEl = document.getElementById("deal-m");
+      var sEl = document.getElementById("deal-s");
+      if (hEl) hEl.textContent = (h < 10 ? "0" : "") + h;
+      if (mEl) mEl.textContent = (m < 10 ? "0" : "") + m;
+      if (sEl) sEl.textContent = (s < 10 ? "0" : "") + s;
+    }, 1000);
+  })();
+</script>
 
 {% schema %}
 {
   "name": "Flash Deals",
   "settings": [
     {
+      "type": "header",
+      "content": "Banner & Promotion"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Background Image"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Flash Deals Live"
+    },
+    {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
+      "label": "Banner Heading",
       "default": "Up to 60% OFF Top Picks"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Banner Subtitle",
+      "default": "Exclusive daily promotional prices. Extra 10% instant discount applied at checkout with coupon KARTZO10."
+    },
+    {
+      "type": "text",
+      "id": "coupon_code",
+      "label": "Coupon Code Highlight",
+      "default": "KARTZO10"
+    },
+    {
+      "type": "number",
+      "id": "countdown_hours",
+      "label": "Countdown Timer Starting Hours",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Collection Auto-Sync (Optional)"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection (Overrides demo cards)"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "label": "Max Products from Collection",
+      "default": 12
     }
   ],
-  "presets": [{ "name": "Flash Deals" }]
+  "blocks": [
+    {
+      "type": "deal_product",
+      "name": "Custom Deal Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Product Image"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Product Title Override"
+        },
+        {
+          "type": "text",
+          "id": "custom_sub",
+          "label": "Category / Tag (e.g. Bluetooth 5.3)"
+        },
+        {
+          "type": "text",
+          "id": "custom_badge",
+          "label": "Discount Badge",
+          "default": "30% OFF"
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Deal Price (e.g. ₹2,799)"
+        },
+        {
+          "type": "text",
+          "id": "custom_compare",
+          "label": "Original Strikethrough Price (e.g. ₹3,999)"
+        },
+        {
+          "type": "text",
+          "id": "custom_rating",
+          "label": "Star Rating",
+          "default": "4.8"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom Link (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "demo_image",
+          "label": "Theme Demo Asset Image (e.g. p-watch.webp)",
+          "default": "p-headphones.webp"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flash Deals"
+    }
+  ]
 }
 {% endschema %}

@@ -1,6 +1,122 @@
 {
   "sections": {
-    "main": { "type": "main-list-collections" }
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "badge_text": "Curated Departments",
+        "heading": "Shop by Category",
+        "subtext": "Find exactly what you need across our verified product departments.",
+        "show_hero": true,
+        "hero_badge": "Featured Department",
+        "hero_title": "Electronics & Smart Tech",
+        "hero_sub": "Discover Bluetooth 5.3 wireless headphones, AMOLED smartwatches, and fast-charging accessories at honest direct prices.",
+        "hero_btn_text": "Explore Collection"
+      },
+      "blocks": {
+        "cat-1": {
+          "type": "department_card",
+          "settings": {
+            "title": "Audio & Electronics",
+            "product_count": "24 Products",
+            "description": "Wireless headphones, TWS earbuds",
+            "demo_image": "p-headphones.webp"
+          }
+        },
+        "cat-2": {
+          "type": "department_card",
+          "settings": {
+            "title": "Fashion & Footwear",
+            "product_count": "48 Products",
+            "description": "Men & women footwear, activewear",
+            "demo_image": "p-shoes.webp"
+          }
+        },
+        "cat-3": {
+          "type": "department_card",
+          "settings": {
+            "title": "Smart Wearables",
+            "product_count": "18 Products",
+            "description": "AMOLED watches, smart health trackers",
+            "demo_image": "p-watch.webp"
+          }
+        },
+        "cat-4": {
+          "type": "department_card",
+          "settings": {
+            "title": "Phones & Computing",
+            "product_count": "15 Products",
+            "description": "Smartphones, laptop accessories",
+            "demo_image": "p-phone.webp"
+          }
+        },
+        "cat-5": {
+          "type": "department_card",
+          "settings": {
+            "title": "Eyewear & Sunglasses",
+            "product_count": "22 Products",
+            "description": "UV400 polarized shades, blue-light",
+            "demo_image": "p-sunglasses.webp"
+          }
+        },
+        "cat-6": {
+          "type": "department_card",
+          "settings": {
+            "title": "Modern Home Living",
+            "product_count": "32 Products",
+            "description": "Smart lighting, decor essentials",
+            "demo_image": "c-home.webp"
+          }
+        },
+        "cat-7": {
+          "type": "department_card",
+          "settings": {
+            "title": "Kitchen & Dining",
+            "product_count": "20 Products",
+            "description": "Portable blenders, air fryers",
+            "demo_image": "p-blender.webp"
+          }
+        },
+        "cat-8": {
+          "type": "department_card",
+          "settings": {
+            "title": "Work & Gaming Setup",
+            "product_count": "14 Products",
+            "description": "Ergonomic chairs, mechanical desks",
+            "demo_image": "p-chair.webp"
+          }
+        },
+        "cat-9": {
+          "type": "department_card",
+          "settings": {
+            "title": "Bags & Travel",
+            "product_count": "16 Products",
+            "description": "Waterproof backpacks, cabin trolley bags",
+            "demo_image": "p-backpack.webp"
+          }
+        },
+        "cat-10": {
+          "type": "department_card",
+          "settings": {
+            "title": "Wellness Essentials",
+            "product_count": "10 Products",
+            "description": "Ergonomic supports, massage tools",
+            "demo_image": "c-health.webp"
+          }
+        }
+      },
+      "block_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3",
+        "cat-4",
+        "cat-5",
+        "cat-6",
+        "cat-7",
+        "cat-8",
+        "cat-9",
+        "cat-10"
+      ]
+    }
   },
   "order": ["main"]
 }

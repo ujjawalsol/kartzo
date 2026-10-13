@@ -1,181 +1,359 @@
 {% comment %}
-  Kartzo Categories Hub — 100% faithful to categories.html prototype with dynamic collection fallback.
+  Kartzo Categories Hub — 100% customizable in Shopify Theme Editor.
+  Supports:
+  1. Hero Banner: Merchant can upload custom banner image, title, subtitle, and link.
+  2. Blocks: Merchant can add, reorder, and customize individual category cards with custom images & collections.
+  3. Auto Collection Loop: Option to automatically list real store collections.
+  4. Fallback: Automatically shows 10 curated prototype departments if unconfigured.
 {% endcomment %}
 {% render 'breadcrumbs', trail: 'Categories' %}
 
+{%- assign head_badge = section.settings.badge_text | default: 'Curated Departments' -%}
+{%- assign head_title = section.settings.heading | default: 'Shop by Category' -%}
+{%- assign head_sub = section.settings.subtext | default: 'Find exactly what you need across our verified product departments.' -%}
+
 <div class="pad site-max py-5 sm:py-8">
-      <div class="mb-6 hidden border-b border-slate-200/80 pb-6 sm:mb-8 sm:block">
-        <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
-          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.91 5.82a2 2 0 0 0 1.27 1.27L21 12l-5.82 1.91a2 2 0 0 0-1.27 1.27L12 21l-1.91-5.82a2 2 0 0 0-1.27-1.27L3 12l5.82-1.91a2 2 0 0 0 1.27-1.27L12 3z"/></svg>
-          Curated Departments
-        </span>
-        <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
-          Shop by Category
-        </h1>
-        <p class="mt-1 text-xs sm:text-sm text-slate-500">
-          Find exactly what you need across our 10 verified product departments.
-        </p>
-      </div>
+  <!-- Header Title -->
+  <div class="mb-6 hidden border-b border-slate-200/80 pb-6 sm:mb-8 sm:block">
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand">
+      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.91 5.82a2 2 0 0 0 1.27 1.27L21 12l-5.82 1.91a2 2 0 0 0-1.27 1.27L12 21l-1.91-5.82a2 2 0 0 0-1.27-1.27L3 12l5.82-1.91a2 2 0 0 0 1.27-1.27L12 3z"/></svg>
+      {{ head_badge }}
+    </span>
+    <h1 class="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-brand-ink">
+      {{ head_title }}
+    </h1>
+    <p class="mt-1 text-xs sm:text-sm text-slate-500">
+      {{ head_sub }}
+    </p>
+  </div>
 
-      <!-- Featured Hero Hub -->
-      <div class="relative mb-6 overflow-hidden rounded-[1.4rem] bg-brand-ink text-white sm:mb-10 sm:rounded-3xl">
-        <img src="{{ 'electronics.webp' | asset_url }}" alt="Electronics Featured Collection" width="2113" height="619" class="absolute inset-0 h-full w-full object-cover opacity-25">
-        <div class="relative z-10 flex items-center p-5 sm:p-12">
-          <div class="max-w-xl">
-            <span class="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-300 backdrop-blur-sm">
-              Featured Department
-            </span>
-            <h2 class="mt-2 text-[1.45rem] font-extrabold leading-tight sm:mt-3 sm:text-4xl">Electronics &amp; Smart Tech</h2>
-            <p class="mt-1.5 hidden text-[13px] text-white/80 leading-relaxed sm:mt-2 sm:block sm:text-sm">
-              Discover Bluetooth 5.3 wireless headphones, AMOLED smartwatches, and fast-charging accessories at honest direct prices.
-            </p>
-            <p class="mt-1.5 truncate text-[13px] font-medium text-white/80 sm:hidden">Top tech at honest prices.</p>
-            <a href="{{ routes.search_url }}?q=electronics" class="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-5 text-sm font-bold text-brand-ink hover:bg-brand-soft hover:text-brand transition shadow-md sm:mt-5 sm:px-6">
-              <span>Explore Collection</span>
-              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
+  <!-- Featured Hero Hub (Customizable via Theme Editor) -->
+  {%- if section.settings.show_hero -%}
+    {%- assign hero_img = section.settings.hero_image -%}
+    {%- assign hero_badge = section.settings.hero_badge | default: 'Featured Department' -%}
+    {%- assign hero_title = section.settings.hero_title | default: 'Electronics & Smart Tech' -%}
+    {%- assign hero_sub = section.settings.hero_sub | default: 'Discover Bluetooth 5.3 wireless headphones, AMOLED smartwatches, and fast-charging accessories at honest direct prices.' -%}
+    {%- assign hero_link = section.settings.hero_link | default: routes.all_products_collection_url -%}
+    {%- assign hero_btn = section.settings.hero_btn_text | default: 'Explore Collection' -%}
 
-      <!-- View Tabs + Category Cards Grid -->
-      <div class="mb-4 flex items-center justify-between gap-3">
-        <p class="text-sm font-extrabold text-brand-ink">10 Departments</p>
-        <div class="flex rounded-xl bg-[#f3f7ff] p-1" role="group" aria-label="Change layout">
-          <button type="button" data-cat-view="grid" aria-pressed="true" class="flex min-h-9 items-center gap-1.5 rounded-lg bg-white px-3 text-xs font-bold text-brand shadow-sm transition">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
-            Grid
-          </button>
-          <button type="button" data-cat-view="list" aria-pressed="false" class="flex min-h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-bold text-slate-500 transition">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/></svg>
-            List
-          </button>
+    <div class="relative mb-6 overflow-hidden rounded-[1.4rem] bg-brand-ink text-white sm:mb-10 sm:rounded-3xl">
+      {%- if hero_img -%}
+        {{ hero_img | image_url: width: 2000 | image_tag: widths: '600, 1000, 1500, 2000', alt: hero_title, class: 'absolute inset-0 h-full w-full object-cover opacity-25' }}
+      {%- else -%}
+        <img src="{{ 'electronics.webp' | asset_url }}" alt="{{ hero_title | escape }}" width="2113" height="619" class="absolute inset-0 h-full w-full object-cover opacity-25">
+      {%- endif -%}
+
+      <div class="relative z-10 flex items-center p-5 sm:p-12">
+        <div class="max-w-xl">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-300 backdrop-blur-sm">
+            {{ hero_badge }}
+          </span>
+          <h2 class="mt-2 text-[1.45rem] font-extrabold leading-tight sm:mt-3 sm:text-4xl">{{ hero_title }}</h2>
+          <p class="mt-1.5 hidden text-[13px] text-white/80 leading-relaxed sm:mt-2 sm:block sm:text-sm">
+            {{ hero_sub }}
+          </p>
+          <p class="mt-1.5 truncate text-[13px] font-medium text-white/80 sm:hidden">{{ hero_sub }}</p>
+          <a href="{{ hero_link }}" class="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-5 text-sm font-bold text-brand-ink hover:bg-brand-soft hover:text-brand transition shadow-md sm:mt-5 sm:px-6">
+            <span>{{ hero_btn }}</span>
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </div>
-      </div>
-      <div id="cat-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        
-        <a href="{{ routes.search_url }}?q=audio" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'p-headphones.webp' | asset_url }}" alt="Audio & Electronics" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Audio & Electronics</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">24 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Bluetooth audio, smart wearables, fast chargers</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=footwear" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'c-fashion.webp' | asset_url }}" alt="Footwear & Fashion" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Footwear & Fashion</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">36 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Running sneakers, outerwear, active accessories</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=home" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'c-home.webp' | asset_url }}" alt="Home & Living" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Home & Living</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">18 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Ergonomic seating, organizers, desk lighting</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=beauty" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'p-perfume.webp' | asset_url }}" alt="Beauty & Grooming" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Beauty & Grooming</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">15 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Fine fragrances, personal care, grooming tools</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=kitchen" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'p-fryer.webp' | asset_url }}" alt="Kitchen Appliances" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Kitchen Appliances</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">12 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Air fryers, portable blenders, cookware</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=sports" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'p-shoes.webp' | asset_url }}" alt="Sports & Training" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Sports & Training</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">20 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Fitness equipment, bottles, gym essentials</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=toys" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'c-toys.webp' | asset_url }}" alt="Toys & STEM" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Toys & STEM</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">14 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">STEM kits, puzzles, creative hobby gear</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=mobile" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'p-phone.webp' | asset_url }}" alt="Mobile Accessories" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Mobile Accessories</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">28 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Protective cases, braided cables, power banks</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=bags" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'p-backpack.webp' | asset_url }}" alt="Bags & Travel" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Bags & Travel</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">16 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Waterproof backpacks, cabin trolley bags</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
-        <a href="{{ routes.search_url }}?q=wellness" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
-          <div class="cat-media overflow-hidden rounded-xl">
-            <img src="{{ 'c-health.webp' | asset_url }}" alt="Wellness Essentials" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
-          </div>
-          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
-            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">Wellness Essentials</h3>
-            <p class="mt-0.5 text-[11px] font-semibold text-brand">10 Products</p>
-            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">Ergonomic supports, massage therapy tools</p>
-          </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
-        </a>
       </div>
     </div>
+  {%- endif -%}
+
+  <!-- View Tabs + Category Cards Grid -->
+  <div class="mb-4 flex items-center justify-between gap-3">
+    {%- assign count_label = 'Curated Departments' -%}
+    {%- if section.blocks.size > 0 -%}
+      {%- assign count_label = section.blocks.size | append: ' Departments' -%}
+    {%- elsif section.settings.show_all_collections and collections.size > 0 -%}
+      {%- assign count_label = collections.size | append: ' Collections' -%}
+    {%- else -%}
+      {%- assign count_label = '10 Departments' -%}
+    {%- endif -%}
+    <p class="text-sm font-extrabold text-brand-ink">{{ count_label }}</p>
+    
+    <div class="flex rounded-xl bg-[#f3f7ff] p-1" role="group" aria-label="Change layout">
+      <button type="button" data-cat-view="grid" aria-pressed="true" class="flex min-h-9 items-center gap-1.5 rounded-lg bg-white px-3 text-xs font-bold text-brand shadow-sm transition">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+        Grid
+      </button>
+      <button type="button" data-cat-view="list" aria-pressed="false" class="flex min-h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-bold text-slate-500 transition">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/></svg>
+        List
+      </button>
+    </div>
+  </div>
+
+  <div id="cat-grid" class="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5">
+    {%- if section.blocks.size > 0 -%}
+      <!-- 1. Merchant-Added Category Blocks -->
+      {%- for block in section.blocks -%}
+        {%- assign col = block.settings.collection -%}
+        {%- assign card_title = block.settings.title -%}
+        {%- if card_title == blank and col != blank -%}{%- assign card_title = col.title -%}{%- endif -%}
+        {%- if card_title == blank -%}{%- assign card_title = 'Department' -%}{%- endif -%}
+
+        {%- assign card_url = block.settings.link -%}
+        {%- if card_url == blank and col != blank -%}{%- assign card_url = col.url -%}{%- endif -%}
+        {%- if card_url == blank -%}{%- assign card_url = routes.all_products_collection_url -%}{%- endif -%}
+
+        {%- assign card_count = block.settings.product_count -%}
+        {%- if card_count == blank and col != blank -%}{%- assign card_count = col.all_products_count | append: ' Products' -%}{%- endif -%}
+        {%- if card_count == blank -%}{%- assign card_count = 'Explore Items' -%}{%- endif -%}
+
+        <a href="{{ card_url }}" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card" {{ block.shopify_attributes }}>
+          <div class="cat-media overflow-hidden rounded-xl">
+            {%- if block.settings.image -%}
+              {{ block.settings.image | image_url: width: 800 | image_tag: widths: '400, 800', alt: card_title, class: 'aspect-square w-full object-cover transition duration-200 group-hover:scale-105' }}
+            {%- elsif col.featured_image -%}
+              {{ col.featured_image | image_url: width: 800 | image_tag: widths: '400, 800', alt: card_title, class: 'aspect-square w-full object-cover transition duration-200 group-hover:scale-105' }}
+            {%- else -%}
+              {%- assign fallback_cat_img = block.settings.demo_image | default: 'p-headphones.webp' -%}
+              <img src="{{ fallback_cat_img | asset_url }}" alt="{{ card_title | escape }}" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
+            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">{{ card_title }}</h3>
+            <p class="mt-0.5 text-[11px] font-semibold text-brand">{{ card_count }}</p>
+            {%- if block.settings.description != blank -%}
+              <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </span>
+        </a>
+      {%- endfor -%}
+
+    {%- elsif section.settings.show_all_collections and collections.size > 0 -%}
+      <!-- 2. Auto-Populated from Store Collections -->
+      {%- for col in collections -%}
+        {%- unless col.handle == 'frontpage' -%}
+          <a href="{{ col.url }}" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
+            <div class="cat-media overflow-hidden rounded-xl">
+              {%- if col.featured_image -%}
+                {{ col.featured_image | image_url: width: 800 | image_tag: widths: '400, 800', alt: col.title, class: 'aspect-square w-full object-cover transition duration-200 group-hover:scale-105' }}
+              {%- else -%}
+                <img src="{{ 'p-headphones.webp' | asset_url }}" alt="{{ col.title | escape }}" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105">
+              {%- endif -%}
+            </div>
+            <div class="cat-body mt-2.5 px-1 pb-1 text-center">
+              <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">{{ col.title }}</h3>
+              <p class="mt-0.5 text-[11px] font-semibold text-brand">{{ col.all_products_count }} Products</p>
+            </div>
+            <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </span>
+          </a>
+        {%- endunless -%}
+      {%- endfor -%}
+
+    {%- else -%}
+      <!-- 3. Default 10 Curated Prototype Departments -->
+      {%- assign demo_handles = 'audio,fashion,wearables,computing,eyewear,home,kitchen,office,bags,wellness' | split: ',' -%}
+      {%- assign demo_titles = 'Audio & Electronics,Fashion & Footwear,Smart Wearables,Phones & Computing,Eyewear & Sunglasses,Modern Home Living,Kitchen & Dining,Work & Gaming Setup,Bags & Travel,Wellness Essentials' | split: ',' -%}
+      {%- assign demo_counts = '24 Products,48 Products,18 Products,15 Products,22 Products,32 Products,20 Products,14 Products,16 Products,10 Products' | split: ',' -%}
+      {%- assign demo_subs = 'Wireless headphones, TWS earbuds;Men & women footwear, activewear;AMOLED watches, smart health trackers;Smartphones, laptop accessories;UV400 polarized shades, blue-light;Smart lighting, decor essentials;Portable blenders, air fryers;Ergonomic chairs, mechanical desks;Waterproof backpacks, cabin trolley bags;Ergonomic supports, massage tools' | split: ';' -%}
+      {%- assign demo_imgs = 'p-headphones.webp,p-shoes.webp,p-watch.webp,p-phone.webp,p-sunglasses.webp,c-home.webp,p-blender.webp,p-chair.webp,p-backpack.webp,c-health.webp' | split: ',' -%}
+
+      {%- for d_title in demo_titles -%}
+        {%- assign idx = forloop.index0 -%}
+        <a href="{{ routes.search_url }}?q={{ demo_handles[idx] }}" class="cat-card group flex flex-col rounded-2xl border border-slate-200/80 bg-white p-2.5 transition duration-200 hover:border-brand/40 hover:shadow-card">
+          <div class="cat-media overflow-hidden rounded-xl">
+            <img src="{{ demo_imgs[idx] | asset_url }}" alt="{{ d_title }}" width="800" height="800" class="aspect-square w-full object-cover transition duration-200 group-hover:scale-105" loading="lazy">
+          </div>
+          <div class="cat-body mt-2.5 px-1 pb-1 text-center">
+            <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">{{ d_title }}</h3>
+            <p class="mt-0.5 text-[11px] font-semibold text-brand">{{ demo_counts[idx] }}</p>
+            <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">{{ demo_subs[idx] }}</p>
+          </div>
+          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </span>
+        </a>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function() {
+    var gridEl = document.getElementById('cat-grid');
+    var btns = document.querySelectorAll('[data-cat-view]');
+    if (!gridEl || !btns.length) return;
+
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var view = this.getAttribute('data-cat-view');
+        btns.forEach(function(b) {
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+          if (b === btn) {
+            b.className = 'flex min-h-9 items-center gap-1.5 rounded-lg bg-white px-3 text-xs font-bold text-brand shadow-sm transition';
+          } else {
+            b.className = 'flex min-h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-bold text-slate-500 transition';
+          }
+        });
+
+        if (view === 'list') {
+          gridEl.className = 'grid grid-cols-1 gap-2.5 sm:grid-cols-2';
+          gridEl.querySelectorAll('.cat-card').forEach(function(card) {
+            card.classList.add('flex-row', 'items-center', 'gap-4', 'p-3');
+            card.classList.remove('flex-col', 'p-2.5');
+            var media = card.querySelector('.cat-media');
+            if (media) media.className = 'cat-media h-20 w-20 shrink-0 overflow-hidden rounded-xl';
+            var body = card.querySelector('.cat-body');
+            if (body) body.className = 'cat-body min-w-0 flex-1 text-left';
+            var arrow = card.querySelector('.cat-arrow');
+            if (arrow) arrow.classList.remove('hidden');
+          });
+        } else {
+          gridEl.className = 'grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5';
+          gridEl.querySelectorAll('.cat-card').forEach(function(card) {
+            card.classList.remove('flex-row', 'items-center', 'gap-4', 'p-3');
+            card.classList.add('flex-col', 'p-2.5');
+            var media = card.querySelector('.cat-media');
+            if (media) media.className = 'cat-media overflow-hidden rounded-xl';
+            var body = card.querySelector('.cat-body');
+            if (body) body.className = 'cat-body mt-2.5 px-1 pb-1 text-center';
+            var arrow = card.querySelector('.cat-arrow');
+            if (arrow) arrow.classList.add('hidden');
+          });
+        }
+      });
+    });
+  })();
+</script>
 
 {% schema %}
 {
   "name": "Categories Hub",
   "settings": [
     {
+      "type": "header",
+      "content": "Page Header"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Curated Departments"
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Shop by Category"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subheading",
+      "default": "Find exactly what you need across our verified product departments."
+    },
+    {
+      "type": "header",
+      "content": "Featured Department Hero"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero",
+      "label": "Show Featured Hero Banner",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_badge",
+      "label": "Hero Badge",
+      "default": "Featured Department"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Electronics & Smart Tech"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_sub",
+      "label": "Hero Subtitle",
+      "default": "Discover Bluetooth 5.3 wireless headphones, AMOLED smartwatches, and fast-charging accessories at honest direct prices."
+    },
+    {
+      "type": "url",
+      "id": "hero_link",
+      "label": "Hero Button Link"
+    },
+    {
+      "type": "text",
+      "id": "hero_btn_text",
+      "label": "Hero Button Text",
+      "default": "Explore Collection"
+    },
+    {
+      "type": "header",
+      "content": "Automatic Collections Display"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_collections",
+      "label": "Auto-populate from Shopify store collections",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "department_card",
+      "name": "Category Department",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Link Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title Override"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Image Override"
+        },
+        {
+          "type": "text",
+          "id": "product_count",
+          "label": "Count Label (e.g. 24 Products)"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Short Summary"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom Link (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "demo_image",
+          "label": "Theme Demo Asset Image (e.g. p-watch.webp)",
+          "default": "p-headphones.webp"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Categories Hub"
     }
   ]
 }
