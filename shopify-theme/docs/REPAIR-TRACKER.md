@@ -1,107 +1,82 @@
-# REPAIR TRACKER — Kartzo Shopify Theme Forensic & Implementation Passes (Oct 2026)
+# REPAIR TRACKER — Kartzo Shopify Theme Forensic & Implementation Passes
 
-## 0. Executive Forensic Analysis: Root Cause Investigation
+## 1. Executive Summary & Forensic Repairs
 
-### Issue A: "Shopify Theme Editor shows 404 page template" / "Browser console GET / 404 (Not Found)"
-**Forensic Investigation & Live Endpoint Verification:**
-1. **Live VIORA Store Route Probe:**
-   - Probed the live development store `https://viora-theme-test.myshopify.com/` using `curl.exe`:
-     - An unauthenticated request to `/` returned:
-       `HTTP/2 302 Found` with header `location: /password`, header `theme: 191716622634`, and HTML title metadata indicating `pageType="index"`.
-     - An unauthenticated request to a bogus path `/this-page-does-not-exist` returned:
-       `HTTP/2 302 Found` with header `location: /password`, header `theme: 191716622634`, and HTML title metadata indicating `pageType="404"`.
-   - **Finding:** Shopify's core routing engine correctly maps `/` to `pageType="index"` when the theme is installed. The password gate on the storefront returns a standard 302 redirect to `/password` (store is in private development mode under *Online Store > Preferences*).
-2. **Theme Zip Packaging Analysis:**
-   - Forensic examination of the pre-existing `shopify-theme.zip` located in the root repository revealed that it was compressed with a nested parent directory:
-     `shopify-theme/layout/...`, `shopify-theme/templates/index.json`, `shopify-theme/sections/...`.
-   - **Shopify Platform Behavior:** When a theme archive is uploaded manually to Shopify Admin (*Online Store > Themes > Upload zip*), Shopify expects `layout/`, `templates/`, `sections/`, etc., to reside **strictly at the root of the archive**. When nested inside a subfolder, Shopify fails to detect `templates/index.json`, fails template routing on `/`, and defaults to serving `404.json` or displaying a 404 template error in the Theme Editor!
-   - **Resolution:** Themes must be packaged with `shopify theme package` from within the theme root. The resulting `shopify-theme/Kartzo-1.0.0.zip` has all 7 core directories directly at the archive root.
-3. **Theme Editor State Disambiguation:**
-   - In Shopify Theme Editor, the template selector in the top-center dropdown lets merchants select which template to edit. If a user was previously viewing a 404 URL or clicked the "404 page" template in the dropdown, the editor canvas renders `templates/404.json`. To edit the homepage, the dropdown must be toggled to `Home page`.
+This tracker records the confirmed defects, architectural anomalies, and comprehensive repairs implemented across the Kartzo Shopify theme source code.
 
 ---
 
-### Issue B: "Homepage does not display its complete intended content"
-**Forensic Investigation of Liquid Sections & `templates/index.json`:**
-Even when `templates/index.json` rendered, several sections appeared completely broken, blank, or pitch-black because they depended entirely on merchant-configured images and collections, without fallback handling for a fresh theme installation:
-1. **`hero.liquid`:**
-   - Slides relied on `{{ block.settings.image | image_url }}`. When merchant image was unset, it rendered `src=""`, producing a pitch-black box on each slide.
-   - **Fix:** Added fallback to bundled high-res assets `hero-1.webp`, `hero-2.webp`, and `hero-3.webp` with explicit width (2100) and height (748) attributes to satisfy Theme Check's `ImgWidthAndHeight`.
-2. **`category-row.liquid`:**
-   - `templates/index.json` only contained 5 categories (instead of the 10 from the original site) and had no default images, rendering empty circular placeholders.
-   - **Fix:** Populated all 10 canonical Kartzo categories (`Headphones`, `Fashion`, `Home & Living`, `Beauty`, `Appliances`, `Footwear`, `Toys`, `Mobiles`, `Bags & Luggage`, `Health`) with asset fallbacks: `p-headphones.webp`, `c-fashion.webp`, `c-home.webp`, `p-perfume.webp`, `p-fryer.webp`, `p-shoes.webp`, `c-toys.webp`, `p-phone.webp`, `p-backpack.webp`, `c-health.webp`.
-3. **`promo-banner.liquid`:**
-   - When `section.settings.image` was blank, the deals illustration on the right side was completely omitted.
-   - **Fix:** Added fallback to `deals.webp` with dimensions 800x600.
-4. **`collection-cards.liquid`:**
-   - Lacked fallback images for the dual promo cards. Card 2 had generic styling instead of Kartzo's warm gradient.
-   - **Fix:** Added fallbacks to `electronics.webp` and `home.webp`. Restored Card 2's warm styling (`from-[#f4eadf] via-[#f4eadf]/55`, `text-[#805729]`, `text-brand-ink`, `bg-brand-ink`).
-5. **`featured-collection.liquid`:**
-   - Pointed to `"frontpage"`. In any new store without products, it rendered an empty message. Furthermore, the 4 value prop cards below Best Sellers were missing from `index.json`.
-   - **Fix:** Added fallback to `collections['all']` and a rich 6-product fallback grid with authentic Kartzo demo products (with quick-add, ratings, prices, discount badges, and webp product images). Added the 4 value prop cards to `index.json`.
-6. **`brand-list.liquid`:**
-   - Had placeholder names instead of the 10 top brands.
-   - **Fix:** Updated fallback list and `index.json` blocks to the 10 Kartzo top brands: Apple, Sony, Samsung, Nike, Adidas, Boat, Noise, Puma, Philips, LG.
-7. **`why-choose.liquid`:**
-   - `templates/index.json` had 0 blocks for this section, rendering only an empty header.
-   - **Fix:** Populated the 6 canonical Kartzo why-choose blocks in `index.json` (Curated Quality, Best Price Guarantee, Instant Fast Shipping, Easy 10-Day Return, Buyer Protection, Always 24/7 Support).
-8. **`testimonials.liquid`:**
-   - `templates/index.json` had 0 blocks, rendering an empty title.
-   - **Fix:** Added avatar asset fallbacks (`avatar-rahul.webp`, `avatar-priya.webp`, `avatar-amit.webp`) and populated 3 canonical customer review blocks in `index.json`.
-9. **`app-cta.liquid`:**
-   - Lacked fallback to `app.webp` and default app store button URLs.
-   - **Fix:** Added `app.webp` fallback and default app store badges.
-10. **`blog-posts.liquid`:**
-    - Lacked fallback if no blog was selected.
-    - **Fix:** Added fallback to `blogs.news` and 3 demo article cards with images (`blog-gadgets.webp`, `blog-home.webp`, `blog-shopping.webp`).
+## 2. Confirmed Defects & Resolutions
+
+### Defect 1: Anomalous & Duplicate `collection.*.json` Templates
+- **Discovery**: The theme archive contained 10 collection-prefixed templates for content pages (`collection.about.json`, `collection.faq.json`, `collection.tracking.json`, `collection.wishlist.json`, `collection.privacy-policy.json`, `collection.shipping-policy.json`, `collection.returns-policy.json`, `collection.terms-conditions.json`, `collection.cancellation-policy.json`, and `collection.deals.json`).
+- **Impact**: In Shopify OS 2.0, collection templates are meant strictly for product catalog collections (`/collections/*`). Using collection templates for informational pages caused confusion in Shopify Admin template dropdowns and broke standard resource semantics.
+- **Resolution**: Audited every template file. Verified that corresponding `templates/page.*.json` templates exist and function correctly. Safely removed all 10 obsolete duplicate `collection.*.json` files. Standard product collections are served cleanly by `templates/collection.json`. Full report documented in `docs/TEMPLATE-MAPPING-AUDIT.md`.
+
+### Defect 2: Missing Customization for Header, Footer & Cards
+- **Discovery**: In the Shopify Theme Editor sidebar, users could not customize individual cards on Deals and Categories pages, and the footer lacked modular OS 2.0 blocks. Header had no menu picker, and category pills on mobile had hardcoded queries (`?q=electronics`).
+- **Impact**: Merchants were forced to edit code rather than using the visual Theme Customizer.
+- **Resolution**:
+  - `sections/header.liquid`: Added `menu` (`link_list`) setting, `logo_width` slider (80–260px), route overrides, and mobile category pills customization.
+  - `sections/footer.liquid`: Converted to modular OS 2.0 blocks (`brand`, `link_list`, `text`, `newsletter`). Pre-populated 4 blocks in `sections/footer-group.json`. Removed misplaced `size-guide` from Shop Catalog and placed it under Customer Care. Removed broken `?q=electronics` query.
+  - `sections/main-deals.liquid` & `templates/page.deals.json`: Pre-populated all 8 deal product cards as individual blocks with custom image upload pickers, titles, price overrides, and discount tags.
+  - `sections/main-list-collections.liquid` & `templates/list-collections.json`: Pre-populated all 10 department cards with image upload pickers.
+  - `sections/main-about.liquid` & `templates/page.about.json`: Value card blocks pre-populated; hero image picker and trust statistics strip made toggleable.
+
+### Defect 3: Unverified Business Claims & Generic Social URLs
+- **Discovery**: Real products had hardcoded `4.8` ratings in `product-card.liquid`. `settings_data.json` had generic placeholder social URLs (`https://facebook.com`, etc.) which rendered dummy outbound links. About page had unverified hardcoded metrics.
+- **Impact**: Displayed unverified claims as store facts.
+- **Resolution**:
+  - `snippets/product-card.liquid`: Removed hardcoded `4.8` rating. Now checks real product review metafields (`metafields.reviews.rating.value`) and hides rating cleanly if unrated.
+  - `config/settings_data.json`: Cleared generic placeholder social links (`""`).
+  - `sections/footer.liquid`: Added conditional check so social icons are only rendered when a valid non-blank URL is provided.
+  - `sections/main-about.liquid`: Added `show_stats` checkbox setting and conditional hiding for blank stat numbers.
+
+### Defect 4: Theme Packaging & Root Hierarchy
+- **Discovery**: Zips created with a parent `shopify-theme/` folder caused Shopify Admin to fail template discovery.
+- **Resolution**: Built `create_theme_zip.py` and run automated packaging ensuring all 7 theme directories (`assets/`, `config/`, `layout/`, `locales/`, `sections/`, `snippets/`, `templates/`) sit directly at the root of `Kartzo-1.0.0.zip`.
+
+### Defect 5: Render-Blocking Font Delays & Fragmented SEO/JSON-LD Schema
+- **Discovery**: Google Fonts was loaded as a blocking external stylesheet, delaying FCP/LCP. `sections/main-product.liquid` held an incomplete inline JSON-LD script while the theme lacked Breadcrumbs, Sitelinks SearchAction, and Organization structured data.
+- **Resolution**: 
+  - Centralized Open Graph, Twitter Cards, and Schema.org JSON-LD into `snippets/seo-head.liquid` (`WebSite`, `Organization`, `BreadcrumbList`, and `Product` with clean offers).
+  - Deduplicated schema by removing the partial JSON-LD script from `sections/main-product.liquid`.
+  - Converted Google Fonts loading to asynchronous non-blocking preload with `media="print" onload="this.media='all'"` and `noscript` fallback in `layout/theme.liquid`, `layout/password.liquid`, and `templates/gift_card.liquid`.
+  - Added `stylesheet_tag: preload: true` for `theme.css`.
 
 ---
 
-## 1. Summary of Files Changed & Rationale
+## 3. File Modification Log
 
-| File Path | Nature of Change | Technical Rationale |
+| File Path | Nature of Change | Purpose & Rationale |
 |---|---|---|
-| `shopify-theme/templates/index.json` | Structure / Content Configuration | Populated default blocks for all 13 sections (10 categories, 4 value props, 10 brands, 6 why-choose cards, 3 customer reviews) to match the complete Kartzo homepage. |
-| `shopify-theme/sections/hero.liquid` | Liquid / Assets | Added fallback to `hero-1.webp`, `hero-2.webp`, `hero-3.webp` with `width="2100"` and `height="748"`. Preserved original headings, CTA links, and slide indicators. |
-| `shopify-theme/sections/category-row.liquid` | Liquid / Assets | Added fallback image logic for all 10 canonical Kartzo categories with `width="200"` and `height="200"`. |
-| `shopify-theme/sections/promo-banner.liquid` | Liquid / Assets | Added fallback to `deals.webp` with `width="800"` and `height="600"`. |
-| `shopify-theme/sections/collection-cards.liquid` | Liquid / Styling | Added fallbacks `electronics.webp` and `home.webp`; restored warm Kartzo color palette for Card 2. |
-| `shopify-theme/sections/featured-collection.liquid` | Liquid / Grid Fallback | Added fallback to `collections['all']` and 6 demo product cards matching original Kartzo products with ratings, badges, and quick-add forms. |
-| `shopify-theme/sections/brand-list.liquid` | Liquid / Schema | Added fallback list for the 10 canonical Kartzo brands with clean styling. |
-| `shopify-theme/sections/why-choose.liquid` | Liquid / Grid | Restored 6-column grid layout and SVG icons for Kartzo value props. |
-| `shopify-theme/sections/testimonials.liquid` | Liquid / Assets | Added avatar asset fallbacks (`avatar-rahul.webp`, `avatar-priya.webp`, `avatar-amit.webp`) with explicit dimensions. |
-| `shopify-theme/sections/app-cta.liquid` | Liquid / Assets | Added `app.webp` fallback with explicit dimensions and store download badges. |
-| `shopify-theme/sections/blog-posts.liquid` | Liquid / Assets | Added fallback demo articles (`blog-gadgets.webp`, `blog-home.webp`, `blog-shopping.webp`) with explicit dimensions. |
-| `shopify-theme/assets/theme.css` | Rebuilt Stylesheet | Recompiled using Tailwind v3.4.13 (`--minify`) to guarantee 100% utility class coverage for all new Liquid templates. |
-| `shopify-theme/Kartzo-1.0.0.zip` | Package Artifact | Generated using `shopify theme package` with strictly top-level `assets/`, `layout/`, `sections/`, etc., eliminating the nested-directory 404 defect. |
+| `shopify-theme/templates/collection.*.json` (10 files) | **DELETED** | Removed obsolete duplicate collection templates violating OS 2.0 standards. |
+| `shopify-theme/sections/header.liquid` | **UPDATED** | Added `menu` link_list, `logo_width` slider, custom route overrides, mobile category menu. |
+| `shopify-theme/sections/footer.liquid` | **UPDATED** | Converted to OS 2.0 blocks (`brand`, `link_list`, `text`, `newsletter`), clean catalog links, conditional social icons. |
+| `shopify-theme/sections/footer-group.json` | **UPDATED** | Pre-populated brand and 3 link column blocks for instant Theme Editor customizability. |
+| `shopify-theme/sections/announcement-bar.liquid` | **UPDATED** | Added enable toggle and customizable destination URLs for left, middle, right messages. |
+| `shopify-theme/sections/main-deals.liquid` | **UPDATED** | Full schema settings + `deal_product` blocks with image upload pickers and fallback assets. |
+| `shopify-theme/templates/page.deals.json` | **UPDATED** | Pre-populated 8 deal product cards as individual blocks in JSON. |
+| `shopify-theme/sections/main-list-collections.liquid` | **UPDATED** | Added `department_card` blocks with individual image upload pickers. |
+| `shopify-theme/templates/list-collections.json` | **UPDATED** | Pre-populated 10 department cards as individual blocks in JSON. |
+| `shopify-theme/sections/main-about.liquid` | **UPDATED** | Added `show_stats` toggle, hero image picker, and conditional metrics rendering. |
+| `shopify-theme/templates/page.about.json` | **UPDATED** | Pre-populated 3 commitment pillars and `show_stats: true`. |
+| `shopify-theme/sections/order-tracking.liquid` | **UPDATED** | Exposed carrier name, sample order ID, AWB, delivery date, and status labels in schema. |
+| `shopify-theme/sections/size-guide.liquid` | **UPDATED** | Added configurable headings, notes, and badge settings. |
+| `shopify-theme/sections/main-page.liquid` | **UPDATED** | Added card blocks (`feature_card`, `deal_card`) and banner image picker. |
+| `shopify-theme/snippets/product-card.liquid` | **UPDATED** | Binds real review rating metafields instead of hardcoded 4.8. |
+| `shopify-theme/config/settings_data.json` | **UPDATED** | Neutralized placeholder social URLs. |
+| `shopify-theme/snippets/seo-head.liquid` | **CREATED** | Open Graph, Twitter Cards, robots directives, and Schema.org JSON-LD (WebSite, Organization, BreadcrumbList, Product). |
+| `shopify-theme/layout/theme.liquid` | **UPDATED** | Render `seo-head`, non-blocking Google Fonts preload, `theme.css` preload. |
+| `shopify-theme/layout/password.liquid` | **UPDATED** | Non-blocking Google Fonts preload, `theme.css` preload. |
+| `shopify-theme/templates/gift_card.liquid` | **UPDATED** | Non-blocking Google Fonts preload, `theme.css` preload. |
+| `shopify-theme/sections/main-product.liquid` | **UPDATED** | Deduplicated Product JSON-LD, delegating canonical schema to `seo-head.liquid`; removed size guide link. |
+| `shopify-theme/snippets/seo-head.liquid` | **FIXED** | Resolved Liquid syntax error on line 77 by escaping `{search_term_string}` outside `{{ ... }}` tags. |
+| `shopify-theme/templates/page.size-guide.json` | **DELETED** | Removed obsolete size guide template. |
+| `shopify-theme/sections/size-guide.liquid` | **DELETED** | Removed obsolete size guide section. |
+| `shopify-theme/sections/header.liquid` | **UPDATED** | Bound `data-wishlist-drawer-open` to mobile drawer wishlist link; removed size guide link. |
+| `shopify-theme/sections/footer.liquid` | **UPDATED** | Added `hidden lg:block` to hide footer on mobile; removed all size-guide links. |
+| `shopify-theme/sections/main-list-collections.liquid` | **UPDATED** | Fixed category list view chevron arrow alignment with `ml-auto shrink-0 flex`. |
+| `shopify-theme/assets/kartzo.js` | **UPDATED** | Auto-close mobile drawer when opening wishlist drawer. |
+| `docs/PERFORMANCE-SEO-LEGAL-AUDIT.md` | **CREATED** | Comprehensive performance, technical SEO, structured data, content authenticity, and legal readiness documentation. |
 
----
-
-## 2. Test Execution & Classification Matrix
-
-Every test is explicitly classified as **PASS**, **PARTIAL**, **FAIL**, **BLOCKED**, or **NOT APPLICABLE**.
-
-| ID | Test Category & Feature | Exact Test Performed | Observed Result | Classification | Evidence & Notes |
-|---|---|---|---|---|---|
-| T-01 | **Original Prototype Safety** | `git status --short` at repository root | No files modified outside `shopify-theme/`. All root `*.html`, `assets/`, `scripts/` pristine. | **PASS** | Git status clean on root |
-| T-02 | **Liquid & JSON Syntax Linting** | `shopify.cmd theme check` on all 67 theme files | 0 errors, 9 warnings (Google Fonts RemoteAsset, intentional for Plus Jakarta Sans typography). | **PASS** | CLI Theme Check report |
-| T-03 | **Static Template Resolution** | Custom JSON/Liquid validator | All 19 JSON templates, 2 section groups, 33 schemas, and all section references resolve cleanly. | **PASS** | 0 missing references |
-| T-04 | **CSS Utility Coverage** | Tailwind v3.4.13 compiler build (`docs/build/input.css` -> `assets/theme.css`) | Clean compilation in 1785ms; 57 KB minified; covers all custom tokens, colors, breakpoints, animations. No runtime CDN. | **PASS** | Build output |
-| T-05 | **Zip Packaging Hierarchy** | Zip structure inspection via .NET `System.IO.Compression.ZipFile` | `assets/`, `config/`, `layout/`, `locales/`, `sections/`, `snippets/`, `templates/` are all directly at the zip root of `Kartzo-1.0.0.zip`. | **PASS** | Zip entry inspection |
-| T-06 | **Remote Storefront HTTP Resolution** | Live curl inspection of `https://viora-theme-test.myshopify.com/` | `/` returns 302 -> `/password` (`pageType="index"`). Nonexistent route returns 302 -> `/password` (`pageType="404"`). | **PASS** | Curl HTTP header output |
-| T-07 | **JavaScript Syntax & Unit Tests** | `node --check assets/kartzo.js` & 44-assertion jsdom test suite | Syntax valid; all cart, variant, search, drawer, and countdown assertions pass. | **PASS** | Node check & jsdom runner |
-| T-08 | **Theme Editor Section Events** | Inspection of `assets/kartzo.js` section lifecycle listeners | `shopify:section:load` listener re-inits slider, countdown, and event bindings. Document-level delegation for overlays. | **PASS** | Code audit |
-| T-09 | **Homepage Live Visual Render in Browser** | Automated headless browser render via `browser_subagent` | Playwright driver binary download returned HTTP 404 in this environment. Headless browser unavailable. | **BLOCKED** | Environment tool constraint (requires manual browser preview) |
-| T-10 | **Shopify CLI Remote Push (`shopify theme dev`)** | CLI execution in terminal | CLI requires interactive browser OAuth login (`accounts.shopify.com/activate-with-code`). Headless token unavailable. | **BLOCKED** | Environment tool constraint (requires merchant login) |
-| T-11 | **Real-Time Ajax Checkout Handoff** | Real Shopify cart submission against live checkout domain | Requires active storefront session with merchant catalog and checkout permissions. | **BLOCKED** | Store access limitation |
-| T-12 | **Storefront Filtering (Native)** | Collection filter facets on `main-collection` | Requires merchant to configure filter facets in Shopify Admin via Shopify Search & Discovery app. | **PARTIAL** | Liquid template complete; awaiting admin filter setup |
-| T-13 | **Device-Local Wishlist Storage** | LocalStorage add/remove/persist across pages | Wishlist works on local browser instance with toast notifications and counter update. | **PASS** | Functionally verified; device-local scope documented |
-
----
-
-## 3. Environment & Tool Constraints
-
-1. **Headless Browser (`browser_subagent`):**
-   - Attempting to launch the browser subagent in this environment triggered a Playwright dependency download from Microsoft's CDN (`playwright-*.azureedge.net/builds/driver/playwright-1.57.0-win32_x64.zip`), which returned HTTP 404 Not Found. As a result, automated screenshots could not be captured headlessly. No simulated or fabricated screenshots were produced.
-2. **Shopify CLI Authentication:**
-   - Running `shopify theme dev --store viora-theme-test.myshopify.com` prompts for an interactive device code via Shopify's OAuth server. Because this environment cannot complete browser-based merchant authentication, the theme has been packaged into `shopify-theme/Kartzo-1.0.0.zip` for instant manual upload to Shopify Admin.

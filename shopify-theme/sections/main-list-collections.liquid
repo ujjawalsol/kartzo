@@ -121,7 +121,7 @@
               <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">{{ block.settings.description }}</p>
             {%- endif -%}
           </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
+          <span class="cat-arrow ml-auto shrink-0 hidden h-9 w-9 items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </span>
         </a>
@@ -143,7 +143,7 @@
               <h3 class="text-[13px] sm:text-sm font-bold text-brand-ink group-hover:text-brand transition">{{ col.title }}</h3>
               <p class="mt-0.5 text-[11px] font-semibold text-brand">{{ col.all_products_count }} Products</p>
             </div>
-            <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
+            <span class="cat-arrow ml-auto shrink-0 hidden h-9 w-9 items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </span>
           </a>
@@ -169,7 +169,7 @@
             <p class="mt-0.5 text-[11px] font-semibold text-brand">{{ demo_counts[idx] }}</p>
             <p class="mt-1 hidden text-[10px] text-slate-400 line-clamp-1 sm:block">{{ demo_subs[idx] }}</p>
           </div>
-          <span class="cat-arrow hidden h-9 w-9 flex-none items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
+          <span class="cat-arrow ml-auto shrink-0 hidden h-9 w-9 items-center justify-center rounded-full bg-[#f3f7ff] text-brand" aria-hidden="true">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </span>
         </a>
@@ -206,7 +206,10 @@
             var body = card.querySelector('.cat-body');
             if (body) body.className = 'cat-body min-w-0 flex-1 text-left';
             var arrow = card.querySelector('.cat-arrow');
-            if (arrow) arrow.classList.remove('hidden');
+            if (arrow) {
+              arrow.classList.remove('hidden');
+              arrow.classList.add('flex');
+            }
           });
         } else {
           gridEl.className = 'grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5';
@@ -218,7 +221,10 @@
             var body = card.querySelector('.cat-body');
             if (body) body.className = 'cat-body mt-2.5 px-1 pb-1 text-center';
             var arrow = card.querySelector('.cat-arrow');
-            if (arrow) arrow.classList.add('hidden');
+            if (arrow) {
+              arrow.classList.add('hidden');
+              arrow.classList.remove('flex');
+            }
           });
         }
       });

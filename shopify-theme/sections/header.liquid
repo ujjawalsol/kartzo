@@ -8,7 +8,6 @@
 {%- assign contact_url = pages['contact'].url | default: section.settings.contact_url | default: '/pages/contact' -%}
 {%- assign faq_url = pages['faq'].url | default: collections['faq'].url | default: section.settings.faq_url | default: '/pages/faq' -%}
 {%- assign tracking_url = pages['tracking'].url | default: collections['tracking'].url | default: section.settings.tracking_url | default: '/pages/tracking' -%}
-{%- assign size_url = pages['size-guide'].url | default: section.settings.size_url | default: '/pages/size-guide' -%}
 {%- assign returns_url = pages['returns-policy'].url | default: collections['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/returns-policy' -%}
 {%- assign shipping_url = pages['shipping-policy'].url | default: collections['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/shipping-policy' -%}
 {%- assign privacy_url = pages['privacy-policy'].url | default: collections['privacy-policy'].url | default: shop.privacy_policy.url | default: '/pages/privacy-policy' -%}
@@ -192,7 +191,7 @@
             <span class="flex items-center gap-3">{% render 'icons', name: 'box', class: 'h-4 w-4 text-slate-500' %}My Orders</span>
             {% render 'icons', name: 'chevron-right', class: 'h-4 w-4 text-slate-300' %}
           </a>
-          <a href="{{ wishlist_url }}" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
+          <a href="{{ wishlist_url }}" data-wishlist-drawer-open class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
             <span class="flex items-center gap-3">{% render 'icons', name: 'heart', class: 'h-4 w-4 text-rose-500' %}My Wishlist</span>
             {% render 'icons', name: 'chevron-right', class: 'h-4 w-4 text-slate-300' %}
           </a>
@@ -213,10 +212,6 @@
           </a>
           <a href="{{ returns_url }}" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
             <span class="flex items-center gap-3">{% render 'icons', name: 'truck', class: 'h-4 w-4 text-slate-500' %}7-Day Doorstep Returns</span>
-            {% render 'icons', name: 'chevron-right', class: 'h-4 w-4 text-slate-300' %}
-          </a>
-          <a href="{{ size_url }}" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
-            <span class="flex items-center gap-3">{% render 'icons', name: 'tag', class: 'h-4 w-4 text-slate-500' %}Size &amp; Fit Guide</span>
             {% render 'icons', name: 'chevron-right', class: 'h-4 w-4 text-slate-300' %}
           </a>
           <a href="{{ about_url }}" class="flex items-center justify-between rounded-xl px-3 py-2.5 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition">
@@ -250,24 +245,34 @@
       <span class="relative inline-flex items-center justify-center">{% render 'icons', name: 'grid', class: 'h-[22px] w-[22px]' %}</span>
       <span class="text-[11px] font-bold leading-none">Categories</span>
     </a>
-    <a href="{{ deals_url }}" class="bottom-nav-tab flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition text-[#4E5D78] hover:bg-brand-soft hover:text-brand">
+    <a href="{{ deals_url }}" class="bottom-nav-tab {% if template.suffix == 'deals' or page.handle == 'deals' or collection.handle == 'deals' %}active bg-brand-soft text-brand{% else %}text-[#4E5D78] hover:bg-brand-soft hover:text-brand{% endif %} flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition">
       <span class="relative inline-flex items-center justify-center">
         {% render 'icons', name: 'zap', class: 'h-[22px] w-[22px]' %}
         <span class="absolute -right-1.5 -top-1 flex h-2 w-2 rounded-full bg-rose-500" aria-hidden="true"></span>
       </span>
       <span class="text-[11px] font-bold leading-none">Deals</span>
     </a>
-    <a href="{{ wishlist_url }}" data-wishlist-drawer-open class="bottom-nav-tab flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition text-[#4E5D78] hover:bg-brand-soft hover:text-brand">
+    <a href="{{ wishlist_url }}" data-wishlist-drawer-open class="bottom-nav-tab {% if template.suffix == 'wishlist' or page.handle == 'wishlist' %}active bg-brand-soft text-brand{% else %}text-[#4E5D78] hover:bg-brand-soft hover:text-brand{% endif %} flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition">
       <span class="relative inline-flex items-center justify-center">
         {% render 'icons', name: 'heart', class: 'h-[22px] w-[22px]' %}
         <span class="mobile-bottom-wishlist-count absolute -right-2.5 -top-1.5 hidden h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black leading-none text-white" data-wishlist-count>0</span>
       </span>
       <span class="text-[11px] font-bold leading-none">{{ 'general.wishlist' | t }}</span>
     </a>
-    <a href="{{ orders_url }}" class="bottom-nav-tab flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition text-[#4E5D78] hover:bg-brand-soft hover:text-brand">
-      <span class="relative inline-flex items-center justify-center">{% render 'icons', name: 'user', class: 'h-[22px] w-[22px]' %}</span>
-      <span class="text-[11px] font-bold leading-none">{{ 'general.account' | t }}</span>
-    </a>
+    {%- if section.settings.bottom_nav_fifth_tab == 'cart' -%}
+      <button type="button" data-cart-drawer-open class="cart-trigger bottom-nav-tab flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition text-[#4E5D78] hover:bg-brand-soft hover:text-brand" aria-label="Cart, {{ cart.item_count }} items">
+        <span class="relative inline-flex items-center justify-center">
+          {% render 'icons', name: 'cart', class: 'h-[22px] w-[22px]' %}
+          <span class="mobile-bottom-cart-count absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black leading-none text-white" data-cart-count>{{ cart.item_count }}</span>
+        </span>
+        <span class="text-[11px] font-bold leading-none">{{ 'general.cart' | t }}</span>
+      </button>
+    {%- else -%}
+      <a href="{{ orders_url }}" class="bottom-nav-tab {% if template.directory == 'customers' or template.name == 'account' or page.handle == 'tracking' %}active bg-brand-soft text-brand{% else %}text-[#4E5D78] hover:bg-brand-soft hover:text-brand{% endif %} flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition">
+        <span class="relative inline-flex items-center justify-center">{% render 'icons', name: 'user', class: 'h-[22px] w-[22px]' %}</span>
+        <span class="text-[11px] font-bold leading-none">{{ 'general.account' | t }}</span>
+      </a>
+    {%- endif -%}
   </div>
 </nav>
 
@@ -284,7 +289,17 @@
     { "type": "url", "id": "about_url", "label": "About page link" },
     { "type": "url", "id": "contact_url", "label": "Contact page link" },
     { "type": "checkbox", "id": "show_mobile_categories", "label": "Show quick categories strip on mobile", "default": true },
-    { "type": "link_list", "id": "mobile_categories_menu", "label": "Mobile quick categories menu (optional override)" }
+    { "type": "link_list", "id": "mobile_categories_menu", "label": "Mobile quick categories menu (optional override)" },
+    {
+      "type": "select",
+      "id": "bottom_nav_fifth_tab",
+      "label": "Mobile bottom navigation 5th tab",
+      "options": [
+        { "value": "account", "label": "Account" },
+        { "value": "cart", "label": "Cart (opens drawer)" }
+      ],
+      "default": "account"
+    }
   ],
   "presets": [{ "name": "Header" }]
 }

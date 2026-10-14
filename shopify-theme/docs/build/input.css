@@ -151,7 +151,7 @@ input[type=search]:focus, input[type=search]:focus-visible {
 #cat-grid.list-view .cat-media { width: 88px; height: 88px; flex: none; }
 #cat-grid.list-view .cat-media img { aspect-ratio: auto; height: 100%; }
 #cat-grid.list-view .cat-body { margin-top: 0; padding: 0; text-align: left; flex: 1 1 auto; min-width: 0; }
-#cat-grid.list-view .cat-arrow { display: inline-flex; }
+#cat-grid.list-view .cat-arrow { display: inline-flex; margin-left: auto; flex-shrink: 0; align-items: center; justify-content: center; }
 /* Product page: compact thumbnails on phones + compact cards */
 @media (max-width: 639.5px) {
   [data-gallery-thumb] { width: 64px; height: 64px; padding: 6px; }

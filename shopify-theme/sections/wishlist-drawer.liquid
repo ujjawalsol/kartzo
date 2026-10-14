@@ -29,8 +29,8 @@
     <!-- Drawer Footer -->
     <div class="border-t border-slate-200 p-6 bg-slate-50/50" data-wishlist-drawer-footer>
       <div class="flex flex-col gap-2.5">
-        <a href="{% if pages['wishlist'] %}{{ pages['wishlist'].url }}{% else %}/collections/all?view=wishlist{% endif %}" class="flex min-h-11 items-center justify-center rounded-xl bg-brand text-xs sm:text-sm font-bold text-white hover:bg-brand-dark transition shadow-sm">
-          Go to Full Wishlist Page
+        <a href="{% if pages['wishlist'] %}{{ pages['wishlist'].url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" class="flex min-h-11 items-center justify-center rounded-xl bg-brand text-xs sm:text-sm font-bold text-white hover:bg-brand-dark transition shadow-sm">
+          {% if pages['wishlist'] %}Go to Full Wishlist Page{% else %}Browse Catalog &amp; Add More{% endif %}
         </a>
         <button type="button" data-wishlist-drawer-close class="flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
           Continue Shopping

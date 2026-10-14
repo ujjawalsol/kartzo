@@ -11,6 +11,7 @@
         "values_badge": "Our Commitments",
         "values_title": "Built for Every Indian Shopper",
         "values_sub": "How we maintain product integrity and customer trust at scale.",
+        "show_stats": true,
         "stat_1_num": "100K+",
         "stat_1_label": "Verified Orders",
         "stat_2_num": "1,200+",

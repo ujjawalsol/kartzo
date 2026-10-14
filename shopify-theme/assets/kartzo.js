@@ -81,9 +81,10 @@
   var OVERLAY_SEL = '#cart-drawer, #search-modal, #mobile-menu-drawer, #filter-drawer, #wishlist-drawer';
   function getOverlay(id) { return document.getElementById(id); }
   document.addEventListener('click', function (e) {
-        var wishOpener = e.target.closest('[data-wishlist-drawer-open]');
+    var wishOpener = e.target.closest('[data-wishlist-drawer-open]');
     if (wishOpener) {
       e.preventDefault();
+      closeOverlay(getOverlay('mobile-menu-drawer'));
       renderWishlistDrawer();
       openOverlay(getOverlay('wishlist-drawer'));
       return;

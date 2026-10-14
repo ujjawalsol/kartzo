@@ -163,10 +163,6 @@
             </div>
           </details>
         {%- endif -%}
-        {%- assign size_page = pages['size-guide'] -%}
-        {%- if size_page -%}
-          <p class="text-sm"><a class="font-bold text-brand hover:underline" href="{{ size_page.url }}">Size &amp; fit guide</a></p>
-        {%- endif -%}
       </div>
     </div>
   </div>
@@ -183,23 +179,6 @@
 </div>
 
 <script type="application/json" id="product-json">{{ product | json }}</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": {{ product.title | json }},
-  "url": {{ shop.url | append: product.url | json }},
-  {%- if product.featured_media -%}"image": {{ product.featured_media | image_url: width: 1200 | prepend: 'https:' | json }},{%- endif -%}
-  "description": {{ product.description | strip_html | truncate: 500 | json }},
-  "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": {{ cart.currency.iso_code | json }},
-    "price": "{{ current_variant.price | divided_by: 100.0 }}",
-    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
-  }
-}
-</script>
 
 {% schema %}
 {

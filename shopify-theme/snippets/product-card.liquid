@@ -59,10 +59,13 @@
         {%- else -%}
           <p class="product-meta mt-0.5 text-[11px] text-transparent select-none">&nbsp;</p>
         {%- endif -%}
-        <div class="product-rating mt-1 flex items-center gap-1 text-[11px] text-[#8b97ad]">
-          {% render 'rating', value: 4.5 %}
-          <span class="text-[10px] text-slate-400">4.8</span>
-        </div>
+        {%- assign rating_val = card_product.metafields.reviews.rating.value.rating | default: card_product.metafields.rating.value -%}
+        {%- if rating_val != blank -%}
+          <div class="product-rating mt-1 flex items-center gap-1 text-[11px] text-[#8b97ad]">
+            {% render 'rating', value: rating_val %}
+            <span class="text-[10px] text-slate-400">{{ rating_val | round: 1 }}</span>
+          </div>
+        {%- endif -%}
         <p class="product-price-row mt-1 flex items-baseline justify-between gap-2">
           <span class="text-[15px] font-extrabold text-brand-ink">{{ variant.price | money }}</span>
           {%- if variant.compare_at_price and variant.compare_at_price > variant.price -%}
