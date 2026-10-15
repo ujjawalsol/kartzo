@@ -38,7 +38,7 @@
 
               {%- if block.settings.show_contact -%}
                 {%- assign f_email = block.settings.email | default: section.settings.support_email | default: settings.support_email | default: 'support@kartzo.com' -%}
-                {%- assign f_phone = block.settings.phone | default: section.settings.support_phone | default: settings.support_phone | default: '+91 98765 43210' -%}
+                {%- assign f_phone = block.settings.phone | default: section.settings.support_phone | default: settings.support_phone | default: '+91 76976 43683' -%}
                 <div class="space-y-2 pt-1 text-xs text-slate-600">
                   <p class="flex items-center gap-2">
                     <svg class="h-4 w-4 text-brand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -174,7 +174,7 @@
           </p>
           <p class="flex items-center gap-2">
             <svg class="h-4 w-4 text-brand shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 4h3l1 4-2 1a12 12 0 0 0 5 5l1-2 4 1v3c0 1-1 2-2 2C10 18 6 14 4 6c0-1 1-2 2-2z"/></svg>
-            <a href="tel:{{ section.settings.support_phone | default: settings.support_phone | default: '+91 98765 43210' | replace: ' ', '' }}" class="hover:text-brand">{{ section.settings.support_phone | default: settings.support_phone | default: '+91 98765 43210' }}</a>
+            <a href="tel:{{ section.settings.support_phone | default: settings.support_phone | default: '+91 76976 43683' | replace: ' ', '' }}" class="hover:text-brand">{{ section.settings.support_phone | default: settings.support_phone | default: '+91 76976 43683' }}</a>
           </p>
           <p class="flex items-start gap-2">
             <svg class="h-4 w-4 text-brand shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
@@ -240,7 +240,7 @@
     { "type": "image_picker", "id": "logo", "label": "Default Logo" },
     { "type": "textarea", "id": "mission", "label": "Default brand mission text", "default": "Kartzo delivers curated essentials across consumer technology, fashion, and home lifestyle with guaranteed authentic sourcing, fair pricing, and direct doorstep returns." },
     { "type": "text", "id": "support_email", "label": "Support Email", "default": "support@kartzo.com" },
-    { "type": "text", "id": "support_phone", "label": "Support Phone", "default": "+91 98765 43210" },
+    { "type": "text", "id": "support_phone", "label": "Support Phone", "default": "+91 76976 43683" },
     { "type": "url", "id": "deals_url", "label": "Flash Deals link" },
     { "type": "url", "id": "about_url", "label": "About Us link" },
     { "type": "url", "id": "contact_url", "label": "Contact link" },
@@ -262,7 +262,7 @@
         { "type": "textarea", "id": "text", "label": "Brand description", "default": "Kartzo delivers curated essentials across consumer technology, fashion, and home lifestyle with guaranteed authentic sourcing, fair pricing, and direct doorstep returns." },
         { "type": "checkbox", "id": "show_contact", "label": "Show contact details", "default": true },
         { "type": "text", "id": "email", "label": "Support email", "default": "support@kartzo.com" },
-        { "type": "text", "id": "phone", "label": "Support phone", "default": "+91 98765 43210" },
+        { "type": "text", "id": "phone", "label": "Support phone", "default": "+91 76976 43683" },
         { "type": "checkbox", "id": "show_social", "label": "Show social icons", "default": true },
         { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
         { "type": "url", "id": "instagram_url", "label": "Instagram URL" },

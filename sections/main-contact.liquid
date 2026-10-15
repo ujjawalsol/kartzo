@@ -43,7 +43,7 @@
         
         <div class="grid gap-4 sm:grid-cols-2">
           <label class="block text-xs font-bold text-slate-600">Phone Number (Optional)
-            <input name="contact[phone]" class="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink outline-none focus:border-brand focus:bg-white transition" placeholder="+91 98765 43210">
+            <input name="contact[phone]" class="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink outline-none focus:border-brand focus:bg-white transition" placeholder="+91 76976 43683">
           </label>
           <label class="block text-xs font-bold text-slate-600">Order ID (If Applicable)
             <input name="contact[order_id]" class="mt-1.5 min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs sm:text-sm font-semibold text-brand-ink outline-none focus:border-brand focus:bg-white transition" placeholder="e.g. KZ-10482">
@@ -113,7 +113,7 @@
             <span class="text-brand shrink-0 mt-0.5"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
             <div>
               <p class="font-bold text-brand-ink">Helpline</p>
-              {%- assign c_phone = section.settings.phone | default: settings.support_phone | default: '+91 800-123-4567' -%}
+              {%- assign c_phone = section.settings.phone | default: settings.support_phone | default: '+91 76976 43683' -%}
               <a href="tel:{{ c_phone | remove: ' ' | remove: '-' }}" class="text-brand hover:underline">{{ c_phone }}</a>
               <p class="text-[11px] text-slate-400">{{ section.settings.hours | default: 'Mon - Sat, 9:00 AM - 7:00 PM IST' }}</p>
             </div>
@@ -196,7 +196,7 @@
       "type": "text",
       "id": "phone",
       "label": "Support Phone",
-      "default": "+91 800-123-4567"
+      "default": "+91 76976 43683"
     },
     {
       "type": "text",
