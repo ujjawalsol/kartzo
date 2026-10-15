@@ -50,6 +50,14 @@ Theme: kartzo/shopify-theme-dev (GitHub connected) — NOT published without app
 - TODO: Test shopping journey (add-to-cart, filters) — no real paid orders.
 - TODO: Sitemap verify (/sitemap.xml), Google Search Console (needs owner account).
 
+## Contact email + full SEO sweep (PASS/PARTIAL, 2026-10-16)
+- Contact email mistake: `%{creation_date}` Shopify fixed template hai (admin me editable template exist nahi karta — search karke verify kiya), badla nahi ja sakta. Jo hamare control me tha fix kiya: hidden subject value "tracking" -> "Order Tracking & Delivery Inquiry" (78fb81e live) — ab email me raw key ki jagah poora subject aayega. Baaki lines (Name/Email/Phone/Order/Body) Shopify render karta hai. Status: PARTIAL (code live; agli real/test mail me verify hoga).
+- Dead links ZERO: Deals/Tracking/Wishlist pages banaye (200 verify). Announcement+footer+drawer policy links ab terms-hub hashes (#shipping/#return/#cancel) par — 404 khatm, duplicate-content bhi nahi.
+- Collections SEO 6/6: description + meta title/desc — Best Sellers, Self Care, Home Essentials, Kids Collections, Jewellery, Featured Collection ("Home page" rename kiya — wahi purana frontpage collection tha). Sab live verify.
+- Products SEO: title/desc/canonical/og/Product-JSONLD present (supplier copy), image alts present, sitemap.xml auto (products+collections+pages+blogs), robots.txt healthy (crawl traps blocked, sitemap declared).
+- BLOCKED: FAQ page — live theme me page.faq.json template missing hai (repo me valid file hai; re-push se sync nahi hua). Theme code editor se add karna padega ya divergence investigate karni padegi.
+- TODO owner: vendor "qcpb2m-7c" cleanup, product type, blog content, Google Search Console.
+
 ## Phone + contact form (PASS, 2026-10-15 night)
 - Number +91 76976 43683 set everywhere (settings_data, footer defaults+block, contact section+schema, tracking demo, policy tel: link, footer-group.json) — old 98765/800 numbers fully gone (grep clean), pushed 0921169, live verified on contact page + footer.
 - Contact form live test: filled Test Customer/test@kartzo.shop/+91 76976 43683 + TEST message, submitted on kartzo.shop/pages/contact → URL ?contact_posted=true + "Thank you! Your message has been received." Form WORKS. Test email went to store notification inbox — owner to confirm receipt.
