@@ -80,7 +80,7 @@
     },
     "best": {
       "type": "featured-collection",
-      "settings": { "heading_first": "Best", "heading_accent": "Sellers", "collection": "frontpage", "limit": 6 },
+      "settings": { "heading_first": "Best", "heading_accent": "Sellers", "collection": "best-sellers", "limit": 8 },
       "blocks": {
         "p-1": { "type": "prop", "settings": { "title": "Wide Product Range", "sub": "Everything you need in one place.", "icon": "bag" } },
         "p-2": { "type": "prop", "settings": { "title": "Best Prices", "sub": "Get the best deals always.", "icon": "tag" } },
@@ -99,7 +99,7 @@
     },
     "new": {
       "type": "featured-collection",
-      "settings": { "heading_first": "New", "heading_accent": "Arrivals", "collection": "frontpage", "limit": 6 }
+      "settings": { "heading_first": "New", "heading_accent": "Arrivals", "collection": "", "limit": 8 }
     },
     "why": {
       "type": "why-choose",

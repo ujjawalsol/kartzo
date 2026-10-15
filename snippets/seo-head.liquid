@@ -26,7 +26,7 @@
 {%- elsif settings.logo -%}
   {%- assign og_image = settings.logo | image_url: width: 1200 -%}
 {%- else -%}
-  {%- assign og_image = 'hero-1.webp' | asset_url -%}
+  {%- assign og_image = 'logo.webp' | asset_url -%}
 {%- endif -%}
 
 <!-- Open Graph / Social Meta -->
@@ -90,6 +90,8 @@
   "url": {{ shop.url | json }},
   {%- if settings.logo -%}
   "logo": {{ settings.logo | image_url: width: 400 | prepend: 'https:' | replace: 'https:https:', 'https:' | json }},
+  {%- else -%}
+  "logo": {{ 'logo.webp' | asset_url | prepend: 'https:' | replace: 'https:https:', 'https:' | json }},
   {%- endif -%}
   "contactPoint": [{
     "@type": "ContactPoint",
