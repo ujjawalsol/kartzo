@@ -49,3 +49,7 @@ Theme: kartzo/shopify-theme-dev (GitHub connected) — NOT published without app
 - TODO: 7 dead pages still 404 (deals, tracking, faq, wishlist, shipping/returns/cancellation-policy) — create via proven flow OR remove links per owner choice.
 - TODO: Test shopping journey (add-to-cart, filters) — no real paid orders.
 - TODO: Sitemap verify (/sitemap.xml), Google Search Console (needs owner account).
+
+## Phone + contact form (PASS, 2026-10-15 night)
+- Number +91 76976 43683 set everywhere (settings_data, footer defaults+block, contact section+schema, tracking demo, policy tel: link, footer-group.json) — old 98765/800 numbers fully gone (grep clean), pushed 0921169, live verified on contact page + footer.
+- Contact form live test: filled Test Customer/test@kartzo.shop/+91 76976 43683 + TEST message, submitted on kartzo.shop/pages/contact → URL ?contact_posted=true + "Thank you! Your message has been received." Form WORKS. Test email went to store notification inbox — owner to confirm receipt.
