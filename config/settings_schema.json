@@ -46,7 +46,8 @@
   {
     "name": "Favicon",
     "settings": [
-      { "type": "image_picker", "id": "favicon", "label": "Favicon image" }
+      { "type": "image_picker", "id": "favicon", "label": "Favicon image" },
+      { "type": "image_picker", "id": "logo", "label": "Logo image (used for SEO / social sharing)" }
     ]
   },
   {

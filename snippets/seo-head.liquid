@@ -34,7 +34,7 @@
 <meta property="og:url" content="{{ og_url }}">
 <meta property="og:title" content="{{ og_title | escape }}">
 <meta property="og:type" content="{{ og_type }}">
-<meta property="og:description" content="{{ og_description }}">
+<meta property="og:description" content="{{ og_description | escape }}">
 {%- if og_image != blank -%}
   <meta property="og:image" content="{{ og_image | prepend: 'https:' | replace: 'https:https:', 'https:' }}">
   <meta property="og:image:secure_url" content="{{ og_image | prepend: 'https:' | replace: 'https:https:', 'https:' }}">
@@ -51,13 +51,13 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
-<meta name="twitter:description" content="{{ og_description }}">
+<meta name="twitter:description" content="{{ og_description | escape }}">
 {%- if og_image != blank -%}
   <meta name="twitter:image" content="{{ og_image | prepend: 'https:' | replace: 'https:https:', 'https:' }}">
 {%- endif -%}
 
 <!-- Search Engine Directives -->
-{%- if template.name == 'search' or template.name == '404' -%}
+{%- if template.name == 'search' or template.name == '404' or template.suffix == 'tracking' or template.suffix == 'wishlist' or template.name == 'cart' or template.name == 'password' or template.directory == 'customers' -%}
   <meta name="robots" content="noindex, follow">
 {%- else -%}
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">

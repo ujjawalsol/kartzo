@@ -16,7 +16,8 @@
             {{ block.settings.image | image_url: width: 2100 | image_tag: widths: '750, 1500, 2100', loading: 'lazy', alt: block.settings.image.alt | default: block.settings.heading, class: 'hero-slide-image absolute inset-0 h-full w-full object-cover object-center' }}
           {%- endif -%}
         {%- else -%}
-          {%- assign hero_asset = 'hero-' | append: forloop.index | append: '.webp' -%}
+          {%- assign hero_num = forloop.index0 | modulo: 3 | plus: 1 -%}
+          {%- assign hero_asset = 'hero-' | append: hero_num | append: '.webp' -%}
           <img src="{{ hero_asset | asset_url }}" alt="{{ block.settings.heading | escape }}" width="2100" height="748" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %} class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
         {%- endif -%}
         <div class="hero-slide-shade absolute inset-0"></div>
@@ -26,7 +27,7 @@
               <p class="hero-kicker inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">{{ block.settings.kicker }}</p>
             {%- endif -%}
             <{% if forloop.first %}h1{% else %}h2{% endif %} class="mt-2 max-w-lg text-[1.6rem] sm:mt-4 font-extrabold leading-[1.05] tracking-[-0.03em] sm:text-6xl lg:text-[4.7rem]">
-              {{ block.settings.heading | newline_to_br }}<br>
+              {{ block.settings.heading | newline_to_br }}
               <span class="text-[#b9d5ff]">{{ block.settings.heading_accent }}</span>
             </{% if forloop.first %}h1{% else %}h2{% endif %}>
             {%- if block.settings.sub_mobile != blank -%}

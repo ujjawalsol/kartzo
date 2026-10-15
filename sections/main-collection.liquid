@@ -27,7 +27,7 @@
           {%- endfor -%}
           <label for="sort-by" class="sr-only">{{ 'general.sort' | t }}</label>
           <select id="sort-by" name="sort_by" data-sort-select class="min-h-11 rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-brand-ink">
-            {%- assign sort_options = 'manual:Featured,best-selling:Best selling,title-ascending:Alphabetically,price-ascending:Price, low to high,price-descending:Price, high to low,created-descending:Newest' | split: ',' -%}
+            {%- assign sort_options = 'manual:Featured|best-selling:Best selling|title-ascending:Alphabetically|price-ascending:Price, low to high|price-descending:Price, high to low|created-descending:Newest' | split: '|' -%}
             {%- for opt in sort_options -%}
               {%- assign parts = opt | split: ':' -%}
               <option value="{{ parts[0] }}" {% if collection.sort_by == parts[0] %}selected{% endif %}>{{ parts[1] }}</option>
