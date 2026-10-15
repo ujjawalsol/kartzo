@@ -7,9 +7,9 @@
 {%- assign contact_url = pages['contact'].url | default: section.settings.contact_url | default: '/pages/contact' -%}
 {%- assign faq_url = pages['faq'].url | default: collections['faq'].url | default: section.settings.faq_url | default: '/pages/faq' -%}
 {%- assign tracking_url = pages['tracking'].url | default: collections['tracking'].url | default: section.settings.tracking_url | default: '/pages/tracking' -%}
-{%- assign returns_url = pages['returns-policy'].url | default: collections['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/returns-policy' -%}
-{%- assign shipping_url = pages['shipping-policy'].url | default: collections['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/shipping-policy' -%}
-{%- assign cancel_url = pages['cancellation-policy'].url | default: collections['cancellation-policy'].url | default: '/pages/cancellation-policy' -%}
+{%- assign returns_url = pages['returns-policy'].url | default: collections['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/terms-conditions#return' -%}
+{%- assign shipping_url = pages['shipping-policy'].url | default: collections['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/terms-conditions#shipping' -%}
+{%- assign cancel_url = pages['cancellation-policy'].url | default: collections['cancellation-policy'].url | default: '/pages/terms-conditions#cancel' -%}
 {%- assign privacy_url = pages['privacy-policy'].url | default: collections['privacy-policy'].url | default: shop.privacy_policy.url | default: '/pages/privacy-policy' -%}
 {%- assign terms_url = pages['terms-conditions'].url | default: collections['terms-conditions'].url | default: shop.terms_of_service.url | default: '/pages/terms-conditions' -%}
 

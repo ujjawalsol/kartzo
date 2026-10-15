@@ -3,8 +3,8 @@
 {% endcomment %}
 {%- if section.settings.enable -%}
   {%- assign threshold_money = settings.free_shipping_threshold | default: 49900 | money_without_trailing_zeros -%}
-  {%- assign returns_url = section.settings.link_mid | default: pages['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/returns-policy' -%}
-  {%- assign shipping_url = section.settings.link_left | default: pages['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/shipping-policy' -%}
+  {%- assign returns_url = section.settings.link_mid | default: pages['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/terms-conditions#return' -%}
+  {%- assign shipping_url = section.settings.link_left | default: pages['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/terms-conditions#shipping' -%}
   {%- assign secure_url = section.settings.link_right | default: pages['terms-conditions'].url | default: shop.terms_of_service.url | default: '/pages/terms-conditions' -%}
 
   <div class="hidden bg-brand-bar text-white lg:block" role="region" aria-label="Store benefits">
