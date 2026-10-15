@@ -4,7 +4,10 @@
 {% endcomment %}
 
 {%- assign og_title = page_title | default: shop.name -%}
-{%- assign og_url = canonical_url | default: request.origin | append: request.path -%}
+{%- assign og_url = canonical_url -%}
+{%- if og_url == blank -%}
+  {%- assign og_url = request.origin | append: request.path -%}
+{%- endif -%}
 {%- assign og_type = 'website' -%}
 {%- assign og_description = page_description | default: shop.description | default: og_title | escape -%}
 
