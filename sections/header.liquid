@@ -111,9 +111,9 @@
           {%- endfor -%}
         {%- else -%}
           <a href="{{ routes.root_url }}" {% if template.name == 'index' %}aria-current="page" class="shrink-0 rounded-full bg-brand px-4 py-1.5 text-white"{% else %}class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand"{% endif %}>All</a>
-          <a href="{{ collections['electronics'].url | default: routes.all_products_collection_url }}" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Electronics</a>
-          <a href="{{ collections['fashion'].url | default: routes.all_products_collection_url }}" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Fashion</a>
-          <a href="{{ collections['home'].url | default: routes.all_products_collection_url }}" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Home &amp; Living</a>
+          <a href="{{ collections['self-care'].url | default: routes.all_products_collection_url }}" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Self Care</a>
+          <a href="{{ collections['home-essentials'].url | default: routes.all_products_collection_url }}" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Home Essentials</a>
+          <a href="{{ collections['best-sellers'].url | default: routes.all_products_collection_url }}" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Best Sellers</a>
           <a href="{{ deals_url }}" class="shrink-0 rounded-full bg-[#f3f7ff] px-4 py-1.5 text-slate-700 transition hover:text-brand">Deals</a>
         {%- endif -%}
       </nav>
@@ -226,8 +226,6 @@
         <a href="{{ faq_url }}" class="hover:text-brand transition">FAQs</a>
         <span aria-hidden="true">•</span>
         <a href="{{ shipping_url }}" class="hover:text-brand transition">Shipping</a>
-        <span aria-hidden="true">•</span>
-        <a href="{{ privacy_url }}" class="hover:text-brand transition">Privacy</a>
         <span aria-hidden="true">•</span>
         <a href="{{ terms_url }}" class="hover:text-brand transition">Terms</a>
       </div>
