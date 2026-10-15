@@ -40,7 +40,12 @@ Theme: kartzo/shopify-theme-dev (GitHub connected) — NOT published without app
 10. Publish / password removal approval — NOT done
 11. Product real data: images alt, SKU, HS codes, weights, vendor brand names, Perfum typo fix approval
 
-## Next safe actions
-- Create FAQ/Deals/Tracking/Wishlist pages same About flow (title + template, no invented content — theme snippet provides content)
-- Inspect Settings>General, Payments, Shipping, Taxes, Markets, Policies, Notifications, Preferences, Domains one by one via automation, record only, change only safe SEO/preference fields
-- Test shopping journey on preview (add-to-cart, search, filters) — no real paid orders
+## Next safe actions (updated 2026-10-15 evening)
+- DONE: Privacy/T&C pushed live (a5b27ab) — footer/header verified live, no Privacy links.
+- DONE: Main menu — Home, Category(All products), About Us(page), Contact, Best Sellers(collection) — saved+live in header.
+- DONE: Favicon/logo — logo.webp uploaded to Files; code fallbacks live (favicon webp + apple-touch-icon, og:image + Organization logo). Theme customizer Theme-settings panel NOT loading groups (BLOCKED UI path — code fallback used instead).
+- DONE: Preferences SEO — title "Kartzo – Smart Tech, Home Essentials & Daily Needs" (50/70), meta desc (180/320) from owner copy, hCaptcha already on, private mode off.
+- DONE: Homepage — Best Sellers -> best-sellers collection (7 real), New Arrivals -> all-products fallback (8 real), 0 demo cards. Fixed og:url double-slash (28b65be).
+- TODO: 7 dead pages still 404 (deals, tracking, faq, wishlist, shipping/returns/cancellation-policy) — create via proven flow OR remove links per owner choice.
+- TODO: Test shopping journey (add-to-cart, filters) — no real paid orders.
+- TODO: Sitemap verify (/sitemap.xml), Google Search Console (needs owner account).
