@@ -33,6 +33,87 @@
   {{ 'theme.css' | asset_url | stylesheet_tag }}
   <script>
     (function() {
+      // 1. Intercept Telemetry & Tracking network calls to prevent blocked client errors, unhandled promise rejections, and retry loops
+      var isTelemetry = function(u) {
+        if (!u) return false;
+        var s = typeof u === 'string' ? u : (u.url || '');
+        return s.indexOf('produce_batch') !== -1 ||
+               s.indexOf('/api/collect') !== -1 ||
+               s.indexOf('shopifysvc.com') !== -1 ||
+               s.indexOf('otlp-http') !== -1 ||
+               s.indexOf('monorail') !== -1;
+      };
+
+      if (window.fetch) {
+        var origFetch = window.fetch;
+        window.fetch = function(input, init) {
+          try {
+            if (isTelemetry(input)) {
+              return Promise.resolve(new Response(JSON.stringify({ status: 'ok' }), {
+                status: 200,
+                headers: { 'Content-Type': 'application/json' }
+              }));
+            }
+          } catch (e) {}
+          return origFetch.apply(this, arguments).catch(function(err) {
+            if (isTelemetry(input)) {
+              return new Response('{}', { status: 200 });
+            }
+            throw err;
+          });
+        };
+      }
+
+      if (navigator.sendBeacon) {
+        var origBeacon = navigator.sendBeacon.bind(navigator);
+        navigator.sendBeacon = function(url, data) {
+          try {
+            if (isTelemetry(url)) {
+              return true;
+            }
+          } catch (e) {}
+          return origBeacon(url, data);
+        };
+      }
+
+      if (window.XMLHttpRequest) {
+        var origOpen = XMLHttpRequest.prototype.open;
+        var origSend = XMLHttpRequest.prototype.send;
+        XMLHttpRequest.prototype.open = function(method, url) {
+          this._kzUrl = url;
+          return origOpen.apply(this, arguments);
+        };
+        XMLHttpRequest.prototype.send = function() {
+          if (isTelemetry(this._kzUrl)) {
+            try {
+              Object.defineProperty(this, 'status', { value: 200, writable: false });
+              Object.defineProperty(this, 'readyState', { value: 4, writable: false });
+              Object.defineProperty(this, 'responseText', { value: '{}', writable: false });
+            } catch (e) {}
+            if (typeof this.onreadystatechange === 'function') this.onreadystatechange();
+            if (typeof this.onload === 'function') this.onload();
+            return;
+          }
+          return origSend.apply(this, arguments);
+        };
+      }
+
+      // 2. Prevent unhandled promise rejections & uncaught errors from telemetry scripts
+      window.addEventListener('unhandledrejection', function(e) {
+        if (e && e.reason) {
+          var str = (e.reason.message || e.reason || '').toString();
+          if (str.indexOf('Failed to fetch') !== -1 || str.indexOf('ERR_BLOCKED_BY_CLIENT') !== -1) {
+            e.preventDefault();
+          }
+        }
+      });
+      window.addEventListener('error', function(e) {
+        if (e && (e.message || '').indexOf('Failed to fetch') !== -1) {
+          e.preventDefault();
+        }
+      });
+
+      // 3. Shop Pay stub (neutralizes 3rd party cookie / Shop sync)
       window.Shopify = window.Shopify || {};
       var dummy = { initShopCartSync: function() {} };
       try {

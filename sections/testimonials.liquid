@@ -19,15 +19,15 @@
           <blockquote class="mt-2 text-sm leading-relaxed text-slate-600">“{{ block.settings.quote }}”</blockquote>
           <figcaption class="mt-3 flex items-center gap-2.5">
             {%- if block.settings.avatar -%}
-              {{ block.settings.avatar | image_url: width: 120 | image_tag: loading: 'lazy', alt: block.settings.name | default: '', class: 'h-9 w-9 rounded-full object-cover' }}
+              {{ block.settings.avatar | image_url: width: 80 | image_tag: loading: 'lazy', alt: block.settings.name | default: '', class: 'h-9 w-9 rounded-full object-cover' }}
             {%- elsif block.settings.avatar_asset != blank -%}
-              <img src="{{ block.settings.avatar_asset | asset_url }}" alt="{{ block.settings.name | escape }}" width="120" height="120" class="h-9 w-9 rounded-full object-cover" loading="lazy">
+              <img src="{{ block.settings.avatar_asset | asset_url }}" alt="{{ block.settings.name | escape }}" width="80" height="80" class="h-9 w-9 rounded-full object-cover" loading="lazy">
             {%- elsif forloop.index == 1 -%}
-              <img src="{{ 'avatar-rahul.webp' | asset_url }}" alt="{{ block.settings.name | escape }}" width="120" height="120" class="h-9 w-9 rounded-full object-cover" loading="lazy">
+              <img src="{{ 'avatar-rahul.webp' | asset_url }}" alt="{{ block.settings.name | escape }}" width="80" height="80" class="h-9 w-9 rounded-full object-cover" loading="lazy">
             {%- elsif forloop.index == 2 -%}
-              <img src="{{ 'avatar-priya.webp' | asset_url }}" alt="{{ block.settings.name | escape }}" width="120" height="120" class="h-9 w-9 rounded-full object-cover" loading="lazy">
+              <img src="{{ 'avatar-priya.webp' | asset_url }}" alt="{{ block.settings.name | escape }}" width="80" height="80" class="h-9 w-9 rounded-full object-cover" loading="lazy">
             {%- elsif forloop.index == 3 -%}
-              <img src="{{ 'avatar-amit.webp' | asset_url }}" alt="{{ block.settings.name | escape }}" width="120" height="120" class="h-9 w-9 rounded-full object-cover" loading="lazy">
+              <img src="{{ 'avatar-amit.webp' | asset_url }}" alt="{{ block.settings.name | escape }}" width="80" height="80" class="h-9 w-9 rounded-full object-cover" loading="lazy">
             {%- else -%}
               <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-soft text-xs font-black text-brand" aria-hidden="true">{{ block.settings.name | slice: 0 }}</span>
             {%- endif -%}
@@ -45,7 +45,7 @@
         </div>
         <blockquote class="mt-2 text-sm leading-relaxed text-slate-600">“Amazing quality products and super fast delivery. Kartzo is now my go-to store!”</blockquote>
         <figcaption class="mt-3 flex items-center gap-2.5">
-          <img src="{{ 'avatar-rahul.webp' | asset_url }}" alt="Rahul Mehta" width="120" height="120" class="h-9 w-9 rounded-full object-cover" loading="lazy">
+          <img src="{{ 'avatar-rahul.webp' | asset_url }}" alt="Rahul Mehta" width="80" height="80" class="h-9 w-9 rounded-full object-cover" loading="lazy">
           <span><span class="block text-sm font-extrabold">Rahul Mehta</span><span class="block text-xs text-slate-500">Verified Buyer</span></span>
         </figcaption>
       </figure>
@@ -55,7 +55,7 @@
         </div>
         <blockquote class="mt-2 text-sm leading-relaxed text-slate-600">“Loved the shopping experience. Great prices on products and excellent customer support.”</blockquote>
         <figcaption class="mt-3 flex items-center gap-2.5">
-          <img src="{{ 'avatar-priya.webp' | asset_url }}" alt="Priya Sharma" width="120" height="120" class="h-9 w-9 rounded-full object-cover" loading="lazy">
+          <img src="{{ 'avatar-priya.webp' | asset_url }}" alt="Priya Sharma" width="80" height="80" class="h-9 w-9 rounded-full object-cover" loading="lazy">
           <span><span class="block text-sm font-extrabold">Priya Sharma</span><span class="block text-xs text-slate-500">Verified Buyer</span></span>
         </figcaption>
       </figure>
@@ -65,7 +65,7 @@
         </div>
         <blockquote class="mt-2 text-sm leading-relaxed text-slate-600">“Wide range of products and genuine quality. Highly recommend Kartzo!”</blockquote>
         <figcaption class="mt-3 flex items-center gap-2.5">
-          <img src="{{ 'avatar-amit.webp' | asset_url }}" alt="Amit Verma" width="120" height="120" class="h-9 w-9 rounded-full object-cover" loading="lazy">
+          <img src="{{ 'avatar-amit.webp' | asset_url }}" alt="Amit Verma" width="80" height="80" class="h-9 w-9 rounded-full object-cover" loading="lazy">
           <span><span class="block text-sm font-extrabold">Amit Verma</span><span class="block text-xs text-slate-500">Verified Buyer</span></span>
         </figcaption>
       </figure>

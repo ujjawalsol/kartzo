@@ -16,7 +16,7 @@
 </head>
 <body class="bg-white font-sans text-brand-ink antialiased">
   <main class="pad mx-auto flex min-h-screen w-full max-w-md flex-col items-center justify-center py-12 text-center">
-    <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-10 w-auto">
+    <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-10 w-auto">
     <p class="mt-4 text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand">Gift Card</p>
     <h1 class="mt-2 text-3xl font-black">{{ gift_card.balance | money }}</h1>
     {%- if gift_card.enabled == false -%}

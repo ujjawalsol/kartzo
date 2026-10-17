@@ -11,14 +11,14 @@
       >
         {%- if block.settings.image -%}
           {%- if forloop.first -%}
-            {{ block.settings.image | image_url: width: 2100 | image_tag: widths: '750, 1500, 2100', fetchpriority: 'high', alt: block.settings.image.alt | default: block.settings.heading, class: 'hero-slide-image absolute inset-0 h-full w-full object-cover object-center' }}
+            {{ block.settings.image | image_url: width: 1500 | image_tag: widths: '750, 1100, 1500', fetchpriority: 'high', alt: block.settings.image.alt | default: block.settings.heading, class: 'hero-slide-image absolute inset-0 h-full w-full object-cover object-center' }}
           {%- else -%}
-            {{ block.settings.image | image_url: width: 2100 | image_tag: widths: '750, 1500, 2100', loading: 'lazy', alt: block.settings.image.alt | default: block.settings.heading, class: 'hero-slide-image absolute inset-0 h-full w-full object-cover object-center' }}
+            {{ block.settings.image | image_url: width: 1500 | image_tag: widths: '750, 1100, 1500', loading: 'lazy', alt: block.settings.image.alt | default: block.settings.heading, class: 'hero-slide-image absolute inset-0 h-full w-full object-cover object-center' }}
           {%- endif -%}
         {%- else -%}
           {%- assign hero_num = forloop.index0 | modulo: 3 | plus: 1 -%}
           {%- assign hero_asset = 'hero-' | append: hero_num | append: '.webp' -%}
-          <img src="{{ hero_asset | asset_url }}" alt="{{ block.settings.heading | escape }}" width="2100" height="748" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %} class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
+          <img src="{{ hero_asset | asset_url }}" alt="{{ block.settings.heading | escape }}" width="1500" height="534" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %} class="hero-slide-image absolute inset-0 h-full w-full object-cover object-center">
         {%- endif -%}
         <div class="hero-slide-shade absolute inset-0"></div>
         <div class="pad relative z-10 flex min-h-[150px] items-center py-3 sm:min-h-[520px] lg:min-h-[540px]">

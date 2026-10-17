@@ -20,7 +20,7 @@
         {%- assign logo_w = section.settings.logo_width | default: 144 -%}
         {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_w | append: 'px;', class: 'h-9 w-auto object-contain' }}
       {%- else -%}
-        <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-9 w-auto">
+        <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-9 w-auto">
       {%- endif -%}
     </a>
     <nav class="site-primary-nav order-3 ml-0 hidden shrink-0 items-center gap-0 whitespace-nowrap lg:col-start-1 lg:row-start-2 lg:flex xl:order-none xl:ml-3 xl:gap-1" aria-label="Primary Navigation">
@@ -87,7 +87,7 @@
           {%- assign logo_w_m = section.settings.logo_width | default: 130 -%}
           {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_w_m | append: 'px;', class: 'h-8 w-auto object-contain' }}
         {%- else -%}
-          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-8 w-auto">
+          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-8 w-auto">
         {%- endif -%}
       </a>
       <button type="button" data-cart-drawer-open class="cart-trigger relative flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Cart">
@@ -127,7 +127,7 @@
         {%- if section.settings.logo -%}
           {{ section.settings.logo | image_url: width: 300 | image_tag: alt: shop.name, class: 'h-7 w-auto object-contain' }}
         {%- else -%}
-          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-7 w-auto">
+          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-7 w-auto">
         {%- endif -%}
       </span>
       <button type="button" data-mobile-menu-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 transition" aria-label="{{ 'general.close' | t }}">

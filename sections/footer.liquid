@@ -26,7 +26,7 @@
                 {%- elsif section.settings.logo -%}
                   {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, class: 'h-8 w-auto object-contain' }}
                 {%- else -%}
-                  <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-8 w-auto">
+                  <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-8 w-auto">
                 {%- endif -%}
               </a>
               {%- if block.settings.text != blank -%}
@@ -160,7 +160,7 @@
           {%- if section.settings.logo -%}
             {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, class: 'h-8 w-auto' }}
           {%- else -%}
-            <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-8 w-auto">
+            <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-8 w-auto">
           {%- endif -%}
         </a>
         <p class="max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">

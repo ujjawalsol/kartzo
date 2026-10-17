@@ -41,9 +41,9 @@
       <a href="{{ target_url }}" class="group flex min-w-0 flex-col items-center gap-2" {{ block.shopify_attributes }}>
         <span class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-full border border-[#dbe7ff] bg-[#eaf1ff] p-1.5 transition duration-200 group-hover:border-brand">
           {%- if tile_image -%}
-            {{ tile_image | image_url: width: 300 | image_tag: widths: '150, 300', loading: 'lazy', alt: label | default: '', class: 'h-full w-full rounded-full object-cover' }}
+            {{ tile_image | image_url: width: 180 | image_tag: widths: '100, 180', loading: 'lazy', alt: label | default: '', class: 'h-full w-full rounded-full object-cover' }}
           {%- elsif tile_fallback != blank -%}
-            <img src="{{ tile_fallback | asset_url }}" alt="{{ label | escape }}" width="300" height="300" class="h-full w-full rounded-full object-cover" loading="lazy">
+            <img src="{{ tile_fallback | asset_url }}" alt="{{ label | escape }}" width="180" height="180" class="h-full w-full rounded-full object-cover" loading="lazy">
           {%- endif -%}
         </span>
         <span class="min-h-10 text-center text-xs font-semibold leading-5 text-brand-ink">{{ label }}</span>

@@ -10,11 +10,11 @@
     {%- endif -%}
     <article class="relative flex flex-col justify-center min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] min-w-0 overflow-hidden rounded-[1.4rem] sm:rounded-3xl {% if forloop.first %}lg:col-span-3 bg-[#041868]{% else %}lg:col-span-2 bg-[#f4eadf]{% endif %}" {{ block.shopify_attributes }}>
       {%- if block.settings.image -%}
-        {{ block.settings.image | image_url: width: 1600 | image_tag: widths: '750, 1200, 1600', loading: 'lazy', alt: block.settings.heading | default: '', class: 'absolute inset-0 h-full w-full object-cover object-right sm:object-center pointer-events-none' }}
+        {{ block.settings.image | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', loading: 'lazy', alt: block.settings.heading | default: '', class: 'absolute inset-0 h-full w-full object-cover object-right sm:object-center pointer-events-none' }}
       {%- elsif forloop.first -%}
-        <img src="{{ 'electronics.webp' | asset_url }}" alt="" width="2113" height="619" class="absolute inset-0 h-full w-full object-cover object-center pointer-events-none" loading="lazy">
+        <img src="{{ 'electronics.webp' | asset_url }}" alt="" width="1200" height="352" class="absolute inset-0 h-full w-full object-cover object-center pointer-events-none" loading="lazy">
       {%- else -%}
-        <img src="{{ 'home.webp' | asset_url }}" alt="" width="1912" height="662" class="absolute inset-0 h-full w-full object-cover object-right sm:object-center pointer-events-none" loading="lazy">
+        <img src="{{ 'home.webp' | asset_url }}" alt="" width="1100" height="381" class="absolute inset-0 h-full w-full object-cover object-right sm:object-center pointer-events-none" loading="lazy">
       {%- endif -%}
       {%- if is_warm -%}
         <div class="absolute inset-0 bg-gradient-to-r from-[#f4eadf] via-[#f4eadf]/55 to-transparent" aria-hidden="true"></div>

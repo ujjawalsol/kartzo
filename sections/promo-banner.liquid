@@ -2,9 +2,9 @@
 <section id="deals-{{ section.id }}" class="pad {% if section.settings.show_mobile %}w-full{% else %}hidden w-full sm:block{% endif %}">
   <div class="relative overflow-hidden rounded-[1.4rem] bg-[#0b47e8] sm:rounded-3xl">
     {%- if section.settings.image -%}
-      {{ section.settings.image | image_url: width: 2100 | image_tag: widths: '750, 1500, 2100', loading: 'lazy', alt: section.settings.heading | default: '', class: 'h-[190px] w-full object-cover object-right sm:h-[250px]' }}
+      {{ section.settings.image | image_url: width: 1300 | image_tag: widths: '650, 1000, 1300', loading: 'lazy', alt: section.settings.heading | default: '', class: 'h-[190px] w-full object-cover object-right sm:h-[250px]' }}
     {%- else -%}
-      <img src="{{ 'deals.webp' | asset_url }}" alt="{{ section.settings.heading | escape }}" width="2150" height="439" class="h-[190px] w-full object-cover object-right sm:h-[250px]" loading="lazy">
+      <img src="{{ 'deals.webp' | asset_url }}" alt="{{ section.settings.heading | escape }}" width="1300" height="265" class="h-[190px] w-full object-cover object-right sm:h-[250px]" loading="lazy">
     {%- endif -%}
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0837c4] via-[#0837c4]/75 to-transparent sm:via-[#0837c4]/25"></div>
     <div class="absolute inset-0 flex items-center justify-between gap-4 px-4 sm:px-5">
