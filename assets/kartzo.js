@@ -316,7 +316,7 @@
     count = Math.max(0, count || 0);
     document.querySelectorAll('[data-cart-count]').forEach(function (el) { el.textContent = String(count); });
     document.querySelectorAll('.cart-trigger').forEach(function (link) {
-      link.setAttribute('aria-label', 'Cart, ' + count + (count === 1 ? ' item' : ' items'));
+      link.setAttribute('aria-label', 'Cart');
     });
   }
   function updateFreeShipping(subtotalMinor) {
