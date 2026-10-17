@@ -1,0 +1,35 @@
+{
+  "check1_homepage": {
+    "status": "PASS",
+    "evidence": "docs/screenshots\\check1-homepage.png",
+    "notes": [
+      "Hero heading: 'Upgrade your everyday.'",
+      "Rendered 15 complete product cards with badges, prices, and imagery"
+    ]
+  },
+  "check2_product_page": {
+    "status": "PASS",
+    "evidence": "docs/screenshots\\check2-product-page.png",
+    "notes": [
+      "Product: 'Self Adhesive Wall Hanger Hooks'",
+      "Variant switched to 'Pack of 8 @699', verified radio state and query param sync"
+    ]
+  },
+  "check3_add_to_cart": {
+    "status": "PASS",
+    "evidence": "docs/screenshots\\check3-cart-drawer.png",
+    "notes": [
+      "Item in cart drawer: 'Self Adhesive Wall Hanger Hooks'",
+      "Subtotal: '\u20b9744.00'",
+      "Dedicated cart page verified: 'Shopping Cart (1)'"
+    ]
+  },
+  "check4_collection_filtering": {
+    "status": "PASS",
+    "evidence": "docs/screenshots\\check4-collection-page.png",
+    "notes": [
+      "Catalog items count: '43 products'",
+      "Rendered 24 product cards with sort_by=price-ascending"
+    ]
+  }
+}
