@@ -903,8 +903,12 @@
   }
   initCountdowns();
 
-  /* ---------- Initial cart sync ---------- */
-  refreshCart();
+  /* ---------- Initial cart sync (deferred to idle to optimize critical paint) ---------- */
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(function () { refreshCart(); });
+  } else {
+    setTimeout(refreshCart, 2000);
+  }
 
   /* Theme Editor: sections re-render without page reload — re-run section-scoped
      init so added/re-rendered sections work; document-level delegation (overlays,
