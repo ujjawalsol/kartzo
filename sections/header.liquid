@@ -10,7 +10,6 @@
 {%- assign tracking_url = pages['tracking'].url | default: collections['tracking'].url | default: section.settings.tracking_url | default: '/pages/tracking' -%}
 {%- assign returns_url = pages['returns-policy'].url | default: collections['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/returns-policy' -%}
 {%- assign shipping_url = pages['shipping-policy'].url | default: collections['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/shipping-policy' -%}
-{%- assign privacy_url = pages['privacy-policy'].url | default: collections['privacy-policy'].url | default: shop.privacy_policy.url | default: '/pages/privacy-policy' -%}
 {%- assign terms_url = pages['terms-conditions'].url | default: collections['terms-conditions'].url | default: shop.terms_of_service.url | default: '/pages/terms-conditions' -%}
 {%- assign orders_url = pages['orders'].url | default: section.settings.orders_url | default: routes.account_url -%}
 
@@ -21,7 +20,7 @@
         {%- assign logo_w = section.settings.logo_width | default: 144 -%}
         {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_w | append: 'px;', class: 'h-9 w-auto object-contain' }}
       {%- else -%}
-        <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="541" height="168" class="h-9 w-auto">
+        <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-9 w-auto">
       {%- endif -%}
     </a>
     <nav class="site-primary-nav order-3 ml-0 hidden shrink-0 items-center gap-0 whitespace-nowrap lg:col-start-1 lg:row-start-2 lg:flex xl:order-none xl:ml-3 xl:gap-1" aria-label="Primary Navigation">
@@ -58,14 +57,14 @@
       <a href="{{ wishlist_url }}" data-wishlist-drawer-open class="flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="{{ 'general.wishlist' | t }}">
         <span class="relative inline-flex items-center justify-center">
           {% render 'icons', name: 'heart', class: 'h-[22px] w-[22px]' %}
-          <span id="wishlist-count" data-wishlist-count class="absolute -top-1 -right-2 hidden h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white leading-none">0</span>
+          <span id="wishlist-count" data-wishlist-count aria-hidden="true" class="absolute -top-1 -right-2 hidden h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white leading-none">0</span>
         </span>
         <span class="text-[10px] font-bold mt-0.5">{{ 'general.wishlist' | t }}</span>
       </a>
-      <button type="button" data-cart-drawer-open class="cart-trigger flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Cart, {{ cart.item_count }} items">
+      <button type="button" data-cart-drawer-open class="cart-trigger flex min-h-11 min-w-11 flex-col items-center justify-center rounded-xl px-2 text-[#3c4a66] transition-colors duration-200 hover:bg-brand-soft" aria-label="Cart">
         <span class="relative inline-flex items-center justify-center">
           {% render 'icons', name: 'cart', class: 'h-[22px] w-[22px]' %}
-          <span id="cart-count" data-cart-count class="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black text-white leading-none">{{ cart.item_count }}</span>
+          <span id="cart-count" data-cart-count aria-hidden="true" class="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black text-white leading-none">{{ cart.item_count }}</span>
         </span>
         <span class="text-[10px] font-bold mt-0.5">Cart</span>
       </button>
@@ -88,12 +87,12 @@
           {%- assign logo_w_m = section.settings.logo_width | default: 130 -%}
           {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_w_m | append: 'px;', class: 'h-8 w-auto object-contain' }}
         {%- else -%}
-          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="541" height="168" class="h-8 w-auto">
+          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-8 w-auto">
         {%- endif -%}
       </a>
-      <button type="button" data-cart-drawer-open class="cart-trigger relative flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Open cart, {{ cart.item_count }} items">
+      <button type="button" data-cart-drawer-open class="cart-trigger relative flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Cart">
         {% render 'icons', name: 'cart', class: 'h-6 w-6' %}
-        <span class="mobile-bottom-cart-count absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black leading-none text-white" data-cart-count>{{ cart.item_count }}</span>
+        <span class="mobile-bottom-cart-count absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black leading-none text-white" data-cart-count aria-hidden="true">{{ cart.item_count }}</span>
       </button>
     </div>
     <div class="pad pb-2.5">
@@ -128,7 +127,7 @@
         {%- if section.settings.logo -%}
           {{ section.settings.logo | image_url: width: 300 | image_tag: alt: shop.name, class: 'h-7 w-auto object-contain' }}
         {%- else -%}
-          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="541" height="168" class="h-7 w-auto">
+          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-7 w-auto">
         {%- endif -%}
       </span>
       <button type="button" data-mobile-menu-close class="flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 transition" aria-label="{{ 'general.close' | t }}">
@@ -258,10 +257,10 @@
       <span class="text-[11px] font-bold leading-none">{{ 'general.wishlist' | t }}</span>
     </a>
     {%- if section.settings.bottom_nav_fifth_tab == 'cart' -%}
-      <button type="button" data-cart-drawer-open class="cart-trigger bottom-nav-tab flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition text-[#4E5D78] hover:bg-brand-soft hover:text-brand" aria-label="Cart, {{ cart.item_count }} items">
+      <button type="button" data-cart-drawer-open class="cart-trigger bottom-nav-tab flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition text-[#4E5D78] hover:bg-brand-soft hover:text-brand" aria-label="{{ 'general.cart' | t }}">
         <span class="relative inline-flex items-center justify-center">
           {% render 'icons', name: 'cart', class: 'h-[22px] w-[22px]' %}
-          <span class="mobile-bottom-cart-count absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black leading-none text-white" data-cart-count>{{ cart.item_count }}</span>
+          <span class="mobile-bottom-cart-count absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[9px] font-black leading-none text-white" data-cart-count aria-hidden="true">{{ cart.item_count }}</span>
         </span>
         <span class="text-[11px] font-bold leading-none">{{ 'general.cart' | t }}</span>
       </button>

@@ -119,6 +119,7 @@
       </aside>
 
       <div>
+        <h2 class="sr-only">Products in {{ collection.title }}</h2>
         {%- if collection.products.size > 0 -%}
           <div id="product-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
             {%- for product in collection.products -%}

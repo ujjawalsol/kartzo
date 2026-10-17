@@ -10,7 +10,6 @@
 {%- assign returns_url = pages['returns-policy'].url | default: collections['returns-policy'].url | default: shop.refund_policy.url | default: '/pages/terms-conditions#return' -%}
 {%- assign shipping_url = pages['shipping-policy'].url | default: collections['shipping-policy'].url | default: shop.shipping_policy.url | default: '/pages/terms-conditions#shipping' -%}
 {%- assign cancel_url = pages['cancellation-policy'].url | default: collections['cancellation-policy'].url | default: '/pages/terms-conditions#cancel' -%}
-{%- assign privacy_url = pages['privacy-policy'].url | default: collections['privacy-policy'].url | default: shop.privacy_policy.url | default: '/pages/privacy-policy' -%}
 {%- assign terms_url = pages['terms-conditions'].url | default: collections['terms-conditions'].url | default: shop.terms_of_service.url | default: '/pages/terms-conditions' -%}
 
 <footer class="hidden lg:block border-t border-[#e8eef8] bg-white">
@@ -27,7 +26,7 @@
                 {%- elsif section.settings.logo -%}
                   {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, class: 'h-8 w-auto object-contain' }}
                 {%- else -%}
-                  <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="541" height="168" class="h-8 w-auto">
+                  <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-8 w-auto">
                 {%- endif -%}
               </a>
               {%- if block.settings.text != blank -%}
@@ -89,7 +88,7 @@
 
           {%- when 'link_list' -%}
             <nav aria-label="{{ block.settings.heading | escape }}" {{ block.shopify_attributes }}>
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">{{ block.settings.heading }}</h3>
+              <h2 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">{{ block.settings.heading }}</h2>
               <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
                 {%- if block.settings.menu != blank and block.settings.menu.links.size > 0 -%}
                   {%- for link in block.settings.menu.links -%}
@@ -128,7 +127,7 @@
 
           {%- when 'text' -%}
             <div {{ block.shopify_attributes }}>
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">{{ block.settings.heading }}</h3>
+              <h2 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">{{ block.settings.heading }}</h2>
               <div class="mt-4 text-xs sm:text-sm leading-relaxed text-slate-600">
                 {{ block.settings.subtext }}
               </div>
@@ -136,7 +135,7 @@
 
           {%- when 'newsletter' -%}
             <div {{ block.shopify_attributes }}>
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">{{ block.settings.heading | default: 'Newsletter' }}</h3>
+              <h2 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">{{ block.settings.heading | default: 'Newsletter' }}</h2>
               <p class="mt-2 text-xs text-slate-600">{{ block.settings.subtext | default: 'Subscribe to receive exclusive deals and updates.' }}</p>
               {% form 'customer', class: 'mt-4 flex flex-col gap-2' %}
                 <input type="hidden" name="contact[tags]" value="newsletter">
@@ -161,7 +160,7 @@
           {%- if section.settings.logo -%}
             {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, class: 'h-8 w-auto' }}
           {%- else -%}
-            <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="541" height="168" class="h-8 w-auto">
+            <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="1672" height="941" class="h-8 w-auto">
           {%- endif -%}
         </a>
         <p class="max-w-sm text-xs sm:text-sm leading-relaxed text-slate-600">
@@ -184,7 +183,7 @@
       </div>
 
       <nav aria-label="Shop Catalog">
-        <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Shop Catalog</h3>
+        <h2 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Shop Catalog</h2>
         <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
           <li><a href="{{ routes.all_products_collection_url }}" class="hover:text-brand transition">All Products</a></li>
           <li><a href="{{ routes.collections_url }}" class="hover:text-brand transition">Shop by Category</a></li>
@@ -195,7 +194,7 @@
       </nav>
 
       <nav aria-label="Customer Care">
-        <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Customer Care</h3>
+        <h2 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Customer Care</h2>
         <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
           <li><a href="{{ tracking_url }}" class="hover:text-brand transition">Track Your Parcel</a></li>
           <li><a href="{{ contact_url }}" class="hover:text-brand transition">Contact Support</a></li>
@@ -207,7 +206,7 @@
       </nav>
 
       <nav aria-label="Company">
-        <h3 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Company</h3>
+        <h2 class="text-xs font-extrabold uppercase tracking-wider text-brand-ink">Company</h2>
         <ul class="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-600 font-medium">
           <li><a href="{{ about_url }}" class="hover:text-brand transition">About {{ shop.name }}</a></li>
           <li><a href="{{ routes.account_url }}" class="hover:text-brand transition">Customer Account</a></li>

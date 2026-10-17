@@ -140,9 +140,13 @@
       </ul>
 
       <div class="mt-6 space-y-3">
+        <h2 class="sr-only">Product overview and specifications</h2>
         <details class="rounded-2xl border border-[#e6eefb] px-4 py-3" open>
           <summary class="flex cursor-pointer items-center justify-between text-sm font-bold">Description {% render 'icons', name: 'chevron-down', class: 'accordion-chevron h-4 w-4' %}</summary>
-          <div class="prose-kartzo mt-2 text-sm leading-relaxed text-slate-600">{{ product.description }}</div>
+          {%- assign prod_title_esc = product.title | escape -%}
+          {%- assign img_with_alt = '<img alt="' | append: prod_title_esc | append: '" loading="lazy" decoding="async" src=' -%}
+          {%- assign safe_description = product.description | replace: '<img src=', img_with_alt -%}
+          <div class="prose-kartzo mt-2 text-sm leading-relaxed text-slate-600">{{ safe_description }}</div>
         </details>
         <details class="rounded-2xl border border-[#e6eefb] px-4 py-3">
           <summary class="flex cursor-pointer items-center justify-between text-sm font-bold">Product details {% render 'icons', name: 'chevron-down', class: 'accordion-chevron h-4 w-4' %}</summary>

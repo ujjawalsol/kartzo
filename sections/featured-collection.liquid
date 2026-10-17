@@ -51,10 +51,10 @@
               </div>
               <div class="mt-2.5 flex flex-col flex-grow">
                 <h3 class="product-title text-[13px] font-bold leading-snug line-clamp-2 min-h-[2.6rem] text-brand-ink"><a href="{{ routes.all_products_collection_url }}" class="hover:text-brand">{{ title }}</a></h3>
-                <p class="product-meta mt-0.5 text-[11px] text-[#7d8aa3] truncate">{{ new_subs[idx] }}</p>
+                <p class="product-meta mt-0.5 text-[11px] text-[#4e5d78] truncate">{{ new_subs[idx] }}</p>
                 <div class="product-rating mt-1 flex items-center gap-1 text-[11px] text-[#8b97ad]">
                   {% render 'rating', value: 4.5 %}
-                  <span class="text-[10px] text-slate-400">{{ new_ratings[idx] }} ({{ new_counts[idx] }})</span>
+                  <span class="text-[10px] text-slate-500">{{ new_ratings[idx] }} ({{ new_counts[idx] }})</span>
                 </div>
                 <p class="product-price-row mt-1 flex items-baseline justify-between gap-2">
                   <span class="text-[15px] font-extrabold text-brand-ink">{{ new_prices[idx] }}</span>
@@ -92,10 +92,10 @@
               </div>
               <div class="mt-2.5 flex flex-col flex-grow">
                 <h3 class="product-title text-[13px] font-bold leading-snug line-clamp-2 min-h-[2.6rem] text-brand-ink"><a href="{{ routes.all_products_collection_url }}" class="hover:text-brand">{{ title }}</a></h3>
-                <p class="product-meta mt-0.5 text-[11px] text-[#7d8aa3] truncate">{{ best_subs[idx] }}</p>
+                <p class="product-meta mt-0.5 text-[11px] text-[#4e5d78] truncate">{{ best_subs[idx] }}</p>
                 <div class="product-rating mt-1 flex items-center gap-1 text-[11px] text-[#8b97ad]">
                   {% render 'rating', value: 4.5 %}
-                  <span class="text-[10px] text-slate-400">{{ best_ratings[idx] }} ({{ best_counts[idx] }})</span>
+                  <span class="text-[10px] text-slate-500">{{ best_ratings[idx] }} ({{ best_counts[idx] }})</span>
                 </div>
                 <p class="product-price-row mt-1 flex items-baseline justify-between gap-2">
                   <span class="text-[15px] font-extrabold text-brand-ink">{{ best_prices[idx] }}</span>

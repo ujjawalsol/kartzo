@@ -923,6 +923,24 @@
     renderWishlistGrid();
   });
 
+  /* ---------- Accessibility DOM safeguards ---------- */
+  function ensureImageAlts() {
+    var imgs = document.querySelectorAll('.prose-kartzo img:not([alt])');
+    if (!imgs.length) return;
+    var heading = document.querySelector('h1');
+    var fallback = (heading && heading.textContent.trim()) || 'Product detail image';
+    imgs.forEach(function (img) {
+      if (!img.getAttribute('alt')) {
+        img.setAttribute('alt', fallback);
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureImageAlts);
+  } else {
+    ensureImageAlts();
+  }
+
   window.Kartzo = {
     toast: showToast,
     openCart: function () { refreshCart().finally(function () { openOverlay(getOverlay('cart-drawer')); }); },
