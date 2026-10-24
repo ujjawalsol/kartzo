@@ -392,6 +392,16 @@
         "heading_accent": "Kartzo?"
       }
     },
+    "featured_collection_Wwpenh": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "heading_first": "Self",
+        "heading_accent": "care",
+        "collection": "self-care",
+        "limit": 8
+      }
+    },
     "reviews": {
       "type": "testimonials",
       "blocks": {
@@ -442,16 +452,6 @@
         "heading": "Stay Updated",
         "sub": "Exclusive offers & new arrivals."
       }
-    },
-    "featured_collection_Wwpenh": {
-      "type": "featured-collection",
-      "name": "Featured collection",
-      "settings": {
-        "heading_first": "Self",
-        "heading_accent": "care",
-        "collection": "self-care",
-        "limit": 8
-      }
     }
   },
   "order": [
@@ -464,8 +464,8 @@
     "featured_collection_keUqUb",
     "new",
     "why",
+    "featured_collection_Wwpenh",
     "reviews",
-    "newsletter",
-    "featured_collection_Wwpenh"
+    "newsletter"
   ]
 }
