@@ -308,6 +308,16 @@
       ],
       "settings": {}
     },
+    "featured_collection_keUqUb": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "heading_first": "Kid",
+        "heading_accent": "Collection",
+        "collection": "kids-collections",
+        "limit": 6
+      }
+    },
     "new": {
       "type": "featured-collection",
       "settings": {
@@ -441,6 +451,7 @@
     "deals",
     "best",
     "cards",
+    "featured_collection_keUqUb",
     "new",
     "why",
     "reviews",
