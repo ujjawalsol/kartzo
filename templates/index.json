@@ -442,6 +442,16 @@
         "heading": "Stay Updated",
         "sub": "Exclusive offers & new arrivals."
       }
+    },
+    "featured_collection_Wwpenh": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "heading_first": "Best",
+        "heading_accent": "Sellers",
+        "collection": "self-care",
+        "limit": 6
+      }
     }
   },
   "order": [
@@ -455,6 +465,7 @@
     "new",
     "why",
     "reviews",
-    "newsletter"
+    "newsletter",
+    "featured_collection_Wwpenh"
   ]
 }
