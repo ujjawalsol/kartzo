@@ -447,8 +447,8 @@
       "type": "featured-collection",
       "name": "Featured collection",
       "settings": {
-        "heading_first": "Best",
-        "heading_accent": "Sellers",
+        "heading_first": "Self",
+        "heading_accent": "care",
         "collection": "self-care",
         "limit": 8
       }
