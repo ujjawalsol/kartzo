@@ -311,8 +311,8 @@
     "new": {
       "type": "featured-collection",
       "settings": {
-        "heading_first": "New",
-        "heading_accent": "Arrivals",
+        "heading_first": "Fashion",
+        "heading_accent": "Collection",
         "collection": "frontpage",
         "limit": 8
       }
