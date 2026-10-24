@@ -313,7 +313,7 @@
       "settings": {
         "heading_first": "New",
         "heading_accent": "Arrivals",
-        "collection": "",
+        "collection": "frontpage",
         "limit": 8
       }
     },
