@@ -139,7 +139,7 @@
         "c-4": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "self-care",
             "title": "Beauty",
             "fallback_image": "p-perfume.webp",
             "link": ""
