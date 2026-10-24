@@ -446,6 +446,13 @@
         "heading_accent": "Customers Say"
       }
     },
+    "faq_Qk3YX4": {
+      "type": "faq",
+      "name": "Help & FAQs",
+      "settings": {
+        "heading": "Frequently Asked Questions"
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -466,6 +473,7 @@
     "why",
     "featured_collection_Wwpenh",
     "reviews",
-    "newsletter"
+    "newsletter",
+    "faq_Qk3YX4"
   ]
 }
