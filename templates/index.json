@@ -154,15 +154,6 @@
             "link": ""
           }
         },
-        "c-6": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Sports",
-            "fallback_image": "p-shoes.webp",
-            "link": ""
-          }
-        },
         "c-7": {
           "type": "category",
           "settings": {
@@ -178,15 +169,6 @@
             "collection": "",
             "title": "Mobile & Accessories",
             "fallback_image": "p-phone.webp",
-            "link": ""
-          }
-        },
-        "c-9": {
-          "type": "category",
-          "settings": {
-            "collection": "",
-            "title": "Bags & Luggage",
-            "fallback_image": "p-backpack.webp",
             "link": ""
           }
         },
@@ -206,10 +188,8 @@
         "c-3",
         "c-4",
         "c-5",
-        "c-6",
         "c-7",
         "c-8",
-        "c-9",
         "c-10"
       ],
       "settings": {}
