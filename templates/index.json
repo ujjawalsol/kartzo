@@ -175,7 +175,7 @@
         "c-10": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "health-and-care",
             "title": "Health & Wellness",
             "fallback_image": "c-health.webp",
             "link": ""
