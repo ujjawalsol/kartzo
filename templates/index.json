@@ -112,7 +112,7 @@
         "c-1": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "best-sellers",
             "title": "Electronics",
             "fallback_image": "p-headphones.webp",
             "link": ""
@@ -166,7 +166,7 @@
         "c-7": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "kids-collections",
             "title": "Toys & Games",
             "fallback_image": "c-toys.webp",
             "link": ""
@@ -446,18 +446,18 @@
         "heading_accent": "Customers Say"
       }
     },
-    "faq_Qk3YX4": {
-      "type": "faq",
-      "name": "Help & FAQs",
-      "settings": {
-        "heading": "Frequently Asked Questions"
-      }
-    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
         "heading": "Stay Updated",
         "sub": "Exclusive offers & new arrivals."
+      }
+    },
+    "faq_Qk3YX4": {
+      "type": "faq",
+      "name": "Help & FAQs",
+      "settings": {
+        "heading": "Frequently Asked Questions"
       }
     }
   },
