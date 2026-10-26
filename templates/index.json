@@ -148,7 +148,7 @@
         "c-5": {
           "type": "category",
           "settings": {
-            "collection": "",
+            "collection": "kitchen",
             "title": "Kitchen",
             "fallback_image": "p-fryer.webp",
             "link": ""
