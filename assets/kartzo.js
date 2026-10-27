@@ -542,19 +542,29 @@
       a.setAttribute('role', 'option');
       /* No price here: suggest.json price magnitude cannot be verified without a
          live store, and a wrong price is worse than none. Price shows on the product page. */
-       var imgSrc = '';
-       if (p.__collection) {
-         imgSrc = (p.image && p.image.url) ? p.image.url : (p.featured_image && p.featured_image.url) ? p.featured_image.url : '';
-       } else {
-         imgSrc = (p.featured_image && p.featured_image.url) ? p.featured_image.url : '';
-       }
-       var img = imgSrc
-         ? '<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-1"><img src="' + sizedImage(imgSrc, '100x') + '" alt="" class="h-9 w-auto object-contain" loading="lazy"></span>'
-         : '';
-       var label = p.__collection ? 'Collection' : (p.type || p.vendor || '');
-        '<div class="min-w-0 flex-1"><p class="truncate text-xs sm:text-sm font-bold text-brand-ink"></p>' +
-         '<p class="text-[11px] text-slate-500">' + label + '</p></div>';
-      a.querySelector('div p').textContent = p.title;
+      var imgSrc = (p.featured_image && p.featured_image.url) ? p.featured_image.url : '';
+      if (imgSrc) {
+        var media = document.createElement('span');
+        media.className = 'flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-1';
+        var im = document.createElement('img');
+        im.src = sizedImage(imgSrc, '100x');
+        im.alt = '';
+        im.loading = 'lazy';
+        im.className = 'h-9 w-auto object-contain';
+        media.appendChild(im);
+        a.appendChild(media);
+      }
+      var body = document.createElement('div');
+      body.className = 'min-w-0 flex-1';
+      var title = document.createElement('p');
+      title.className = 'truncate text-xs sm:text-sm font-bold text-brand-ink';
+      title.textContent = p.title;
+      var meta = document.createElement('p');
+      meta.className = 'text-[11px] text-slate-500';
+      meta.textContent = p.__collection ? 'Collection' : (p.type || p.vendor || '');
+      body.appendChild(title);
+      body.appendChild(meta);
+      a.appendChild(body);
       suggestBox.appendChild(a);
     });
     if (viewAll && query) viewAll.href = (routes.search || '/search') + '?q=' + encodeURIComponent(query);
@@ -567,7 +577,7 @@
       clearTimeout(suggestTimer);
       if (q.length < 2) { paintSuggestions([], ''); return; }
       suggestTimer = setTimeout(function () {
-        fetch(cartRoot('search/suggest.json') + '?q=' + encodeURIComponent(q) + '&resources[type]=product,collection&resources[limit]=6&resources[options][unavailable_products]=hide')
+        fetch(cartRoot('search/suggest.json') + '?q=' + encodeURIComponent(q) + '&resources[type]=product,collection&resources[limit]=6&resources[options][unavailable_products]=last')
           .then(function (res) { if (!res.ok) throw new Error('suggest'); return res.json(); })
           .then(function (data) {
             var r = (data.resources && data.resources.results) || {};

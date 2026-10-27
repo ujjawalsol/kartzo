@@ -22,7 +22,7 @@
               <a href="{{ routes.root_url }}" class="inline-block" aria-label="{{ shop.name }} home">
                 {%- if block.settings.logo -%}
                   {%- assign logo_bw = block.settings.logo_width | default: 140 -%}
-                  {{ block.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_bw | append: 'px;', class: 'h-8 w-auto object-contain' }}
+                  <img src="{{ block.settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="{{ block.settings.logo.width }}" height="{{ block.settings.logo.height }}" class="h-8 w-auto object-contain" style="max-width: {{ logo_bw }}px;">
                 {%- elsif section.settings.logo -%}
                   {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, class: 'h-8 w-auto object-contain' }}
                 {%- else -%}
