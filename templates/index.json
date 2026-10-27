@@ -432,13 +432,6 @@
         "heading": "Stay Updated",
         "sub": "Exclusive offers & new arrivals."
       }
-    },
-    "faq_Qk3YX4": {
-      "type": "faq",
-      "name": "Help & FAQs",
-      "settings": {
-        "heading": "Frequently Asked Questions"
-      }
     }
   },
   "order": [
@@ -453,7 +446,6 @@
     "why",
     "featured_collection_Wwpenh",
     "reviews",
-    "newsletter",
-    "faq_Qk3YX4"
+    "newsletter"
   ]
 }

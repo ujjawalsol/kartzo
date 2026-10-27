@@ -664,6 +664,21 @@
 
   /* ---------- Product page: variants, gallery, sticky CTA ---------- */
   /* Idempotent: safe to call on load and on shopify:section:load (editor re-renders). */
+  /* Shopify CDN URLs without a width param render at full size; this keeps swaps light. */
+  function kzProductSized(url, width) {
+    if (!url) return url;
+    try {
+      var u = new URL(url, location.href);
+      if (u.searchParams.has('width')) u.searchParams.set('width', String(width));
+      else u.searchParams.append('width', String(width));
+      return u.toString();
+    } catch (err) { return url; }
+  }
+  function kzPreload(src) {
+    if (!src) return;
+    var im = new Image();
+    im.src = src;
+  }
   function initProductForm(productForm) {
     if (!productForm || productForm.dataset.kzInit) return;
     productForm.dataset.kzInit = '1';
@@ -716,7 +731,10 @@
       var mediaSrc = media && (media.src || (media.preview_image && media.preview_image.src));
       if (mediaSrc) {
         var main = document.getElementById('main-product-img');
-        if (main) { main.src = mediaSrc; main.removeAttribute('srcset'); }
+        if (main) {
+          main.src = kzProductSized(mediaSrc, 800);
+          main.setAttribute('srcset', kzProductSized(mediaSrc, 360) + ' 360w, ' + kzProductSized(mediaSrc, 600) + ' 600w, ' + kzProductSized(mediaSrc, 800) + ' 800w');
+        }
       }
       try {
         var url = new URL(window.location.href);
@@ -742,7 +760,12 @@
     if (thumb) {
       var main = document.getElementById('main-product-img');
       var src = thumb.getAttribute('data-full') || (thumb.querySelector('img') || {}).src;
-      if (main && src) { main.src = src; main.removeAttribute('srcset'); }
+      var srcset = thumb.getAttribute('data-srcset') || '';
+      if (main && src) {
+        main.src = src;
+        if (srcset) main.setAttribute('srcset', srcset);
+        else main.removeAttribute('srcset');
+      }
       document.querySelectorAll('[data-gallery-thumb]').forEach(function (t) {
         t.classList.remove('border-brand', 'ring-2', 'ring-brand');
         t.classList.add('border-[#e6eefb]');
@@ -760,6 +783,29 @@
       var label = document.getElementById('selected-color-label');
       if (label) label.textContent = sw.getAttribute('data-color-name') || '';
     }
+  });
+  /* ---------- Gallery prefetch: square thumbs swap the main box instantly ---------- */
+  function initGalleryPrefetch() {
+    var thumbs = document.querySelectorAll('[data-gallery-thumb]');
+    if (!thumbs.length) return;
+    Array.prototype.forEach.call(thumbs, function (t) {
+      if (t.dataset.kzPre) return;
+      t.dataset.kzPre = '1';
+      var full = t.getAttribute('data-full');
+      if (!full) return;
+      /* Hover/focus intent → warm the cache a beat before the click lands. */
+      t.addEventListener('pointerenter', function () { kzPreload(full); });
+      t.addEventListener('focus', function () { kzPreload(full); });
+    });
+    /* Idle: preload every thumb image (max 6) so the first click is instant, touch included. */
+    var idle = window.requestIdleCallback || function (cb) { return setTimeout(cb, 350); };
+    idle(function () {
+      Array.prototype.forEach.call(thumbs, function (t) { kzPreload(t.getAttribute('data-full')); });
+    });
+  }
+  initGalleryPrefetch();
+  document.addEventListener('shopify:section:load', function (e) {
+    if (e.target && e.target.querySelector && e.target.querySelector('[data-gallery-thumb]')) initGalleryPrefetch();
   });
   var pdpCta = document.getElementById('pdp-main-cta');
   var stickyBar = document.getElementById('sticky-pdp-bar');

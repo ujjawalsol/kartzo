@@ -17,7 +17,7 @@
             src="{{ main_img }}"
             alt="{{ main_alt }}"
             srcset="{{ main_img_360 }} 360w, {{ main_img_600 }} 600w, {{ main_img }} 800w"
-            sizes="(max-width: 768px) 360px, 600px"
+            sizes="(max-width: 768px) 100vw, 600px"
             width="800" height="800"
             fetchpriority="high"
             class="aspect-square w-full object-contain p-4"
@@ -27,12 +27,15 @@
       {%- if product.media.size > 1 -%}
         <div class="mt-3 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Product images">
           {%- for media in product.media limit: 6 -%}
-            {%- assign thumb_full = media | image_url: width: 1200 -%}
+            {%- assign thumb_full = media | image_url: width: 800 -%}
+            {%- assign thumb_600 = media | image_url: width: 600 -%}
+            {%- assign thumb_360 = media | image_url: width: 360 -%}
             {%- assign thumb_alt = media.alt | default: product.title | escape -%}
             <button
               type="button"
               data-gallery-thumb
               data-full="{{ thumb_full }}"
+              data-srcset="{{ thumb_360 }} 360w, {{ thumb_600 }} 600w, {{ thumb_full }} 800w"
               class="h-20 w-20 shrink-0 overflow-hidden rounded-2xl border p-1.5 {% if forloop.first %}border-brand ring-2 ring-brand{% else %}border-[#e6eefb]{% endif %}"
               aria-label="View image {{ forloop.index }}"
             >
