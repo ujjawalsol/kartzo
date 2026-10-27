@@ -542,13 +542,18 @@
       a.setAttribute('role', 'option');
       /* No price here: suggest.json price magnitude cannot be verified without a
          live store, and a wrong price is worse than none. Price shows on the product page. */
-      var img = p.featured_image
-        ? '<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-1"><img src="' + sizedImage(p.featured_image.url, '100x') + '" alt="" class="h-9 w-auto object-contain" loading="lazy"></span>'
-        : '';
-      a.innerHTML =
-        img +
+       var imgSrc = '';
+       if (p.__collection) {
+         imgSrc = (p.image && p.image.url) ? p.image.url : (p.featured_image && p.featured_image.url) ? p.featured_image.url : '';
+       } else {
+         imgSrc = (p.featured_image && p.featured_image.url) ? p.featured_image.url : '';
+       }
+       var img = imgSrc
+         ? '<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-50 p-1"><img src="' + sizedImage(imgSrc, '100x') + '" alt="" class="h-9 w-auto object-contain" loading="lazy"></span>'
+         : '';
+       var label = p.__collection ? 'Collection' : (p.type || p.vendor || '');
         '<div class="min-w-0 flex-1"><p class="truncate text-xs sm:text-sm font-bold text-brand-ink"></p>' +
-        '<p class="text-[11px] text-slate-500">' + (p.type || p.vendor || '') + '</p></div>';
+         '<p class="text-[11px] text-slate-500">' + label + '</p></div>';
       a.querySelector('div p').textContent = p.title;
       suggestBox.appendChild(a);
     });
@@ -562,9 +567,18 @@
       clearTimeout(suggestTimer);
       if (q.length < 2) { paintSuggestions([], ''); return; }
       suggestTimer = setTimeout(function () {
-        fetch(cartRoot('search/suggest.json') + '?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=6&resources[options][unavailable_products]=hide')
+        fetch(cartRoot('search/suggest.json') + '?q=' + encodeURIComponent(q) + '&resources[type]=product,collection&resources[limit]=6&resources[options][unavailable_products]=hide')
           .then(function (res) { if (!res.ok) throw new Error('suggest'); return res.json(); })
-          .then(function (data) { paintSuggestions((data.resources && data.resources.results && data.resources.results.products) || [], q); })
+          .then(function (data) {
+            var r = (data.resources && data.resources.results) || {};
+            var products = r.products || [];
+            var collections = r.collections || [];
+            var items = products.concat(collections.map(function (c) {
+              c.__collection = true;
+              return c;
+            }));
+            paintSuggestions(items, q);
+          })
           .catch(function () { paintSuggestions([], q); });
       }, 220);
     });
@@ -685,9 +699,10 @@
         addBtn.disabled = !v.available;
         addBtn.textContent = v.available ? addBtn.getAttribute('data-add-label') || 'Add to Cart' : 'Sold out';
       }
-      var media = v.featured_media_id && productJson.media
-        ? productJson.media.find(function (m) { return m.id === v.featured_media_id; })
-        : null;
+       var mediaId = v.featured_media ? v.featured_media.id : v.featured_media_id;
+       var media = mediaId && productJson.media
+         ? productJson.media.find(function (m) { return m.id === mediaId; })
+         : null;
       var mediaSrc = media && (media.src || (media.preview_image && media.preview_image.src));
       if (mediaSrc) {
         var main = document.getElementById('main-product-img');

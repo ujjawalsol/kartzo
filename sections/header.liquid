@@ -18,9 +18,9 @@
     <a href="{{ routes.root_url }}" class="shrink-0 flex items-center" aria-label="{{ shop.name }} home">
       {%- if section.settings.logo -%}
         {%- assign logo_w = section.settings.logo_width | default: 144 -%}
-        {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_w | append: 'px;', class: 'h-9 w-auto object-contain' }}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_w | append: 'px;', class: 'h-12 w-auto object-contain' }}
       {%- else -%}
-        <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-9 w-auto">
+        <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-12 w-auto">
       {%- endif -%}
     </a>
     <nav class="site-primary-nav order-3 ml-0 hidden shrink-0 items-center gap-0 whitespace-nowrap lg:col-start-1 lg:row-start-2 lg:flex xl:order-none xl:ml-3 xl:gap-1" aria-label="Primary Navigation">
@@ -85,9 +85,9 @@
       <a href="{{ routes.root_url }}" class="flex min-w-0 flex-1 items-center justify-center" aria-label="{{ shop.name }} home">
         {%- if section.settings.logo -%}
           {%- assign logo_w_m = section.settings.logo_width | default: 130 -%}
-          {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_w_m | append: 'px;', class: 'h-8 w-auto object-contain' }}
+          {{ section.settings.logo | image_url: width: 400 | image_tag: widths: '200, 400', alt: shop.name, style: 'width: auto; max-width: ' | append: logo_w_m | append: 'px;', class: 'h-10 w-auto object-contain' }}
         {%- else -%}
-          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-8 w-auto">
+          <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name | escape }}" width="300" height="169" class="h-10 w-auto">
         {%- endif -%}
       </a>
       <button type="button" data-cart-drawer-open class="cart-trigger relative flex min-h-11 min-w-11 items-center justify-center rounded-xl text-brand-ink transition hover:bg-brand-soft" aria-label="Cart">
