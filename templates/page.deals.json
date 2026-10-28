@@ -1,108 +1,126 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-deals",
-      "settings": {
-        "badge_text": "Flash Deals Live",
-        "heading": "Up to 60% OFF Top Picks",
-        "subtext": "Exclusive daily promotional prices. Extra 10% instant discount applied at checkout with coupon KARTZO10.",
-        "coupon_code": "KARTZO10",
-        "countdown_hours": 8
-      },
       "blocks": {
         "deal-1": {
           "type": "deal_product",
           "settings": {
+            "product": "",
             "custom_title": "Wireless Headphones Pro",
             "custom_sub": "Bluetooth 5.3",
             "custom_badge": "30% OFF",
             "custom_price": "₹2,799",
             "custom_compare": "₹3,999",
             "custom_rating": "4.8",
+            "custom_link": "",
             "demo_image": "p-headphones.webp"
           }
         },
         "deal-2": {
           "type": "deal_product",
           "settings": {
+            "product": "",
             "custom_title": "Smart Watch AMOLED",
             "custom_sub": "Health & Fitness",
             "custom_badge": "40% OFF",
             "custom_price": "₹3,499",
             "custom_compare": "₹5,832",
             "custom_rating": "4.6",
+            "custom_link": "",
             "demo_image": "p-watch.webp"
           }
         },
         "deal-3": {
           "type": "deal_product",
           "settings": {
+            "product": "",
             "custom_title": "Men's Running Shoes",
             "custom_sub": "Footwear & Sport",
             "custom_badge": "40% OFF",
             "custom_price": "₹2,399",
             "custom_compare": "₹3,998",
             "custom_rating": "4.7",
+            "custom_link": "",
             "demo_image": "p-shoes.webp"
           }
         },
         "deal-4": {
           "type": "deal_product",
           "settings": {
+            "product": "",
             "custom_title": "Smartphone 128GB",
             "custom_sub": "Mobile & Computing",
             "custom_badge": "25% OFF",
-            "custom_price": "₹44,999",
-            "custom_compare": "₹59,999",
-            "custom_rating": "4.9",
+            "custom_price": "",
+            "custom_compare": "",
+            "custom_rating": "",
+            "custom_link": "",
             "demo_image": "p-phone.webp"
           }
         },
         "deal-5": {
           "type": "deal_product",
           "settings": {
+            "product": "",
             "custom_title": "Leather Casual Backpack",
             "custom_sub": "Travel & Commute",
             "custom_badge": "50% OFF",
             "custom_price": "₹1,749",
             "custom_compare": "₹3,499",
             "custom_rating": "4.8",
+            "custom_link": "",
             "demo_image": "p-backpack.webp"
           }
         },
         "deal-6": {
           "type": "deal_product",
           "settings": {
+            "product": "",
             "custom_title": "UV400 Polarized Shades",
             "custom_sub": "Eyewear & Style",
             "custom_badge": "35% OFF",
             "custom_price": "₹899",
             "custom_compare": "₹1,383",
             "custom_rating": "4.6",
+            "custom_link": "",
             "demo_image": "p-sunglasses.webp"
           }
         },
         "deal-7": {
           "type": "deal_product",
           "settings": {
+            "product": "",
             "custom_title": "Ergonomic Office Chair",
             "custom_sub": "Home Office",
             "custom_badge": "30% OFF",
             "custom_price": "₹8,999",
             "custom_compare": "₹12,855",
             "custom_rating": "4.7",
+            "custom_link": "",
             "demo_image": "p-chair.webp"
           }
         },
         "deal-8": {
           "type": "deal_product",
           "settings": {
+            "product": "",
             "custom_title": "Premium Perfume 100ml",
             "custom_sub": "Luxury Fragrance",
             "custom_badge": "35% OFF",
             "custom_price": "₹1,299",
             "custom_compare": "₹1,999",
             "custom_rating": "4.5",
+            "custom_link": "",
             "demo_image": "p-perfume.webp"
           }
         }
@@ -116,8 +134,19 @@
         "deal-6",
         "deal-7",
         "deal-8"
-      ]
+      ],
+      "settings": {
+        "badge_text": "Flash Deals Live",
+        "heading": "Up to 60% OFF Top Picks",
+        "subtext": "Exclusive daily promotional prices. Extra 10% instant discount applied at checkout with coupon KARTZO10.",
+        "coupon_code": "KARTZO10",
+        "countdown_hours": 8,
+        "collection": "",
+        "products_limit": 12
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
