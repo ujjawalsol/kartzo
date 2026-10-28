@@ -34,7 +34,7 @@
         "about_url": "",
         "contact_url": "",
         "show_mobile_categories": true,
-        "mobile_categories_menu": "main-menu",
+        "mobile_categories_menu": "",
         "bottom_nav_fifth_tab": "account"
       }
     }
